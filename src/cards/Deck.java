@@ -17,6 +17,7 @@ package cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  *
@@ -25,7 +26,7 @@ import java.util.Collections;
  */
 public class Deck {
 
-    private ArrayList deck;
+    private final ArrayList<Card> deck;
 
     private static final int NUM_COLORS = 4;
     private static final int NUM_SPECIAL_NOTCOLOR = 2;
@@ -33,8 +34,10 @@ public class Deck {
     private static final int SPECIAL_COLOR_CARDS = 3;
     private static final int SPECIAL_NOTCOLOR_CARDS = 3;
 
+    private Iterator cardIterator;
+
     public Deck() {
-        deck = new ArrayList();
+        deck = new ArrayList<>();
 
         //Add Cards by color
         for (int i = 0; i < NUM_COLORS; i++) {
@@ -73,6 +76,25 @@ public class Deck {
             this.deck.add(card);
             this.deck.add(card);
         }
+
+        cardIterator = deck.iterator();
+    }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(deck);
+    }
+
+    public Card getNextCard() {
+        if (!cardIterator.hasNext()) {
+            cardIterator = deck.iterator();
+        }
+
+        Card card = (Card) cardIterator.next();
+        return card;
     }
 
     @Override
@@ -80,15 +102,11 @@ public class Deck {
         return "New Deck: \n" + deck;
     }
 
-    public void shuffle() {
-        Collections.shuffle(deck);
-    }
-
     public static void main(String[] args) {
-        Deck thisDeck = new Deck();
+        Deck theDeck = new Deck();
 
-        thisDeck.shuffle();
-        System.out.println(thisDeck.toString());
+        theDeck.shuffle();
+        System.out.println(theDeck.toString());
     }
 
 }
