@@ -15,7 +15,10 @@
  */
 package gui;
 
+import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 
 /**
  * A GUI Card Prototype MVC view
@@ -35,6 +38,9 @@ public class CardPrototypeView {
      */
     private final CardPrototypeModel theModel;
 
+    Rectangle faceDown;
+    Rectangle faceUp;
+
     /**
      * An explicit constructor for the Card Prototype view
      *
@@ -44,6 +50,20 @@ public class CardPrototypeView {
         this.theModel = theModel;
 
         root = new BorderPane();
+        GridPane grid = new GridPane();
+        root.setCenter(grid);
+
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(10));
+
+        //Face down card
+        faceDown = new Rectangle(128, 178);
+        grid.add(faceDown, 0, 0);
+
+        //Face up card
+        faceUp = new Rectangle(128, 178);
+        grid.add(faceUp, 1, 0);
     }
 
     /**
@@ -53,6 +73,14 @@ public class CardPrototypeView {
      */
     public BorderPane getRootNode() {
         return root;
+    }
+
+    public Rectangle getFaceDown() {
+        return faceDown;
+    }
+
+    public Rectangle getFaceUp() {
+        return faceUp;
     }
 
 }
