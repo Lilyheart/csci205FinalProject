@@ -61,4 +61,9 @@ public class Card {
         return type;
     }
 
+    @Override
+    public String toString() {
+        return "Card{" + "color=" + color + ", type=" + type + '}';
+    }
+
 }
