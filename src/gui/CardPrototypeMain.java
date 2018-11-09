@@ -71,6 +71,9 @@ public class CardPrototypeMain extends Application {
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.show();
+
+        //Required to listen for key presses when only shapes are in the view
+        this.theView.getRootNode().requestFocus();
     }
 
     /**

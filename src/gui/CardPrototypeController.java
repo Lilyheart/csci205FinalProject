@@ -15,13 +15,20 @@
  */
 package gui;
 
+import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 /**
  * A GUI Card Prototype MVC controller
  *
  * @version 0.1
  * @author Lily Romano
  */
-public class CardPrototypeController {
+public class CardPrototypeController implements EventHandler<Event> {
 
     /**
      * The model for the Card Prototype
@@ -39,10 +46,27 @@ public class CardPrototypeController {
      * @param theModel The model for the Card Prototype
      * @param theView The view for the Card Prototype
      */
+    @SuppressWarnings("LeakingThisInConstructor")
     public CardPrototypeController(CardPrototypeModel theModel,
                                    CardPrototypeView theView) {
         this.theModel = theModel;
         this.theView = theView;
+
+        this.theView.getRootNode().addEventFilter(KeyEvent.KEY_PRESSED, this);
+        this.theView.getFaceDown().setOnMouseClicked(this);
+        this.theView.getFaceUp().setOnMouseClicked(this);
+    }
+
+    @Override
+    public void handle(Event event) {
+        EventType eType = event.getEventType();
+
+        if (eType == KeyEvent.KEY_PRESSED) {
+            KeyEvent target = (KeyEvent) event;
+            if (target.getCode() == KeyCode.ESCAPE) {
+                Platform.exit();
+            }
+        }
     }
 
 }
