@@ -65,7 +65,7 @@ public class DeckTest {
     }
 
     /**
-     * Test the shuffle method
+     * Test the shuffle method, of class Deck.
      */
     @Test
     public void testShuffle() {
@@ -88,4 +88,27 @@ public class DeckTest {
         assertFalse(defaultDeckString.equals(newShuffledDeckString));
     }
 
+    /**
+     * Test of getNextCard method, of class Deck.
+     */
+    @Test
+    public void testGetNextCard() {
+        System.out.println("getNextCard");
+
+        Card firstCard = newDeck.getNextCard();
+        Card secondCard = newDeck.getNextCard();
+
+        //test that second card does not equal first card
+        assertFalse(firstCard.equals(secondCard));
+
+        //cycle through remaining cards and test that first card is the same
+        for (int i = 2; i < newDeck.getDeck().size(); i++) {
+            newDeck.getNextCard();
+        }
+
+        Card nextCard = newDeck.getNextCard();
+
+        assertTrue(firstCard.equals(nextCard));
+
+    }
 }
