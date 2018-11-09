@@ -23,6 +23,9 @@ package gui;
  */
 public class CardPrototypeModel {
 
+    /**
+     * An explicit constructor for the Card Prototype Model
+     */
     public CardPrototypeModel() {
     }
 
