@@ -16,6 +16,7 @@
 package cards;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -79,8 +80,14 @@ public class Deck {
         return "New Deck: \n" + deck;
     }
 
+    public void shuffle() {
+        Collections.shuffle(deck);
+    }
+
     public static void main(String[] args) {
         Deck thisDeck = new Deck();
+
+        thisDeck.shuffle();
         System.out.println(thisDeck.toString());
     }
 
