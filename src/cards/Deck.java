@@ -26,15 +26,21 @@ public class Deck {
 
     private ArrayList deck;
 
+    private static final int NUM_COLORS = 4;
+    private static final int NUM_SPECIAL_NOTCOLOR = 2;
+    private static final int TOTAL_NUMCARDS = 10;
+    private static final int SPECIAL_COLOR_CARDS = 3;
+    private static final int SPECIAL_NOTCOLOR_CARDS = 3;
+
     public Deck() {
         deck = new ArrayList();
 
         //Add Cards by color
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < NUM_COLORS; i++) {
             CardColor color = CardColor.values()[i];
 
             //Add number cards by color
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < TOTAL_NUMCARDS; j++) {
                 CardType type = CardType.values()[j];
                 Card card = new Card(color, type);
                 //Add one of this card type
@@ -45,8 +51,25 @@ public class Deck {
                     this.deck.add(card);
                 }
             }
+
+            //Add color special cards
+            for (int j = 0; j < SPECIAL_COLOR_CARDS; j++) {
+                CardType type = CardType.values()[j + TOTAL_NUMCARDS];
+                Card card = new Card(color, type);
+                //Add two of this card type
+                this.deck.add(card);
+                this.deck.add(card);
+            }
         }
 
+        for (int i = 0; i < NUM_SPECIAL_NOTCOLOR; i++) {
+            CardColor color = CardColor.values()[4];
+            CardType type = CardType.values()[i + TOTAL_NUMCARDS + SPECIAL_COLOR_CARDS];
+            Card card = new Card(color, type);
+            //Add two of this card type
+            this.deck.add(card);
+            this.deck.add(card);
+        }
         System.out.println(deck);
 
     }
