@@ -16,6 +16,8 @@
 package cards;
 
 /**
+ * A enumerated type to represent the possible card types. The types must be
+ * added in the order - Number cards, Colored special, Non-color special
  *
  * @author Lily Romano
  */
