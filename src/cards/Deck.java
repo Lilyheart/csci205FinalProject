@@ -43,7 +43,7 @@ public class Deck {
             for (int j = 0; j < TOTAL_NUMCARDS; j++) {
                 CardType type = CardType.values()[j];
                 Card card = new Card(color, type);
-                //Add one of this card type
+                //Add one of this card zero, two of the others
                 this.deck.add(card);
 
                 //If card number is not zero, add a second card of this type
@@ -66,16 +66,22 @@ public class Deck {
             CardColor color = CardColor.values()[4];
             CardType type = CardType.values()[i + TOTAL_NUMCARDS + SPECIAL_COLOR_CARDS];
             Card card = new Card(color, type);
-            //Add two of this card type
+            //Add four of this card type
+            this.deck.add(card);
+            this.deck.add(card);
             this.deck.add(card);
             this.deck.add(card);
         }
-        System.out.println(deck);
+    }
 
+    @Override
+    public String toString() {
+        return "New Deck: \n" + deck;
     }
 
     public static void main(String[] args) {
-        Deck thisdeck = new Deck();
+        Deck thisDeck = new Deck();
+        System.out.println(thisDeck.toString());
     }
 
 }
