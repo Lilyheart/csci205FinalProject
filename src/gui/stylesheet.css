@@ -1,0 +1,13 @@
+/* Background texture generated from https://www.cssmatic.com/noise-texture */
+#rootNode {
+  -fx-background-image: url("http://api.thumbr.it/whitenoise-361x370.png?background=0082baff&noise=59cbe8&density=20&opacity=28");
+  -fx-background-repeat: repeat;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-radius: 10px;
+}

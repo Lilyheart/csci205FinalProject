@@ -66,6 +66,8 @@ public class CardPrototypeMain extends Application {
         this.theControl = new CardPrototypeController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());
+        scene.getStylesheets().add(
+                getClass().getResource("stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("Card Prototype");
         primaryStage.setScene(scene);

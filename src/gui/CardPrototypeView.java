@@ -18,7 +18,7 @@ package gui;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.StackPane;
 
 /**
  * A GUI Card Prototype MVC view
@@ -38,8 +38,8 @@ public class CardPrototypeView {
      */
     private final CardPrototypeModel theModel;
 
-    Rectangle faceDown;
-    Rectangle faceUp;
+    StackPane faceDown;
+    StackPane faceUp;
 
     /**
      * An explicit constructor for the Card Prototype view
@@ -50,19 +50,24 @@ public class CardPrototypeView {
         this.theModel = theModel;
 
         root = new BorderPane();
+        root.setId("rootNode");
         GridPane grid = new GridPane();
         root.setCenter(grid);
 
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10));
+        grid.setHgap(20);
+        grid.setVgap(20);
+        grid.setPadding(new Insets(40));
 
         //Face down card
-        faceDown = new Rectangle(128, 178);
+        faceDown = new StackPane();
+        faceDown.setPrefSize(128, 178);
+        faceDown.getStyleClass().add("card");
         grid.add(faceDown, 0, 0);
 
         //Face up card
-        faceUp = new Rectangle(128, 178);
+        faceUp = new StackPane();
+        faceUp.setPrefSize(128, 178);
+        faceUp.getStyleClass().add("card");
         grid.add(faceUp, 1, 0);
     }
 
@@ -75,11 +80,11 @@ public class CardPrototypeView {
         return root;
     }
 
-    public Rectangle getFaceDown() {
+    public StackPane getFaceDown() {
         return faceDown;
     }
 
-    public Rectangle getFaceUp() {
+    public StackPane getFaceUp() {
         return faceUp;
     }
 
