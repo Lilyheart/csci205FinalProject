@@ -41,7 +41,7 @@ public enum CardColor {
     /**
      * An enum with information on the special cards
      */
-    SPECIAL("#FFFFFF");
+    SPECIAL("#000000");
 
     /**
      * The {@code Color} of the card
