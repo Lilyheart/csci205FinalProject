@@ -13,9 +13,9 @@
 *
 * ****************************************
  */
-package prototypegui.view;
+package prototypegui.cardcreator;
 
-import cards.Card;
+import deck.card.Card;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

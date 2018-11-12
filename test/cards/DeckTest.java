@@ -15,6 +15,8 @@
  */
 package cards;
 
+import deck.Deck;
+import deck.card.Card;
 import static junit.framework.TestCase.*;
 import org.junit.After;
 import org.junit.Before;

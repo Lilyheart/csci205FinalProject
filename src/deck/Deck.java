@@ -13,8 +13,11 @@
 *
 * ****************************************
  */
-package cards;
+package deck;
 
+import deck.card.Card;
+import deck.card.CardColor;
+import deck.card.CardType;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.ListIterator;

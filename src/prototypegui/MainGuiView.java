@@ -13,13 +13,14 @@
 *
 * ****************************************
  */
-package prototypegui.view;
+package prototypegui;
 
+import prototypegui.cardcreator.CardFrontView;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import prototypegui.model.MainGuiModel;
+import prototypegui.MainGuiModel;
 
 /**
  * A GUI Card Prototype MVC view Main GUI

@@ -13,7 +13,7 @@
 *
 * ****************************************
  */
-package cards;
+package deck.card;
 
 /**
  * A enumerated type to represent the possible card colors

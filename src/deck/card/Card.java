@@ -13,7 +13,7 @@
 *
 * ****************************************
  */
-package cards;
+package deck.card;
 
 /**
  * A Card of an BUno deck

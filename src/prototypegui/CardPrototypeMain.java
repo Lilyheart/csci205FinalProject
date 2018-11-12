@@ -18,9 +18,6 @@ package prototypegui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import prototypegui.controller.MainGuiController;
-import prototypegui.model.MainGuiModel;
-import prototypegui.view.MainGuiView;
 
 /**
  * A Prototype of Cards
@@ -69,7 +66,7 @@ public class CardPrototypeMain extends Application {
 
         Scene scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(
-                getClass().getResource("view/stylesheet.css").toExternalForm());
+                getClass().getResource("resource/stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("Card Prototype");
         primaryStage.setScene(scene);

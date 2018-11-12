@@ -1,6 +1,6 @@
 /* Background texture generated from https://www.cssmatic.com/noise-texture */
 #rootNode {
-  -fx-background-image: url("../resources/background.png");
+  -fx-background-image: url("background.png");
   -fx-background-repeat: repeat;
 }
 
@@ -14,7 +14,7 @@
 
 .inside {
     -fx-background-radius: 10px;
-    -fx-background-image: url("../resources/oval.png");
+    -fx-background-image: url("oval.png");
     -fx-background-repeat: no-repeat;
 }
 

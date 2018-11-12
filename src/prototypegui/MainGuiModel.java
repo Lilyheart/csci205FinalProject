@@ -13,10 +13,10 @@
 *
 * ****************************************
  */
-package prototypegui.model;
+package prototypegui;
 
-import cards.Card;
-import cards.Deck;
+import deck.card.Card;
+import deck.Deck;
 
 /**
  * A GUI Card Prototype MVC model Main GUI

@@ -13,9 +13,10 @@
 *
 * ****************************************
  */
-package prototypegui.controller;
+package prototypegui;
 
-import cards.Card;
+import prototypegui.cardcreator.CardFrontView;
+import deck.card.Card;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -23,9 +24,6 @@ import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import prototypegui.model.MainGuiModel;
-import prototypegui.view.CardFrontView;
-import prototypegui.view.MainGuiView;
 
 /**
  * A GUI Card Prototype MVC controller
