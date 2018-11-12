@@ -15,9 +15,9 @@
  */
 package cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  *
@@ -29,7 +29,7 @@ public class Deck {
     /**
      * An {@code ArrayList} representing the deck.
      */
-    private final ArrayList<Card> deck;
+    private final LinkedList<Card> deck;
 
     //TODO [Color Cleanup] Move some of these constants into the enums
     /**
@@ -57,13 +57,13 @@ public class Deck {
     /**
      * An iterator for the {@code deck}
      */
-    private Iterator cardIterator;
+    private ListIterator cardIterator;
 
     /**
      * An explicit constructor for the deck
      */
     public Deck() {
-        deck = new ArrayList<>();
+        deck = new LinkedList<>();
 
         //Add Cards by color
         for (int i = 0; i < NUM_COLORS; i++) {
@@ -104,7 +104,7 @@ public class Deck {
             this.deck.add(card);
         }
 
-        cardIterator = deck.iterator();
+        cardIterator = deck.listIterator();
     }
 
     /**
@@ -112,7 +112,7 @@ public class Deck {
      *
      * @return the {@code ArrayList} of the deck.
      */
-    public ArrayList<Card> getDeck() {
+    public LinkedList<Card> getDeck() {
         return deck;
     }
 
@@ -130,7 +130,7 @@ public class Deck {
      */
     public Card getNextCard() {
         if (!cardIterator.hasNext()) {
-            cardIterator = deck.iterator();
+            cardIterator = deck.listIterator();
         }
 
         Card card = (Card) cardIterator.next();

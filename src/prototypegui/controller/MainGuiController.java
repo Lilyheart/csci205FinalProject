@@ -15,13 +15,16 @@
  */
 package prototypegui.controller;
 
+import cards.Card;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import prototypegui.model.MainGuiModel;
+import prototypegui.view.CardFrontView;
 import prototypegui.view.MainGuiView;
 
 /**
@@ -62,6 +65,12 @@ public class MainGuiController implements EventHandler<Event> {
     @Override
     public void handle(Event event) {
         EventType eType = event.getEventType();
+
+        if (event.getSource() == theView.getFaceDown()) {
+            Card newCard = theModel.getNextCard();
+            CardFrontView.changeCardFrontView(newCard,
+                                              (StackPane) theView.getFaceUp());
+        }
 
         if (eType == KeyEvent.KEY_PRESSED) {
             KeyEvent target = (KeyEvent) event;

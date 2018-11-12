@@ -59,12 +59,34 @@ public class CardFrontView {
         bottom.setMinWidth(118);
         bottom.setPrefHeight(20);
 
+        inside.setStyle("-fx-background-color: " + cardColor);
+        middle.setStyle("-fx-text-fill: " + cardColor);
+
         inside.getChildren().addAll(top, middle, bottom);
+
+        return faceUp;
+    }
+
+    public static Node changeCardFrontView(Card newCard, StackPane cardPane) {
+
+        String cardColor = newCard.getColorString();
+        String cardString = newCard.getType().getCardText();
+
+        VBox inside = (VBox) cardPane.getChildren().get(0);
+        Label top = (Label) inside.getChildren().get(0);
+        Label middle = (Label) inside.getChildren().get(1);
+        Label bottom = (Label) inside.getChildren().get(2);
+
+        System.out.println();
 
         inside.setStyle("-fx-background-color: " + cardColor);
         middle.setStyle("-fx-text-fill: " + cardColor);
 
-        return faceUp;
+        top.setText(cardString);
+        middle.setText(cardString);
+        bottom.setText(cardString);
+
+        return cardPane;
     }
 
 }
