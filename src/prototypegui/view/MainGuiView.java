@@ -15,18 +15,15 @@
  */
 package prototypegui.view;
 
-import cards.Card;
-import prototypegui.model.MainGuiModel;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import prototypegui.model.MainGuiModel;
 
 /**
  * A GUI Card Prototype MVC view Main GUI
  *
- * @version 0.1
  * @author Lily Romano
  */
 public class MainGuiView {
@@ -41,8 +38,15 @@ public class MainGuiView {
      */
     private final MainGuiModel theModel;
 
+    /**
+     * The StackPane of the facedown pile of cards.
+     */
     StackPane faceDown;
-    Node faceUp;
+
+    /**
+     * The StackPane of the faceup pile of cards.
+     */
+    StackPane faceUp;
 
     /**
      * An explicit constructor for the Card Prototype view Main GUI
@@ -68,7 +72,8 @@ public class MainGuiView {
         faceDown.getStyleClass().add("card");
 
         //Face up card
-        faceUp = CardFrontView.createCardFrontView(theModel.getNextCard());
+        faceUp = CardFrontView.createCardFrontView(
+                theModel.getNextCard());
         grid.add(faceUp, 1, 0);
     }
 
@@ -81,11 +86,21 @@ public class MainGuiView {
         return root;
     }
 
-    public StackPane getFaceDown() {
+    /**
+     * Returns the StackPane of the facedown pile of cards.
+     *
+     * @return the StackPane of the facedown pile of cards.
+     */
+    public StackPane getFaceDownPane() {
         return faceDown;
     }
 
-    public Node getFaceUp() {
+    /**
+     * Returns the StackPane of the faceup pile of cards.
+     *
+     * @return the StackPane of the faceup pile of cards.
+     */
+    public StackPane getFaceUpPane() {
         return faceUp;
     }
 }

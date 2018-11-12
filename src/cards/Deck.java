@@ -20,14 +20,14 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
+ * A Prototype Deck file for the deck GUI prototype
  *
  * @author Lily Romano
- * @version 0.1
  */
 public class Deck {
 
     /**
-     * An {@code ArrayList} representing the deck.
+     * An {@code LinkedList} representing the deck.
      */
     private final LinkedList<Card> deck;
 
@@ -108,15 +108,6 @@ public class Deck {
     }
 
     /**
-     * Returns the {@code ArrayList} of the deck.
-     *
-     * @return the {@code ArrayList} of the deck.
-     */
-    public LinkedList<Card> getDeck() {
-        return deck;
-    }
-
-    /**
      * Shuffles the deck of cards.
      */
     public void shuffle() {
@@ -145,6 +136,15 @@ public class Deck {
     @Override
     public String toString() {
         return "New Deck: \n" + deck;
+    }
+
+    /**
+     * Returns the size of the deck.
+     *
+     * @return the size of the deck.
+     */
+    public int getDeckSize() {
+        return deck.size();
     }
 
     public static void main(String[] args) {

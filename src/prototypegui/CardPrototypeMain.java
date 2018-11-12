@@ -15,17 +15,16 @@
  */
 package prototypegui;
 
-import prototypegui.view.MainGuiView;
-import prototypegui.model.MainGuiModel;
-import prototypegui.controller.MainGuiController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import prototypegui.controller.MainGuiController;
+import prototypegui.model.MainGuiModel;
+import prototypegui.view.MainGuiView;
 
 /**
  * A Prototype of Cards
  *
- * @version 0.1
  * @author Lily Romano
  */
 public class CardPrototypeMain extends Application {
@@ -81,9 +80,6 @@ public class CardPrototypeMain extends Application {
         this.theView.getRootNode().requestFocus();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

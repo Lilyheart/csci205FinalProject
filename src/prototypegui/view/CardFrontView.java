@@ -23,16 +23,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
+ * Utility class for updating existing StackPanes to display card fronts
  *
  * @author Lily Romano
- * @version 0.1
  */
-public class CardFrontView {
+public final class CardFrontView {
 
-    public static Node createCardFrontView(Card card) {
-        String cardColor = card.getColorString();
-        String cardString = card.getType().getCardText();
-
+    /**
+     * Creates a StackPane that represents a face up card
+     *
+     * @param card The {@code Card} the pane should display
+     * @return The StackPane for displaying
+     */
+    public static StackPane createCardFrontView(Card card) {
         StackPane faceUp = new StackPane();
 
         faceUp.setPrefSize(128, 178);
@@ -44,47 +47,54 @@ public class CardFrontView {
         faceUp.getChildren().add(inside);
         StackPane.setMargin(inside, new Insets(5));
 
-        Label top = new Label(cardString);
+        Label top = new Label();
         top.getStyleClass().add("top");
         top.setMinWidth(118);
         top.setPrefHeight(20);
 
-        Label middle = new Label(cardString);
+        Label middle = new Label();
         middle.getStyleClass().add("middle");
         middle.setMinWidth(118);
         middle.setPrefHeight(138);
 
-        Label bottom = new Label(cardString);
+        Label bottom = new Label();
         bottom.getStyleClass().add("bottom");
         bottom.setMinWidth(118);
         bottom.setPrefHeight(20);
 
-        inside.setStyle("-fx-background-color: " + cardColor);
-        middle.setStyle("-fx-text-fill: " + cardColor);
-
         inside.getChildren().addAll(top, middle, bottom);
+
+        changeCardFrontView(card, faceUp);
 
         return faceUp;
     }
 
+    /**
+     * Updates an previously created StackPane to display a card.
+     *
+     * @param newCard The {@code Card} the pane should display
+     * @param cardPane The StackPane for displaying
+     * @return The StackPane for displaying
+     */
     public static Node changeCardFrontView(Card newCard, StackPane cardPane) {
 
         String cardColor = newCard.getColorString();
         String cardString = newCard.getType().getCardText();
 
+        //Get VBox in StackPane
         VBox inside = (VBox) cardPane.getChildren().get(0);
-        Label top = (Label) inside.getChildren().get(0);
-        Label middle = (Label) inside.getChildren().get(1);
-        Label bottom = (Label) inside.getChildren().get(2);
 
-        System.out.println();
+        //Iterate through VBox and update all card types and text color of middle
+        for (Node n : inside.getChildren()) {
+            if (n instanceof Label) {
+                ((Label) n).setText(cardString);
+            }
+            if (n.getStyleClass().get(1) == "middle") {
+                n.setStyle("-fx-text-fill: " + cardColor);
+            }
+        }
 
         inside.setStyle("-fx-background-color: " + cardColor);
-        middle.setStyle("-fx-text-fill: " + cardColor);
-
-        top.setText(cardString);
-        middle.setText(cardString);
-        bottom.setText(cardString);
 
         return cardPane;
     }

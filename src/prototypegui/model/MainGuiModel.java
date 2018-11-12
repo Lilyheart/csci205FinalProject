@@ -21,11 +21,13 @@ import cards.Deck;
 /**
  * A GUI Card Prototype MVC model Main GUI
  *
- * @version 0.1
  * @author Lily Romano
  */
 public class MainGuiModel {
 
+    /**
+     * Creates a deck of cards
+     */
     private Deck theDeck;
 
     /**
@@ -36,10 +38,11 @@ public class MainGuiModel {
         theDeck.shuffle();
     }
 
-    public Deck getTheDeck() {
-        return theDeck;
-    }
-
+    /**
+     * Returns the next card in the deck
+     *
+     * @return the next card in the deck
+     */
     public Card getNextCard() {
         return theDeck.getNextCard();
     }

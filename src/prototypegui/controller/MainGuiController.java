@@ -30,7 +30,6 @@ import prototypegui.view.MainGuiView;
 /**
  * A GUI Card Prototype MVC controller
  *
- * @version 0.1
  * @author Lily Romano
  */
 public class MainGuiController implements EventHandler<Event> {
@@ -58,18 +57,18 @@ public class MainGuiController implements EventHandler<Event> {
         this.theView = theView;
 
         this.theView.getRootNode().addEventFilter(KeyEvent.KEY_PRESSED, this);
-        this.theView.getFaceDown().setOnMouseClicked(this);
-        this.theView.getFaceUp().setOnMouseClicked(this);
+        this.theView.getFaceDownPane().setOnMouseClicked(this);
+        this.theView.getFaceUpPane().setOnMouseClicked(this);
     }
 
     @Override
     public void handle(Event event) {
         EventType eType = event.getEventType();
 
-        if (event.getSource() == theView.getFaceDown()) {
+        if (event.getSource() == theView.getFaceDownPane()) {
             Card newCard = theModel.getNextCard();
             CardFrontView.changeCardFrontView(newCard,
-                                              (StackPane) theView.getFaceUp());
+                                              (StackPane) theView.getFaceUpPane());
         }
 
         if (eType == KeyEvent.KEY_PRESSED) {

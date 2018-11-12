@@ -16,9 +16,9 @@
 package cards;
 
 /**
+ * A Card of an BUno deck
  *
  * @author Lily Romano
- * @version 0.1
  */
 public class Card {
 
