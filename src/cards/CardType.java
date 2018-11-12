@@ -92,7 +92,7 @@ public enum CardType {
     /**
      * The scoring value of the card type
      */
-    private final int cardValue;
+    private final int cardPointValue;
 
     /**
      * An explicit constructor for the Card Type enumerated type
@@ -101,7 +101,7 @@ public enum CardType {
      */
     private CardType(String cardText, int cardValue) {
         this.cardText = cardText;
-        this.cardValue = cardValue;
+        this.cardPointValue = cardValue;
     }
 
     /**
@@ -113,4 +113,12 @@ public enum CardType {
         return cardText;
     }
 
+    /**
+     * Returns the card point value for scoring
+     *
+     * @return the card point value for scoring
+     */
+    public int getCardPointValue() {
+        return cardPointValue;
+    }
 }
