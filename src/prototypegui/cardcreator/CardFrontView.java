@@ -50,17 +50,14 @@ public final class CardFrontView {
         Label top = new Label();
         top.getStyleClass().add("top");
         top.setMinWidth(118);
-        top.setPrefHeight(20);
 
         Label middle = new Label();
         middle.getStyleClass().add("middle");
         middle.setMinWidth(118);
-        middle.setPrefHeight(138);
 
         Label bottom = new Label();
         bottom.getStyleClass().add("bottom");
         bottom.setMinWidth(118);
-        bottom.setPrefHeight(20);
 
         inside.getChildren().addAll(top, middle, bottom);
 
