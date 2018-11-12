@@ -17,11 +17,10 @@ package prototypegui.view;
 
 import prototypegui.model.MainGuiModel;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 /**
  * A GUI Card Prototype MVC view Main GUI
@@ -42,7 +41,7 @@ public class MainGuiView {
     private final MainGuiModel theModel;
 
     StackPane faceDown;
-    StackPane faceUp;
+    Node faceUp;
 
     /**
      * An explicit constructor for the Card Prototype view Main GUI
@@ -68,35 +67,8 @@ public class MainGuiView {
         faceDown.getStyleClass().add("card");
 
         //Face up card
-        faceUp = new StackPane();
+        faceUp = CardFrontView.createCardFrontView();
         grid.add(faceUp, 1, 0);
-        faceUp.setPrefSize(128, 178);
-        faceUp.getStyleClass().add("card");
-
-        //Set Inside of face
-        VBox inside = new VBox();
-        inside.getStyleClass().add("inside");
-        faceUp.getChildren().add(inside);
-        StackPane.setMargin(inside, new Insets(5));
-
-        String string = "1";
-
-        Label top = new Label(string);
-        top.getStyleClass().add("top");
-        top.setMinWidth(118);
-        top.setPrefHeight(20);
-
-        Label middle = new Label(string);
-        middle.getStyleClass().add("middle");
-        middle.setMinWidth(118);
-        middle.setPrefHeight(138);
-
-        Label bottom = new Label(string);
-        bottom.getStyleClass().add("bottom");
-        bottom.setMinWidth(118);
-        bottom.setPrefHeight(20);
-
-        inside.getChildren().addAll(top, middle, bottom);
     }
 
     /**
@@ -112,8 +84,7 @@ public class MainGuiView {
         return faceDown;
     }
 
-    public StackPane getFaceUp() {
+    public Node getFaceUp() {
         return faceUp;
     }
-
 }
