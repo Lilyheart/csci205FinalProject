@@ -15,6 +15,7 @@
  */
 package prototypegui.view;
 
+import cards.Card;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -28,7 +29,9 @@ import javafx.scene.layout.VBox;
  */
 public class CardFrontView {
 
-    public static Node createCardFrontView() {
+    public static Node createCardFrontView(Card card) {
+        String cardColor = card.getColorString();
+        String cardString = card.getType().getCardText();
 
         StackPane faceUp = new StackPane();
 
@@ -41,24 +44,25 @@ public class CardFrontView {
         faceUp.getChildren().add(inside);
         StackPane.setMargin(inside, new Insets(5));
 
-        String string = "1";
-
-        Label top = new Label(string);
+        Label top = new Label(cardString);
         top.getStyleClass().add("top");
         top.setMinWidth(118);
         top.setPrefHeight(20);
 
-        Label middle = new Label(string);
+        Label middle = new Label(cardString);
         middle.getStyleClass().add("middle");
         middle.setMinWidth(118);
         middle.setPrefHeight(138);
 
-        Label bottom = new Label(string);
+        Label bottom = new Label(cardString);
         bottom.getStyleClass().add("bottom");
         bottom.setMinWidth(118);
         bottom.setPrefHeight(20);
 
         inside.getChildren().addAll(top, middle, bottom);
+
+        inside.setStyle("-fx-background-color: " + cardColor);
+        middle.setStyle("-fx-text-fill: " + cardColor);
 
         return faceUp;
     }

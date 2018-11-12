@@ -25,11 +25,11 @@ public enum CardColor {
     /**
      * An enum with information on the blue cards
      */
-    BLUE("#E87722"),
+    BLUE("#003865"),
     /**
      * An enum with information on the orange cards
      */
-    ORANGE("#003865"),
+    ORANGE("#E87722"),
     /**
      * An enum with information on the yellow cards
      */

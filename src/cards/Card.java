@@ -53,6 +53,15 @@ public class Card {
     }
 
     /**
+     * Returns the enum CardColor of the card
+     *
+     * @return the enum CardColor of the card
+     */
+    public String getColorString() {
+        return color.getColor();
+    }
+
+    /**
      * Returns the enum CardType of the card
      *
      * @return the enum CardType of the card

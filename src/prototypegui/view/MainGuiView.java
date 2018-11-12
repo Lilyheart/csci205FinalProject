@@ -15,6 +15,7 @@
  */
 package prototypegui.view;
 
+import cards.Card;
 import prototypegui.model.MainGuiModel;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -67,7 +68,7 @@ public class MainGuiView {
         faceDown.getStyleClass().add("card");
 
         //Face up card
-        faceUp = CardFrontView.createCardFrontView();
+        faceUp = CardFrontView.createCardFrontView(theModel.getNextCard());
         grid.add(faceUp, 1, 0);
     }
 
