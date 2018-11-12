@@ -8,13 +8,14 @@
 *
 * Project: csci205FinalProject
 * Package: gui
-* File: CardPrototypeView
+* File: MainGuiView
 * Description:
 *
 * ****************************************
  */
-package gui;
+package prototypegui.view;
 
+import prototypegui.model.MainGuiModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -23,12 +24,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * A GUI Card Prototype MVC view
+ * A GUI Card Prototype MVC view Main GUI
  *
  * @version 0.1
  * @author Lily Romano
  */
-public class CardPrototypeView {
+public class MainGuiView {
 
     /**
      * The root node of the view which is a BorderPane
@@ -38,17 +39,17 @@ public class CardPrototypeView {
     /**
      * The model for the Card Prototype
      */
-    private final CardPrototypeModel theModel;
+    private final MainGuiModel theModel;
 
     StackPane faceDown;
     StackPane faceUp;
 
     /**
-     * An explicit constructor for the Card Prototype view
+     * An explicit constructor for the Card Prototype view Main GUI
      *
-     * @param theModel The model for the Card Prototype
+     * @param theModel The model for the Card Prototype Main GUI
      */
-    public CardPrototypeView(CardPrototypeModel theModel) {
+    public MainGuiView(MainGuiModel theModel) {
         this.theModel = theModel;
 
         root = new BorderPane();

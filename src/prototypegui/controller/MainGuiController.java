@@ -8,12 +8,12 @@
 *
 * Project: csci205FinalProject
 * Package: gui
-* File: CardPrototypeController
+* File: MainGuiController
 * Description: A GUI controller for the Card Prototype
 *
 * ****************************************
  */
-package gui;
+package prototypegui.controller;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -21,6 +21,8 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import prototypegui.model.MainGuiModel;
+import prototypegui.view.MainGuiView;
 
 /**
  * A GUI Card Prototype MVC controller
@@ -28,27 +30,27 @@ import javafx.scene.input.KeyEvent;
  * @version 0.1
  * @author Lily Romano
  */
-public class CardPrototypeController implements EventHandler<Event> {
+public class MainGuiController implements EventHandler<Event> {
 
     /**
-     * The model for the Card Prototype
+     * The model for the Card Prototype Main GUI
      */
-    private final CardPrototypeModel theModel;
+    private final MainGuiModel theModel;
 
     /**
-     * The view for the Card Prototype
+     * The view for the Card Prototype Main GUI
      */
-    private final CardPrototypeView theView;
+    private final MainGuiView theView;
 
     /**
-     * An explicit constructor for the Card Prototype controller.
+     * An explicit constructor for the Card Prototype controller Main GUI.
      *
      * @param theModel The model for the Card Prototype
      * @param theView The view for the Card Prototype
      */
     @SuppressWarnings("LeakingThisInConstructor")
-    public CardPrototypeController(CardPrototypeModel theModel,
-                                   CardPrototypeView theView) {
+    public MainGuiController(MainGuiModel theModel,
+                             MainGuiView theView) {
         this.theModel = theModel;
         this.theView = theView;
 

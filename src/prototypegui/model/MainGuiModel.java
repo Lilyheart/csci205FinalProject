@@ -8,30 +8,30 @@
 *
 * Project: csci205FinalProject
 * Package: gui
-* File: CardPrototypeModel
+* File: MainGuiModel
 * Description:
 *
 * ****************************************
  */
-package gui;
+package prototypegui.model;
 
 import cards.Card;
 import cards.Deck;
 
 /**
- * A GUI Card Prototype MVC model
+ * A GUI Card Prototype MVC model Main GUI
  *
  * @version 0.1
  * @author Lily Romano
  */
-public class CardPrototypeModel {
+public class MainGuiModel {
 
     private Deck theDeck;
 
     /**
-     * An explicit constructor for the Card Prototype Model
+     * An explicit constructor for the Card Prototype Model Main GUI
      */
-    public CardPrototypeModel() {
+    public MainGuiModel() {
         theDeck = new Deck();
         theDeck.shuffle();
     }

@@ -13,8 +13,11 @@
 *
 * ****************************************
  */
-package gui;
+package prototypegui;
 
+import prototypegui.view.MainGuiView;
+import prototypegui.model.MainGuiModel;
+import prototypegui.controller.MainGuiController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,17 +33,17 @@ public class CardPrototypeMain extends Application {
     /**
      * The model for the Card Prototype
      */
-    private CardPrototypeModel theModel;
+    private MainGuiModel theModel;
 
     /**
      * The view for the Card Prototype
      */
-    private CardPrototypeView theView;
+    private MainGuiView theView;
 
     /**
      * The controller for the Card Prototype
      */
-    private CardPrototypeController theControl;
+    private MainGuiController theControl;
 
     /**
      * The primary method that is called by the JavaFX application to initialize
@@ -51,8 +54,8 @@ public class CardPrototypeMain extends Application {
     @Override
     public void init() throws Exception {
         super.init(); //To change body of generated methods, choose Tools | Templates.
-        this.theModel = new CardPrototypeModel();
-        this.theView = new CardPrototypeView(theModel);
+        this.theModel = new MainGuiModel();
+        this.theView = new MainGuiView(theModel);
     }
 
     /**
@@ -63,11 +66,11 @@ public class CardPrototypeMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        this.theControl = new CardPrototypeController(theModel, theView);
+        this.theControl = new MainGuiController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(
-                getClass().getResource("stylesheet.css").toExternalForm());
+                getClass().getResource("view/stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("Card Prototype");
         primaryStage.setScene(scene);
