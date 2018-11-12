@@ -15,12 +15,12 @@
  */
 package prototypegui;
 
-import prototypegui.cardcreator.CardFrontView;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import prototypegui.MainGuiModel;
+import prototypegui.cardcreator.CardBackView;
+import prototypegui.cardcreator.CardFrontView;
 
 /**
  * A GUI Card Prototype MVC view Main GUI
@@ -67,10 +67,8 @@ public class MainGuiView {
         grid.setPadding(new Insets(40));
 
         //Face down card
-        faceDown = new StackPane();
+        faceDown = CardBackView.createCardBackView();
         grid.add(faceDown, 0, 0);
-        faceDown.setPrefSize(128, 178);
-        faceDown.getStyleClass().add("card");
 
         //Face up card
         faceUp = CardFrontView.createCardFrontView(

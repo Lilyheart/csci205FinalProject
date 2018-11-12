@@ -34,3 +34,10 @@
     -fx-font-size: 85;
     -fx-effect: dropshadow(one-pass-box, black, 5, 5, 5, 5);
 }
+
+.logo {
+    -fx-text-fill: #E87722;
+    -fx-rotate: -25;
+    -fx-font-size: 40;
+    -fx-effect: dropshadow(one-pass-box, black, 3, 3, 3, 3);
+}
