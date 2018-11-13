@@ -26,68 +26,73 @@ public enum CardType {
     /**
      * An enum with information on the card zero
      */
-    ZERO("0", 0),
+    ZERO("0", "0", 0),
     /**
      * An enum with information on the card one
      */
-    ONE("1", 1),
+    ONE("1", "1", 1),
     /**
      * An enum with information on the card two
      */
-    TWO("2", 2),
+    TWO("2", "2", 2),
     /**
      * An enum with information on the card three
      */
-    THREE("3", 3),
+    THREE("3", "3", 3),
     /**
      * An enum with information on the card four
      */
-    FOUR("4", 4),
+    FOUR("4", "4", 4),
     /**
      * An enum with information on the card five
      */
-    FIVE("5", 5),
+    FIVE("5", "5", 5),
     /**
      * An enum with information on the card six
      */
-    SIX("6", 6),
+    SIX("6", "6", 6),
     /**
      * An enum with information on the card seven
      */
-    SEVEN("7", 7),
+    SEVEN("7", "7", 7),
     /**
      * An enum with information on the card eight
      */
-    EIGHT("8", 8),
+    EIGHT("8", "8", 8),
     /**
      * An enum with information on the card nine
      */
-    NINE("9", 9),
+    NINE("9", "9", 9),
     /**
      * An enum with information on the card draw 2
      */
-    DRAW2("+2", 20),
+    DRAW2("+2", "D2", 20),
     /**
      * An enum with information on the card reverse
      */
-    REVERSE("⇆", 20),
+    REVERSE("⇆", "R", 20),
     /**
      * An enum with information on the card skip
      */
-    SKIP("Ø", 20),
+    SKIP("Ø", "S", 20),
     /**
      * An enum with information on the card wild
      */
-    WILD("Wild", 50),
+    WILD("Wild", "Wild", 50),
     /**
      * An enum with information on the card wild draw 4
      */
-    WILDDRAW4("WildDraw4", 50);
+    WILDDRAW4("Wild", "D4", 50);
 
     /**
-     * A String that represents the card type
+     * What is displayed in the main portion of the card.
      */
-    private final String cardText;
+    private final String cardMainText;
+
+    /**
+     * What is displayed in the corners of the card.
+     */
+    private final String cardCornerText;
 
     /**
      * The scoring value of the card type
@@ -99,18 +104,32 @@ public enum CardType {
      *
      * @param cardText a {@code String} representing the card type
      */
-    private CardType(String cardText, int cardValue) {
-        this.cardText = cardText;
+    private CardType(String cardCornerText, String cardMainText, int cardValue) {
+        this.cardCornerText = cardCornerText;
+        this.cardMainText = cardMainText;
         this.cardPointValue = cardValue;
     }
 
     /**
-     * Returns the string representation of the card type
+     * Returns the string representation of what is displayed in the main
+     * portion of the card type
      *
-     * @return the string representation of the card type
+     * @return the string representation of what is displayed in the main
+     * portion of the card type
      */
-    public String getCardText() {
-        return cardText;
+    public String getCardMainText() {
+        return cardMainText;
+    }
+
+    /**
+     * Returns the string representation of what is displayed in the corner of
+     * the card type
+     *
+     * @return the string representation of what is displayed in the corner of
+     * the card type
+     */
+    public String getCardCornerText() {
+        return cardCornerText;
     }
 
     /**

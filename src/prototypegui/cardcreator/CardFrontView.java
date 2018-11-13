@@ -76,7 +76,8 @@ public final class CardFrontView {
     public static Node changeCardFrontView(Card newCard, StackPane cardPane) {
 
         String cardColor = newCard.getColorString();
-        String cardString = newCard.getType().getCardText();
+        String cardMainString = newCard.getType().getCardMainText();
+        String cardCornerString = newCard.getType().getCardCornerText();
 
         //Get VBox in StackPane
         VBox inside = (VBox) cardPane.getChildren().get(0);
@@ -84,10 +85,11 @@ public final class CardFrontView {
         //Iterate through VBox and update all card types and text color of middle
         for (Node n : inside.getChildren()) {
             if (n instanceof Label) {
-                ((Label) n).setText(cardString);
+                ((Label) n).setText(cardCornerString);
             }
             if (n.getStyleClass().get(1) == "middle") {
                 n.setStyle("-fx-text-fill: " + cardColor);
+                ((Label) n).setText(cardMainString);
             }
         }
 
