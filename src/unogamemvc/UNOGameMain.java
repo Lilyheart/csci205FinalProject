@@ -4,81 +4,82 @@
 *
 * Name: James Kelly, Scott Little, Rachel Wang, Lily Romano
 * Date: Nov 9, 2018
-* Time: 9:47:31 AM
+* Time: 12:36:08 PM
 *
 * Project: csci205FinalProject
-* Package: gui
-* File: NewFXMain
+* Package: view
+* File: UNOGameMain
 * Description:
 *
 * ****************************************
  */
-package prototypegui;
+package unogamemvc;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * A Prototype of Cards
+ * GUI of the java playing screen.
  *
+ * @author jameskelly
  * @author Lily Romano
  */
-public class PrototypeMain extends Application {
+public class UNOGameMain extends Application {
 
     /**
-     * The model for the Card Prototype
+     * The model for the UNO game
      */
-    private PrototypeGuiModel theModel;
+    private UNOGameModel theModel;
 
     /**
-     * The view for the Card Prototype
+     * The view for the UNO game
      */
-    private PrototypeGuiView theView;
+    private UNOGameView theView;
 
     /**
-     * The controller for the Card Prototype
+     * The controller for the UNO game
      */
-    private PrototypeGuiController theControl;
+    private UNOGameController theControl;
 
     /**
      * The primary method that is called by the JavaFX application to initialize
      * the GUI
      *
+     * @author Lily Romano
      * @throws Exception
      */
     @Override
     public void init() throws Exception {
         super.init(); //To change body of generated methods, choose Tools | Templates.
-        this.theModel = new PrototypeGuiModel();
-        this.theView = new PrototypeGuiView(theModel);
+        this.theModel = new UNOGameModel();
+        this.theView = new UNOGameView(theModel);
     }
 
     /**
      * The primary method that is called by the JavaFX application to set up the
      * initial stage
      *
+     * @author jameskelly
+     * @author Lily Romano
+     *
      * @param primaryStage The initial stage
      */
     @Override
     public void start(Stage primaryStage) {
-        this.theControl = new PrototypeGuiController(theModel, theView);
+        this.theControl = new UNOGameController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(
                 getClass().getResource("resource/stylesheet.css").toExternalForm());
 
-        primaryStage.setTitle("Card Prototype");
+        primaryStage.setTitle("BUno!");
         primaryStage.setScene(scene);
-        primaryStage.sizeToScene();
         primaryStage.show();
-
-        //Required to listen for key presses when only shapes are in the view
-        this.theView.getRootNode().requestFocus();
     }
 
     /**
-     * Launches the UNO Game Prototype
+     * Launches the UNO Game GUI
      *
      * @param args the command line arguments
      */

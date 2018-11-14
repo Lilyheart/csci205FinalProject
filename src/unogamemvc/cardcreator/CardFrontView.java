@@ -21,9 +21,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import unogamemvc.resource.CardSettings;
 
 /**
- * Utility class for updating existing StackPanes to display card fronts
+ * Utility class for creating and updating existing StackPanes to display card
+ * fronts
  *
  * @author Lily Romano
  */
@@ -32,35 +34,41 @@ public final class CardFrontView {
     /**
      * Creates a StackPane that represents a face up card
      *
+     * @author Lily Romano
+     *
      * @param card The {@code Card} the pane should display
      * @return The StackPane for displaying
      */
     public static StackPane createCardFrontView(Card card) {
         StackPane faceUp = new StackPane();
 
-        faceUp.setPrefSize(128, 178);
+        faceUp.setPrefSize(CardSettings.OUTER_CARD_WIDTH,
+                           CardSettings.OUTER_CARD_HEIGHT);
         faceUp.getStyleClass().add("card");
 
         //Set Inside of face
         VBox inside = new VBox();
         inside.getStyleClass().add("inside");
+        StackPane.setMargin(inside, new Insets(CardSettings.OUTER_CARD_MARGIN));
         faceUp.getChildren().add(inside);
-        StackPane.setMargin(inside, new Insets(5));
 
+        //Create content of the inside of the face
         Label top = new Label();
         top.getStyleClass().add("top");
-        top.setMinWidth(118);
+        top.setMinWidth(CardSettings.INNER_CARD_WIDTH);
 
         Label middle = new Label();
         middle.getStyleClass().add("middle");
-        middle.setMinWidth(118);
+        middle.setMinWidth(CardSettings.INNER_CARD_WIDTH);
 
         Label bottom = new Label();
         bottom.getStyleClass().add("bottom");
-        bottom.setMinWidth(118);
+        bottom.setMinWidth(CardSettings.INNER_CARD_WIDTH);
 
+        //Add inside content
         inside.getChildren().addAll(top, middle, bottom);
 
+        //Update content to match card creating
         changeCardFrontView(card, faceUp);
 
         return faceUp;
@@ -69,12 +77,15 @@ public final class CardFrontView {
     /**
      * Updates an previously created StackPane to display a card.
      *
+     * @author Lily Romano
+     *
      * @param newCard The {@code Card} the pane should display
      * @param cardPane The StackPane for displaying
      * @return The StackPane for displaying
      */
     public static Node changeCardFrontView(Card newCard, StackPane cardPane) {
 
+        //Get values of card to display
         String cardColor = newCard.getColorString();
         String cardMainString = newCard.getType().getCardMainText();
         String cardCornerString = newCard.getType().getCardCornerText();
@@ -87,7 +98,7 @@ public final class CardFrontView {
             if (n instanceof Label) {
                 ((Label) n).setText(cardCornerString);
             }
-            if (n.getStyleClass().get(1) == "middle") {
+            if ("middle".equals(n.getStyleClass().get(1))) {
                 n.setStyle("-fx-text-fill: " + cardColor);
                 ((Label) n).setText(cardMainString);
             }

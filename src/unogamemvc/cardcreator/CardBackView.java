@@ -19,17 +19,25 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import unogamemvc.resource.CardSettings;
 
 /**
+ * Utility class for updating existing StackPanes to display card fronts
  *
- * @author lilyheart
+ * @author Lily Romano
  */
 public final class CardBackView {
 
+    /**
+     * Creates a StackPane that represents the back of a card
+     *
+     * @return The StackPane for displaying
+     */
     public static StackPane createCardBackView() {
         StackPane faceDown = new StackPane();
 
-        faceDown.setPrefSize(128, 178);
+        faceDown.setPrefSize(CardSettings.OUTER_CARD_WIDTH,
+                             CardSettings.OUTER_CARD_HEIGHT);
         faceDown.getStyleClass().add("card");
 
         //Set Inside of face
@@ -37,7 +45,7 @@ public final class CardBackView {
         inside.getStyleClass().add("inside");
         inside.getStyleClass().add("insideback");
         faceDown.getChildren().add(inside);
-        StackPane.setMargin(inside, new Insets(5));
+        StackPane.setMargin(inside, new Insets(CardSettings.OUTER_CARD_MARGIN));
 
         Label logo = new Label("BUno");
         logo.getStyleClass().add("logo");

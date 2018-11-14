@@ -150,11 +150,4 @@ public class DrawDeck {
         return deck.size();
     }
 
-    public static void main(String[] args) {
-        DrawDeck theDeck = new DrawDeck();
-
-        theDeck.shuffle();
-        System.out.println(theDeck.toString());
-    }
-
 }

@@ -52,6 +52,8 @@ public class PrototypeGuiView {
     /**
      * An explicit constructor for the Card Prototype view Main GUI
      *
+     * @author Lily Romano
+     *
      * @param theModel The model for the Card Prototype Main GUI
      */
     public PrototypeGuiView(PrototypeGuiModel theModel) {
@@ -79,6 +81,8 @@ public class PrototypeGuiView {
     /**
      * Returns the root BorderPane node
      *
+     * @author Lily Romano
+     *
      * @return the root BorderPane node
      */
     public BorderPane getRootNode() {
@@ -88,6 +92,8 @@ public class PrototypeGuiView {
     /**
      * Returns the StackPane of the facedown pile of cards.
      *
+     * @author Lily Romano
+     *
      * @return the StackPane of the facedown pile of cards.
      */
     public StackPane getFaceDownPane() {
@@ -96,6 +102,8 @@ public class PrototypeGuiView {
 
     /**
      * Returns the StackPane of the faceup pile of cards.
+     *
+     * @author Lily Romano
      *
      * @return the StackPane of the faceup pile of cards.
      */
