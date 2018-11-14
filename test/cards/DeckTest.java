@@ -15,7 +15,7 @@
  */
 package cards;
 
-import deck.Deck;
+import deck.DrawDeck;
 import deck.card.Card;
 import static junit.framework.TestCase.*;
 import org.junit.After;
@@ -23,7 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the Deck class
+ * Tests the DrawDeck class
  *
  * @author Lily Romano
  */
@@ -32,7 +32,7 @@ public class DeckTest {
     /**
      * A new deck used for testing methods
      */
-    Deck newDeck;
+    DrawDeck newDeck;
 
     /**
      * The default string a deck of 102 cards should display
@@ -44,7 +44,7 @@ public class DeckTest {
      */
     @Before
     public void setUp() {
-        newDeck = new Deck();
+        newDeck = new DrawDeck();
     }
 
     /**
@@ -74,7 +74,7 @@ public class DeckTest {
     }
 
     /**
-     * Test the shuffle method, of class Deck.
+     * Test the shuffle method, of class DrawDeck.
      */
     @Test
     public void testShuffle() {
@@ -98,7 +98,7 @@ public class DeckTest {
     }
 
     /**
-     * Test of getNextCard method, of class Deck.
+     * Test of getNextCard method, of class DrawDeck.
      */
     @Test
     public void testGetNextCard() {

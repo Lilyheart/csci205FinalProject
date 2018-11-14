@@ -24,22 +24,22 @@ import javafx.stage.Stage;
  *
  * @author Lily Romano
  */
-public class CardPrototypeMain extends Application {
+public class PrototypeMain extends Application {
 
     /**
      * The model for the Card Prototype
      */
-    private MainGuiModel theModel;
+    private PrototypeGuiModel theModel;
 
     /**
      * The view for the Card Prototype
      */
-    private MainGuiView theView;
+    private PrototypeGuiView theView;
 
     /**
      * The controller for the Card Prototype
      */
-    private MainGuiController theControl;
+    private PrototypeGuiController theControl;
 
     /**
      * The primary method that is called by the JavaFX application to initialize
@@ -50,8 +50,8 @@ public class CardPrototypeMain extends Application {
     @Override
     public void init() throws Exception {
         super.init(); //To change body of generated methods, choose Tools | Templates.
-        this.theModel = new MainGuiModel();
-        this.theView = new MainGuiView(theModel);
+        this.theModel = new PrototypeGuiModel();
+        this.theView = new PrototypeGuiView(theModel);
     }
 
     /**
@@ -62,7 +62,7 @@ public class CardPrototypeMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        this.theControl = new MainGuiController(theModel, theView);
+        this.theControl = new PrototypeGuiController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(

@@ -8,7 +8,7 @@
 *
 * Project: csci205FinalProject
 * Package: gui
-* File: MainGuiView
+* File: PrototypeGuiView
 * Description:
 *
 * ****************************************
@@ -27,7 +27,7 @@ import prototypegui.cardcreator.CardFrontView;
  *
  * @author Lily Romano
  */
-public class MainGuiView {
+public class PrototypeGuiView {
 
     /**
      * The root node of the view which is a BorderPane
@@ -37,7 +37,7 @@ public class MainGuiView {
     /**
      * The model for the Card Prototype
      */
-    private final MainGuiModel theModel;
+    private final PrototypeGuiModel theModel;
 
     /**
      * The StackPane of the facedown pile of cards.
@@ -54,7 +54,7 @@ public class MainGuiView {
      *
      * @param theModel The model for the Card Prototype Main GUI
      */
-    public MainGuiView(MainGuiModel theModel) {
+    public PrototypeGuiView(PrototypeGuiModel theModel) {
         this.theModel = theModel;
 
         root = new BorderPane();

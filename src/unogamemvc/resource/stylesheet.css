@@ -1,0 +1,54 @@
+@font-face {
+    src: url("SpicyRice.ttf");
+}
+
+/* Background texture generated from https://www.cssmatic.com/noise-texture */
+#rootNode {
+  -fx-background-image: url("background.png");
+  -fx-background-repeat: repeat;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-radius: 10px;
+}
+
+.inside {
+    -fx-background-radius: 10px;
+    -fx-background-image: url("oval.png");
+    -fx-background-repeat: no-repeat;
+}
+
+.insideback {
+    -fx-background-color: #003865;
+}
+
+.top, .bottom {
+    -fx-padding: 6 0 0 6;
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #222, 4, 0, 1, 1);
+}
+
+.bottom {
+    -fx-rotate: 180;
+}
+
+.middle {
+    -fx-font-family: "Spicy Rice";
+    -fx-alignment: center;
+    -fx-font-size: 75;
+    -fx-effect: dropshadow(gaussian, #222, 10, 0, 4, 4);
+}
+
+.logo {
+    -fx-font-family: "Spicy Rice";
+    -fx-text-fill: #E87722;
+    -fx-rotate: -25;
+    -fx-font-size: 52;
+    -fx-effect: dropshadow(gaussian, #222, 10, 0, 4, 4);
+    -fx-padding: 45 -10 0 -10;
+}

@@ -8,7 +8,7 @@
 *
 * Project: csci205FinalProject
 * Package: cards
-* File: Deck
+* File: DrawDeck
 * Description:
 *
 * ****************************************
@@ -23,11 +23,11 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
- * A Prototype Deck file for the deck GUI prototype
+ * A Prototype DrawDeck file for the deck GUI prototype
  *
  * @author Lily Romano
  */
-public class Deck {
+public class DrawDeck {
 
     /**
      * An {@code LinkedList} representing the deck.
@@ -65,7 +65,7 @@ public class Deck {
     /**
      * An explicit constructor for the deck
      */
-    public Deck() {
+    public DrawDeck() {
         deck = new LinkedList<>();
 
         //Add Cards by color
@@ -151,7 +151,7 @@ public class Deck {
     }
 
     public static void main(String[] args) {
-        Deck theDeck = new Deck();
+        DrawDeck theDeck = new DrawDeck();
 
         theDeck.shuffle();
         System.out.println(theDeck.toString());

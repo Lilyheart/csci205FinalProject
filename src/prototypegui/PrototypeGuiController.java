@@ -8,7 +8,7 @@
 *
 * Project: csci205FinalProject
 * Package: gui
-* File: MainGuiController
+* File: PrototypeGuiController
 * Description: A GUI controller for the Card Prototype
 *
 * ****************************************
@@ -30,17 +30,17 @@ import javafx.scene.layout.StackPane;
  *
  * @author Lily Romano
  */
-public class MainGuiController implements EventHandler<Event> {
+public class PrototypeGuiController implements EventHandler<Event> {
 
     /**
      * The model for the Card Prototype Main GUI
      */
-    private final MainGuiModel theModel;
+    private final PrototypeGuiModel theModel;
 
     /**
      * The view for the Card Prototype Main GUI
      */
-    private final MainGuiView theView;
+    private final PrototypeGuiView theView;
 
     /**
      * An explicit constructor for the Card Prototype controller Main GUI.
@@ -49,8 +49,8 @@ public class MainGuiController implements EventHandler<Event> {
      * @param theView The view for the Card Prototype
      */
     @SuppressWarnings("LeakingThisInConstructor")
-    public MainGuiController(MainGuiModel theModel,
-                             MainGuiView theView) {
+    public PrototypeGuiController(PrototypeGuiModel theModel,
+                             PrototypeGuiView theView) {
         this.theModel = theModel;
         this.theView = theView;
 
