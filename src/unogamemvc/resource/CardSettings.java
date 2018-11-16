@@ -16,6 +16,7 @@
 package unogamemvc.resource;
 
 /**
+ * Stores setting values for the UNO Game MVC.
  *
  * @author Lily Romano
  */

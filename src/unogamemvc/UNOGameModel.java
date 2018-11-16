@@ -16,8 +16,6 @@
 package unogamemvc;
 
 import deck.DrawDeck;
-import deck.EmptyDeckException;
-import deck.card.Card;
 
 /**
  * A GUI Card Prototype MVC model Main GUI
@@ -37,17 +35,6 @@ public class UNOGameModel {
     public UNOGameModel() {
         theDrawDeck = new DrawDeck();
         theDrawDeck.shuffle();
-    }
-
-    /**
-     * Returns the next card in the draw deck
-     *
-     * @return the next card in the draw deck
-     * @throws deck.EmptyDeckException
-     */
-    public Card getNextDrawCard() throws EmptyDeckException {
-        //TODO [Exception Handling]
-        return theDrawDeck.removeNextCard();
     }
 
 }

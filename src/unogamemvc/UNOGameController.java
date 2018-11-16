@@ -62,7 +62,7 @@ public class UNOGameController implements EventHandler<Event> {
      *
      * @author Lily Romano
      *
-     * @param event
+     * @param event The event that triggered this method
      */
     @Override
     public void handle(Event event) {

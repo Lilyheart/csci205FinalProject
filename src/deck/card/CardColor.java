@@ -51,7 +51,9 @@ public enum CardColor {
     /**
      * An explicit constructor for the Card Color enumerated type
      *
-     * @param color
+     * @author Lily Romano
+     *
+     * @param color the HEX Code of the color of the string
      */
     private CardColor(String color) {
         this.color = color;
@@ -59,6 +61,8 @@ public enum CardColor {
 
     /**
      * Returns the {@code Color} of the card.
+     *
+     * @author Lily Romano
      *
      * @return the {@code Color} of the card
      */

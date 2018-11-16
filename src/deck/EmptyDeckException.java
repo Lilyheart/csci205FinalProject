@@ -16,6 +16,7 @@
 package deck;
 
 /**
+ * The exception thrown in the deck is empty
  *
  * @author Lily Romano
  */
@@ -24,6 +25,8 @@ public class EmptyDeckException extends Exception {
     /**
      * Constructs an instance of <code>EmptyDeckException</code> with the
      * specified detail message.
+     *
+     * @author Lily Romano
      *
      * @param msg the detail message.
      */

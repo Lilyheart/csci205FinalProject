@@ -35,6 +35,8 @@ public class Card {
     /**
      * An explicit constructor for a Card
      *
+     * @author Lily Romano
+     *
      * @param color the color of the card
      * @param type the type of card
      */
@@ -46,6 +48,8 @@ public class Card {
     /**
      * Returns the enum CardColor of the card
      *
+     * @author Lily Romano
+     *
      * @return the enum CardColor of the card
      */
     public CardColor getColor() {
@@ -54,6 +58,8 @@ public class Card {
 
     /**
      * Returns the enum CardColor of the card
+     *
+     * @author Lily Romano
      *
      * @return the enum CardColor of the card
      */
@@ -64,6 +70,8 @@ public class Card {
     /**
      * Returns the enum CardType of the card
      *
+     * @author Lily Romano
+     *
      * @return the enum CardType of the card
      */
     public CardType getType() {
@@ -72,6 +80,8 @@ public class Card {
 
     /**
      * Returns a nicely formatted string representing a card.
+     *
+     * @author Lily Romano
      *
      * @return a nicely formatted string representing a card.
      */

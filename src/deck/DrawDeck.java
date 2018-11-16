@@ -28,6 +28,8 @@ public class DrawDeck extends BUnoDeck {
 
     /**
      * An explicit constructor for the deck
+     *
+     * @author Lily Romano
      */
     public DrawDeck() {
         super();
@@ -75,6 +77,8 @@ public class DrawDeck extends BUnoDeck {
 
     /**
      * Returns a well formatted string representing the deck.
+     *
+     * @author Lily Romano
      *
      * @return a well formatted string representing the deck.
      */

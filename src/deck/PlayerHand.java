@@ -35,10 +35,15 @@ public class PlayerHand extends BUnoDeck {
      */
     private final boolean isComputerPlayer;
 
+    /**
+     * The number of cards in a new hand
+     */
     public final static int NEWHANDCARDNUM = 7;
 
     /**
      * An explicit constructor to create a new player's hand.
+     *
+     * @author Lily Romano
      *
      * @param idNum ID number of the player
      * @param isComputerPlayer True if the player is a computer player, false if
@@ -49,10 +54,24 @@ public class PlayerHand extends BUnoDeck {
         this.isComputerPlayer = isComputerPlayer;
     }
 
+    /**
+     * Returns a copy of the hand to ensure the hand isn't accidentally edited
+     *
+     * @author Lily Romano
+     *
+     * @return a copy of the hand to ensure the hand isn't accidentally edited
+     */
     public CopyOnWriteArrayList<Card> getCopyOfHand() {
         return new CopyOnWriteArrayList<>(deck);
     }
 
+    /**
+     * Returns true if the player is a computer, otherwise false.
+     *
+     * @author Lily Romano
+     *
+     * @return true if the player is a computer, otherwise false.
+     */
     public boolean isComputerPlayer() {
         return isComputerPlayer;
     }

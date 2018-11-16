@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * An abstract class to manage a BUno deck
  *
  * @author Lily Romano
  */
@@ -56,6 +57,8 @@ public abstract class BUnoDeck {
 
     /**
      * An explicit constructor for a deck of Uno Cards
+     *
+     * @author Lily Romano
      */
     public BUnoDeck() {
         this.deck = new CopyOnWriteArrayList<>();
@@ -63,6 +66,8 @@ public abstract class BUnoDeck {
 
     /**
      * Returns the size of the deck.
+     *
+     * @author Lily Romano
      *
      * @return the size of the deck.
      */
@@ -72,6 +77,8 @@ public abstract class BUnoDeck {
 
     /**
      * Shuffles the deck of cards.
+     *
+     * @author Lily Romano
      */
     public void shuffle() {
         Collections.shuffle(deck);
@@ -79,6 +86,8 @@ public abstract class BUnoDeck {
 
     /**
      * Returns the next card in the deck.
+     *
+     * @author Lily Romano
      *
      * @return the next card in the deck.
      * @throws deck.EmptyDeckException when the deck is empty
@@ -92,12 +101,21 @@ public abstract class BUnoDeck {
         return deck.remove(0);
     }
 
+    /**
+     * Add a card to this deck
+     *
+     * @author Lily Romano
+     *
+     * @param newCard
+     */
     public void addCard(Card newCard) {
         deck.add(newCard);
     }
 
     /**
      * Returns a well formatted string representing the deck.
+     *
+     * @author Lily Romano
      *
      * @return a well formatted string representing the deck.
      */

@@ -25,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import unogamemvc.cardcreator.CardBackView;
-import unogamemvc.cardcreator.CardFrontView;
 
 /**
  * A GUI Card Prototype MVC view Main GUI
@@ -79,9 +78,10 @@ public class UNOGameView {
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
         for (int i = 0; i <= 7; i++) {
-            StackPane faceUpCard = CardFrontView.createCardFrontView(
-                    theModel.getNextDrawCard());
-            cardsInPlayersHand.add(faceUpCard, i, 0);
+            //TODO [Card Display] Get cards from hand instead
+//            StackPane faceUpCard = CardFrontView.createCardFrontView(
+//                    theModel.getNextDrawCard());
+//            cardsInPlayersHand.add(faceUpCard, i, 0);
         }
 
         playersHand.getChildren().add(cardsInPlayersHand);

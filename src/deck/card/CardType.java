@@ -103,6 +103,8 @@ public enum CardType {
     /**
      * An explicit constructor for the Card Type enumerated type
      *
+     * @author Lily Romano
+     *
      * @param cardText a {@code String} representing the card type
      */
     private CardType(String cardCornerText, String cardMainText, int cardValue) {
@@ -115,6 +117,8 @@ public enum CardType {
      * Returns the string representation of what is displayed in the main
      * portion of the card type
      *
+     * @author Lily Romano
+     *
      * @return the string representation of what is displayed in the main
      * portion of the card type
      */
@@ -126,6 +130,8 @@ public enum CardType {
      * Returns the string representation of what is displayed in the corner of
      * the card type
      *
+     * @author Lily Romano
+     *
      * @return the string representation of what is displayed in the corner of
      * the card type
      */
@@ -135,6 +141,8 @@ public enum CardType {
 
     /**
      * Returns the card point value for scoring
+     *
+     * @author Lily Romano
      *
      * @return the card point value for scoring
      */
