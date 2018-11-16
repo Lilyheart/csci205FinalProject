@@ -16,6 +16,7 @@
 package unogamemvc;
 
 import deck.DrawDeck;
+import deck.EmptyDeckException;
 import deck.card.Card;
 
 /**
@@ -43,8 +44,9 @@ public class UNOGameModel {
      *
      * @return the next card in the draw deck
      */
-    public Card getNextDrawCard() {
-        return theDrawDeck.getNextCard();
+    public Card getNextDrawCard() throws EmptyDeckException {
+        //TODO [Exception Handling]
+        return theDrawDeck.removeNextCard();
     }
 
 }

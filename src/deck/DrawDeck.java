@@ -73,4 +73,14 @@ public class DrawDeck extends UnoDeck {
 
     }
 
+    /**
+     * Returns a well formatted string representing the deck.
+     *
+     * @return a well formatted string representing the deck.
+     */
+    @Override
+    public String toString() {
+        return "Draw " + super.toString();
+    }
+
 }

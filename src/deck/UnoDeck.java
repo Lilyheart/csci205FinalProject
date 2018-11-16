@@ -17,7 +17,6 @@ package deck;
 
 import deck.card.Card;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -32,7 +31,6 @@ public abstract class UnoDeck {
      */
     protected final List<Card> deck;
 
-    //TODO [Color Cleanup] Move some of these constants into the enums
     /**
      * The number of different colors in the deck
      */
@@ -42,7 +40,8 @@ public abstract class UnoDeck {
      * The count of special cards in the deck that are not colors Wild and Wild
      * Draw 3
      */
-    protected static final int NUM_SPECIAL_NOTCOLOR = 2;
+    //TODO [Basic Game] Change following const to 2 for full game
+    protected static final int NUM_SPECIAL_NOTCOLOR = 0;
 
     /**
      * The count of different number face cards 0-9
@@ -53,19 +52,14 @@ public abstract class UnoDeck {
      * The count of special cards in the deck that are colors Draw 2, Reverse
      * and Skip
      */
-    protected static final int SPECIAL_COLOR_CARDS = 3;
-
-    /**
-     * An iterator for the {@code deck}
-     */
-    protected Iterator cardIterator;
+    //TODO [Basic Game] Change following const to 3 for full game
+    protected static final int SPECIAL_COLOR_CARDS = 0;
 
     /**
      * An explicit constructor for a deck of Uno Cards
      */
     public UnoDeck() {
         this.deck = new CopyOnWriteArrayList<>();
-        this.cardIterator = deck.iterator();
     }
 
     /**
@@ -88,19 +82,15 @@ public abstract class UnoDeck {
      * Returns the next card in the deck.
      *
      * @return the next card in the deck.
+     * @throws deck.EmptyDeckException when the deck is empty
      */
-    public Card getNextCard() {
-        Card card;
+    public Card removeNextCard() throws EmptyDeckException {
 
-        if (cardIterator.hasNext()) {
-            card = (Card) cardIterator.next();
-        }
-        else {
-            cardIterator = deck.iterator();
-            card = (Card) cardIterator.next();
+        if (deck.isEmpty()) {
+            throw new EmptyDeckException(this.getClass() + " Deck is empty");
         }
 
-        return card;
+        return deck.remove(0);
     }
 
     /**
@@ -110,7 +100,7 @@ public abstract class UnoDeck {
      */
     @Override
     public String toString() {
-        return "New Deck: \n" + deck;
+        return "Deck: \n" + deck;
     }
 
 }

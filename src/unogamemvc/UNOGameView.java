@@ -15,6 +15,7 @@
  */
 package unogamemvc;
 
+import deck.EmptyDeckException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -52,7 +53,8 @@ public class UNOGameView {
      *
      * @param theModel The model for the UNO game
      */
-    public UNOGameView(UNOGameModel theModel) {
+    public UNOGameView(UNOGameModel theModel) throws EmptyDeckException {
+        //TODO [Exception Handling]
 
         this.theModel = theModel;
 

@@ -62,27 +62,28 @@ public enum CardType {
     /**
      * An enum with information on the card nine
      */
-    NINE("9", "9", 9),
-    /**
-     * An enum with information on the card draw 2
-     */
-    DRAW2("+2", "D2", 20),
-    /**
-     * An enum with information on the card reverse
-     */
-    REVERSE("⇆", "R", 20),
-    /**
-     * An enum with information on the card skip
-     */
-    SKIP("Ø", "S", 20),
-    /**
-     * An enum with information on the card wild
-     */
-    WILD("Wild", "Wild", 50),
-    /**
-     * An enum with information on the card wild draw 4
-     */
-    WILDDRAW4("Wild", "D4", 50);
+    NINE("9", "9", 9);
+    //TODO [Basic Game] Uncomment following lines for full game and fix comma/semicolon
+//    /**
+//     * An enum with information on the card draw 2
+//     */
+//    DRAW2("+2", "D2", 20),
+//    /**
+//     * An enum with information on the card reverse
+//     */
+//    REVERSE("⇆", "R", 20),
+//    /**
+//     * An enum with information on the card skip
+//     */
+//    SKIP("Ø", "S", 20),
+//    /**
+//     * An enum with information on the card wild
+//     */
+//    WILD("Wild", "Wild", 50),
+//    /**
+//     * An enum with information on the card wild draw 4
+//     */
+//    WILDDRAW4("Wild", "D4", 50);
 
     /**
      * What is displayed in the main portion of the card.
