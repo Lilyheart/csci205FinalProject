@@ -41,6 +41,16 @@ public class PlayerHand extends BUnoDeck {
     public final static int NEWHANDCARDNUM = 7;
 
     /**
+     * A more readable variable to signify if human player
+     */
+    public static final Boolean HUMAN = false;
+
+    /**
+     * A more readable variable to signify if computer player
+     */
+    public static final Boolean COMPUTER = true;
+
+    /**
      * An explicit constructor to create a new player's hand.
      *
      * @author Lily Romano

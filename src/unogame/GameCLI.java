@@ -16,6 +16,7 @@
 package unogame;
 
 import deck.EmptyDeckException;
+import deck.PlayerHand;
 
 /**
  * A CLI version of the BUno game.
@@ -43,17 +44,14 @@ public class GameCLI {
      */
     public static void main(String[] args) throws EmptyDeckException {
         //TODO [Exception Handling]
-        final Boolean HUMAN = false;
-        final Boolean COMPUTER = true;
 
         //create new game
         Game unoGame = new Game();
-        unoGame.printTheDrawDeck();
         //create player
-        unoGame.makePlayer(HUMAN);
+        unoGame.makePlayer(PlayerHand.HUMAN);
         //create computer players
         for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
-            unoGame.makePlayer(COMPUTER);
+            unoGame.makePlayer(PlayerHand.COMPUTER);
         }
 
         //display hand [own method]
