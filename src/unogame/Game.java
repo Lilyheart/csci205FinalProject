@@ -72,7 +72,7 @@ public class Game {
         PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
 
         for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
-            newPlayer.addCard(theDrawDeck.removeNextCard());
+            newPlayer.addCard(theDrawDeck.popNextCard());
         }
 
         players.add(newPlayer);

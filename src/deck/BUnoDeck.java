@@ -85,20 +85,36 @@ public abstract class BUnoDeck {
     }
 
     /**
-     * Returns the next card in the deck.
+     * Returns the next card in the deck and removes it
      *
      * @author Lily Romano
      *
-     * @return the next card in the deck.
+     * @return the next card in the deck and remove it.
      * @throws deck.EmptyDeckException when the deck is empty
      */
-    public Card removeNextCard() throws EmptyDeckException {
+    public Card popNextCard() throws EmptyDeckException {
 
         if (deck.isEmpty()) {
-            throw new EmptyDeckException(this.getClass() + " Deck is empty");
+            throw new EmptyDeckException(this.getClass() + " is empty");
         }
 
         return deck.remove(0);
+    }
+
+    public CopyOnWriteArrayList<Card> removeAllCards() {
+        CopyOnWriteArrayList<Card> remainingCards = (CopyOnWriteArrayList<Card>) deck.clone();
+        deck.clear();
+
+        return remainingCards;
+    }
+
+    /**
+     * Returns the next card in the deck but leaves it in place
+     *
+     * @return the next card in the deck but leave it in place
+     */
+    public Card peekTopCard() {
+        return deck.get(0);
     }
 
     /**
