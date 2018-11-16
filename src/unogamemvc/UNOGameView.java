@@ -52,6 +52,7 @@ public class UNOGameView {
      * @author jameskelly
      *
      * @param theModel The model for the UNO game
+     * @throws deck.EmptyDeckException
      */
     public UNOGameView(UNOGameModel theModel) throws EmptyDeckException {
         //TODO [Exception Handling]

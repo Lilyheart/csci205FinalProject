@@ -43,6 +43,7 @@ public class UNOGameModel {
      * Returns the next card in the draw deck
      *
      * @return the next card in the draw deck
+     * @throws deck.EmptyDeckException
      */
     public Card getNextDrawCard() throws EmptyDeckException {
         //TODO [Exception Handling]

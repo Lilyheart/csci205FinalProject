@@ -20,11 +20,11 @@ import deck.card.CardColor;
 import deck.card.CardType;
 
 /**
- * A Prototype DrawDeck file for the deck GUI prototype
+ * A DrawDeck file for the deck GUI
  *
  * @author Lily Romano
  */
-public class DrawDeck extends UnoDeck {
+public class DrawDeck extends BUnoDeck {
 
     /**
      * An explicit constructor for the deck

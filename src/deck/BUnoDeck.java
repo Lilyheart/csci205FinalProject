@@ -8,7 +8,7 @@
 *
 * Project: csci205FinalProject
 * Package: deck
-* File: UnoDeck
+* File: BUnoDeck
 * Description:
 *
 * ****************************************
@@ -17,19 +17,18 @@ package deck;
 
 import deck.card.Card;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
  * @author Lily Romano
  */
-public abstract class UnoDeck {
+public abstract class BUnoDeck {
 
     /**
      * An {@code LinkedList} representing the deck.
      */
-    protected final List<Card> deck;
+    protected final CopyOnWriteArrayList<Card> deck;
 
     /**
      * The number of different colors in the deck
@@ -58,7 +57,7 @@ public abstract class UnoDeck {
     /**
      * An explicit constructor for a deck of Uno Cards
      */
-    public UnoDeck() {
+    public BUnoDeck() {
         this.deck = new CopyOnWriteArrayList<>();
     }
 
@@ -91,6 +90,10 @@ public abstract class UnoDeck {
         }
 
         return deck.remove(0);
+    }
+
+    public void addCard(Card newCard) {
+        deck.add(newCard);
     }
 
     /**
