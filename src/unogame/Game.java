@@ -15,6 +15,7 @@
  */
 package unogame;
 
+import deck.DiscardDeck;
 import deck.DrawDeck;
 import deck.EmptyDeckException;
 import deck.PlayerHand;
@@ -31,7 +32,12 @@ public class Game {
     /**
      * The Draw Deck for the game
      */
-    private DrawDeck theDrawDeck;
+    protected DrawDeck theDrawDeck;
+
+    /**
+     * The Draw Deck for the game
+     */
+    protected DiscardDeck theDiscardDeck;
 
     /**
      * An {@code ArrayList} of player
@@ -44,52 +50,32 @@ public class Game {
     private static int numPlayers;
 
     /**
+     * True if the game has started, otherwise false
+     */
+    private Boolean isGameStarted;
+
+    /**
      * An explicit constructor for a new game.
      */
     public Game() {
         //Instantiate variables
         players = new ArrayList<>();
         numPlayers = 0;
+        isGameStarted = false;
 
-        //create draw deck
+        //create draw decks
         theDrawDeck = new DrawDeck();
+        theDiscardDeck = new DiscardDeck();
         //shuffle draw deck
         theDrawDeck.shuffle();
 
     }
 
     /**
-     * Makes a new human player
-     *
-     * @param isComputerPlayer true of the player is a computer player,
-     * otherwise false
-     * @throws deck.EmptyDeckException
-     */
-    public void makePlayer(Boolean isComputerPlayer) throws EmptyDeckException {
-        //TODO [Exception Handling]
-
-        numPlayers++;
-        PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
-
-        for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
-            newPlayer.addCard(theDrawDeck.popNextCard());
-        }
-
-        players.add(newPlayer);
-    }
-
-    /**
-     * Prints the draw deck to the {@code System.out}.
-     */
-    public void printTheDrawDeck() {
-        System.out.println(theDrawDeck);
-    }
-
-    /**
      *
      * @return
      */
-    public int numHumanPlayers() {
+    public int getNumHumanPlayers() {
         int result = 0;
 
         for (PlayerHand h : players) {
@@ -104,7 +90,7 @@ public class Game {
      *
      * @return
      */
-    public int numComputerPlayers() {
+    public int getNumComputerPlayers() {
         int result = 0;
 
         for (PlayerHand h : players) {
@@ -124,4 +110,38 @@ public class Game {
         return players.get(playerID).getCopyOfHand();
     }
 
+    public void startGame() {
+        isGameStarted = true;
+        try {
+            theDiscardDeck.addCard(theDrawDeck.popNextCard());
+        } catch (EmptyDeckException ex) {
+            //Unable to play game if unable to create discard pile
+            System.out.println(ex);
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Makes a new human player
+     *
+     * @param isComputerPlayer true of the player is a computer player,
+     * otherwise false
+     * @throws deck.EmptyDeckException
+     */
+    public void makePlayer(Boolean isComputerPlayer) throws EmptyDeckException, GameNotStartedException {
+        //TODO [Exception Handling]
+        if (isGameStarted) {
+            String player = isComputerPlayer ? "computer" : "human";
+            throw new GameNotStartedException(
+                    "Attempting to create a " + player + " player after the game has started");
+        }
+        numPlayers++;
+        PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
+
+        for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
+            newPlayer.addCard(theDrawDeck.popNextCard());
+        }
+
+        players.add(newPlayer);
+    }
 }

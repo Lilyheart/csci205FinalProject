@@ -47,14 +47,27 @@ public class GameCLI {
 
         //create new game
         Game unoGame = new Game();
-        //create player
-        unoGame.makePlayer(PlayerHand.HUMAN);
-        //create computer players
-        for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
-            unoGame.makePlayer(PlayerHand.COMPUTER);
-        }
+        setNewDefaultGame(unoGame);
 
-        //display hand [own method]
+        unoGame.startGame();
+
         GameCLIHelper.displayGameBoard(unoGame);
+
     }
+
+    private static void setNewDefaultGame(Game g) throws EmptyDeckException {
+        try {
+            //create player
+            g.makePlayer(PlayerHand.HUMAN);
+            //create computer players
+            for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
+                g.makePlayer(PlayerHand.COMPUTER);
+            }
+        } catch (GameNotStartedException ex) {
+            //Unable to play game if unable to add players - should never be hit
+            System.out.println(ex);
+            System.exit(-1);
+        }
+    }
+
 }

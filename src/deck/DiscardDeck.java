@@ -12,13 +12,13 @@
 * Description:
 *
 * ****************************************
-*/
+ */
 package deck;
 
 /**
  *
  * @author Lily Romano
  */
-public class DiscardDeck {
+public class DiscardDeck extends BUnoDeck {
 
 }
