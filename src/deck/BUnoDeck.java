@@ -85,6 +85,23 @@ public abstract class BUnoDeck {
     }
 
     /**
+     * Returns the card at a specific index in the deck and removes it
+     *
+     * @author Lily Romano
+     *
+     * @return the card at a specific index in the deck and remove it.
+     * @throws deck.EmptyDeckException when the deck is empty
+     */
+    public Card popCardAtIndex(int index) throws EmptyDeckException {
+
+        if (deck.isEmpty()) {
+            throw new EmptyDeckException(this.getClass() + " is empty");
+        }
+
+        return deck.remove(index);
+    }
+
+    /**
      * Returns the next card in the deck and removes it
      *
      * @author Lily Romano
@@ -92,13 +109,9 @@ public abstract class BUnoDeck {
      * @return the next card in the deck and remove it.
      * @throws deck.EmptyDeckException when the deck is empty
      */
-    public Card popNextCard() throws EmptyDeckException {
+    public Card popTopCard() throws EmptyDeckException {
 
-        if (deck.isEmpty()) {
-            throw new EmptyDeckException(this.getClass() + " is empty");
-        }
-
-        return deck.remove(0);
+        return popCardAtIndex(0);
     }
 
     public CopyOnWriteArrayList<Card> removeAllCards() {
@@ -115,6 +128,15 @@ public abstract class BUnoDeck {
      */
     public Card peekTopCard() {
         return deck.get(0);
+    }
+
+    /**
+     * Returns the next card in the deck but leaves it in place
+     *
+     * @return the next card in the deck but leave it in place
+     */
+    public Card peekBottomCard() {
+        return deck.get(deck.size() - 1);
     }
 
     /**

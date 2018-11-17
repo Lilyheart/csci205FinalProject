@@ -114,7 +114,7 @@ public class Game {
     public void startGame() {
         isGameStarted = true;
         try {
-            theDiscardDeck.addCard(theDrawDeck.popNextCard());
+            theDiscardDeck.addCard(theDrawDeck.popTopCard());
         } catch (EmptyDeckException ex) {
             //Unable to play game if unable to create discard pile
             System.out.println(ex);
@@ -140,9 +140,15 @@ public class Game {
         PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
 
         for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
-            newPlayer.addCard(theDrawDeck.popNextCard());
+            newPlayer.addCard(theDrawDeck.popTopCard());
         }
 
         players.add(newPlayer);
+    }
+
+    public void playCard(int playerID, int cardIndex) throws EmptyDeckException {
+        int playerIndex = playerID - 1;
+        theDiscardDeck.addCard(
+                players.get(playerIndex).popCardAtIndex(cardIndex));
     }
 }

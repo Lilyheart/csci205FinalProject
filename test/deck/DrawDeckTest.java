@@ -81,7 +81,7 @@ public class DrawDeckTest {
      */
     @Test
     public void testTopCare() throws EmptyDeckException {
-        assertEquals(unshuffledTopCard, testDeck.popNextCard().toString());
+        assertEquals(unshuffledTopCard, testDeck.popTopCard().toString());
     }
 
     /**
@@ -106,7 +106,7 @@ public class DrawDeckTest {
     }
 
     /**
-     * Test of popNextCard method, of class DrawDeck.
+     * Test of popTopCard method, of class DrawDeck.
      *
      * @author Lily Romano
      */
@@ -117,8 +117,8 @@ public class DrawDeckTest {
         try {
             System.out.println("testRemoveNextCard");
 
-            Card firstCard = testDeck.popNextCard();
-            Card secondCard = testDeck.popNextCard();
+            Card firstCard = testDeck.popTopCard();
+            Card secondCard = testDeck.popTopCard();
 
             //test that second card does not equal first card
             assertFalse(firstCard.equals(secondCard));
@@ -144,7 +144,7 @@ public class DrawDeckTest {
 
         //Attempt to remove card from empty deck
         try {
-            testDeck.popNextCard();
+            testDeck.popTopCard();
             fail("EmptyDeckException should have been throw for removeNextCard().  Should not have thrown exception");
         } catch (EmptyDeckException e) {
             assertEquals("class deck.DrawDeck is empty", e.getMessage());
@@ -162,7 +162,7 @@ public class DrawDeckTest {
 
         try {
             //get top card
-            Card addCard = testDeck.popNextCard();
+            Card addCard = testDeck.popTopCard();
 
             //empty deck and then readd card
             testDeck.removeAllCards();

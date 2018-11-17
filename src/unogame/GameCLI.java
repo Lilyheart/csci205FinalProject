@@ -56,8 +56,13 @@ public class GameCLI {
 
         GameCLIDisplayBoard.displayGameBoard(unoGame);
 
-        getPlayCommand(unoGame);
+        //TODO [Rules] This only plays the card.  Can't draw if no match or renege etc
+        int cardPosition = getPlayCommand(unoGame);
+        int cardIndex = cardPosition - 1;
 
+        unoGame.playCard(1, cardIndex);
+
+        GameCLIDisplayBoard.displayGameBoard(unoGame);
     }
 
     private static void setNewDefaultGame(Game g) throws EmptyDeckException {

@@ -43,7 +43,8 @@ public final class GameCLIDisplayBoard {
         else {
             drawDeck = "*";
         }
-        String discardDeck = easyCardDescription(g.theDiscardDeck.peekTopCard());
+        String discardDeck = easyCardDescription(
+                g.theDiscardDeck.peekBottomCard());
         System.out.printf("| Draw Deck: %s  Discard Deck: %s%n|%n", drawDeck,
                           discardDeck);
 
