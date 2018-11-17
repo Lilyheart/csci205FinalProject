@@ -8,7 +8,7 @@
 *
 * Project: csci205FinalProject
 * Package: unogame
-* File: GameCLIHelper
+* File: GameCLIDisplayBoard
 * Description:
 *
 * ****************************************
@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author Lily Romano
  */
-public final class GameCLIHelper {
+public final class GameCLIDisplayBoard {
 
     /**
      * Displays the game board as of the current game state

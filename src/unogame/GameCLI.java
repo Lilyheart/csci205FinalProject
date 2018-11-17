@@ -17,6 +17,7 @@ package unogame;
 
 import deck.EmptyDeckException;
 import deck.PlayerHand;
+import java.util.Scanner;
 
 /**
  * A CLI version of the BUno game.
@@ -35,6 +36,8 @@ public class GameCLI {
      */
     Game unoGame;
 
+    static Scanner keyboard = new Scanner(System.in);
+
     /**
      * Runs the CLI version of the UNO game. Assumes one human player and set
      * number of computer players
@@ -51,7 +54,9 @@ public class GameCLI {
 
         unoGame.startGame();
 
-        GameCLIHelper.displayGameBoard(unoGame);
+        GameCLIDisplayBoard.displayGameBoard(unoGame);
+
+        getPlayCommand(unoGame);
 
     }
 
@@ -70,4 +75,26 @@ public class GameCLI {
         }
     }
 
+    private static int getPlayCommand(Game g) {
+
+        System.out.println(
+                "TESTING ONLY MESSAGE: Type the number of the card you wish to play.  Rules don't matter > ");
+
+        int response = -1;
+        while (response < 1 || response > g.getPlayersHandCopy(1).size()) {
+            if (keyboard.hasNextInt()) {
+                response = keyboard.nextInt();
+                if (response < 1 || response > g.getPlayersHandCopy(1).size()) {
+                    System.out.println(">> Input a valid option.");
+                }
+            }
+            else {
+                System.out.println(">> You didn't input a number.  "
+                                   + "Please input a number");
+            }
+
+        }
+
+        return response;
+    }
 }

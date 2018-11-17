@@ -106,7 +106,8 @@ public class Game {
      * @param playerID
      * @return
      */
-    public CopyOnWriteArrayList<Card> getPlayersHandCopy(int playerID) {
+    public CopyOnWriteArrayList<Card> getPlayersHandCopy(int playerIndex) {
+        int playerID = playerIndex + 1;
         return players.get(playerID).getCopyOfHand();
     }
 
