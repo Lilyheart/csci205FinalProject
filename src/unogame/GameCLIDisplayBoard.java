@@ -51,8 +51,8 @@ public final class GameCLIDisplayBoard {
         if (g.getNumComputerPlayers() > 0) {
             System.out.println("| Other Players");
             for (int i = 1; i <= g.getNumComputerPlayers(); i++) {
-                System.out.printf("|   Player %d: Cards ", i + 1);
-                for (int j = 0; j < g.getPlayersHandCopy(i).size(); j++) {
+                System.out.printf("|   Player %d: Cards ", i);
+                for (int j = 0; j < g.getPlayersHandCopy(i + 1).size(); j++) {
                     System.out.print("*");
                 }
                 System.out.println();
@@ -60,7 +60,7 @@ public final class GameCLIDisplayBoard {
             System.out.println("|");
         }
         System.out.println("| Your Hand\n|");
-        CopyOnWriteArrayList<Card> playerHand = g.getPlayersHandCopy(0);
+        CopyOnWriteArrayList<Card> playerHand = g.getPlayersHandCopy(1);
         System.out.print("|");
         for (int i = 0; i < playerHand.size(); i++) {
             String cardText = String.format("%1$-" + 20 + "s",
