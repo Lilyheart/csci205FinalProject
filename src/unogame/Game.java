@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * Creates and manages an unoGame
  *
  * @author Lily Romano
  */
@@ -56,6 +57,8 @@ public class Game {
 
     /**
      * An explicit constructor for a new game.
+     *
+     * @author Lily Romano
      */
     public Game() {
         //Instantiate variables
@@ -72,8 +75,11 @@ public class Game {
     }
 
     /**
+     * Returns the total number of human players.
      *
-     * @return
+     * @author Lily Romano
+     *
+     * @return the total number of human players.
      */
     public int getNumHumanPlayers() {
         int result = 0;
@@ -87,8 +93,11 @@ public class Game {
     }
 
     /**
+     * Returns the total number of computer players.
      *
-     * @return
+     * @author Lily Romano
+     *
+     * @return the total number of computer players.
      */
     public int getNumComputerPlayers() {
         int result = 0;
@@ -102,15 +111,24 @@ public class Game {
     }
 
     /**
+     * Returns a copy of the player's hand.
      *
-     * @param playerID
-     * @return
+     * @author Lily Romano
+     *
+     * @param playerID The playerID of the player's hand to return.
+     * @return a copy of the player's hand.
      */
     public CopyOnWriteArrayList<Card> getPlayersHandCopy(int playerID) {
         int playerIndex = playerID - 1;
         return players.get(playerIndex).getCopyOfHand();
     }
 
+    /**
+     * Starts a new game by popping the top card of the draw deck onto the
+     * discard deck
+     *
+     * @author Lily Romano
+     */
     public void startGame() {
         isGameStarted = true;
         try {
@@ -125,9 +143,12 @@ public class Game {
     /**
      * Makes a new human player
      *
+     * @author Lily Romano
+     *
      * @param isComputerPlayer true of the player is a computer player,
      * otherwise false
      * @throws deck.EmptyDeckException
+     * @throws unogame.GameNotStartedException
      */
     public void makePlayer(Boolean isComputerPlayer) throws EmptyDeckException, GameNotStartedException {
         //TODO [Exception Handling]
@@ -146,9 +167,48 @@ public class Game {
         players.add(newPlayer);
     }
 
+    /**
+     * Plays a card from a player's hand
+     *
+     * @author Lily Romano
+     *
+     * @param playerID the player ID [Starting from 1]
+     * @param cardIndex the index of the card to play
+     * @throws EmptyDeckException
+     */
     public void playCard(int playerID, int cardIndex) throws EmptyDeckException {
+        //TODO [Basic Game] Add Rules
         int playerIndex = playerID - 1;
         theDiscardDeck.addCard(
                 players.get(playerIndex).popCardAtIndex(cardIndex));
+    }
+
+    /**
+     * Draws a card from the draw deck and adds it to the player's hand
+     *
+     * @author Lily Romano
+     *
+     * @param playerID the player ID [Starting from 1]
+     * @throws EmptyDeckException
+     */
+    public void drawCard(int playerID) throws EmptyDeckException {
+        int playerIndex = playerID - 1;
+        players.get(playerIndex).addCard(theDrawDeck.popTopCard());
+    }
+
+    /**
+     * Shuffles the discard pile into the draw deck and turns over the top card.
+     *
+     * @author Lily Romano
+     */
+    public void shuffleDiscardToDrawDeck() {
+        theDrawDeck.addCards(theDiscardDeck.removeAllCards());
+        try {
+            theDiscardDeck.addCard(theDrawDeck.popTopCard());
+        } catch (EmptyDeckException ex) {
+            //Unable to play game if unable to create discard pile
+            System.out.println(ex);
+            System.exit(-1);
+        }
     }
 }

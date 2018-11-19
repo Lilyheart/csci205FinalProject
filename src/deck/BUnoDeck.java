@@ -89,6 +89,7 @@ public abstract class BUnoDeck {
      *
      * @author Lily Romano
      *
+     * @param index the index of the card to remove and return.
      * @return the card at a specific index in the deck and remove it.
      * @throws deck.EmptyDeckException when the deck is empty
      */
@@ -114,6 +115,14 @@ public abstract class BUnoDeck {
         return popCardAtIndex(0);
     }
 
+    /**
+     * Removes all cards from the deck and returns them as a
+     * {@code CopyOnWriteArrayList}
+     *
+     * @author Lily Romano
+     *
+     * @return all cards from the deck as a {@code CopyOnWriteArrayList}
+     */
     public CopyOnWriteArrayList<Card> removeAllCards() {
         CopyOnWriteArrayList<Card> remainingCards = (CopyOnWriteArrayList<Card>) deck.clone();
         deck.clear();
@@ -124,6 +133,8 @@ public abstract class BUnoDeck {
     /**
      * Returns the next card in the deck but leaves it in place
      *
+     * @author Lily Romano
+     *
      * @return the next card in the deck but leave it in place
      */
     public Card peekTopCard() {
@@ -132,6 +143,8 @@ public abstract class BUnoDeck {
 
     /**
      * Returns the next card in the deck but leaves it in place
+     *
+     * @author Lily Romano
      *
      * @return the next card in the deck but leave it in place
      */
@@ -144,10 +157,23 @@ public abstract class BUnoDeck {
      *
      * @author Lily Romano
      *
-     * @param newCard
+     * @param newCard the {@code Card} to add.
      */
     public void addCard(Card newCard) {
         deck.add(newCard);
+    }
+
+    /**
+     * Add an array of card to this deck
+     *
+     * @author Lily Romano
+     *
+     * @param cards The {@code CopyOnWriteArrayList} of {@code Card}s to add.
+     */
+    public void addCards(CopyOnWriteArrayList<Card> cards) {
+        for (Card card : cards) {
+            deck.add(card);
+        }
     }
 
     /**

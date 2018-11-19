@@ -16,9 +16,10 @@
 package deck;
 
 /**
+ * A DiscardDeck file for the deck GUI
  *
  * @author Lily Romano
  */
 public class DiscardDeck extends BUnoDeck {
-
+    //TODO [Final Project] If no specific methods are added here, decide if it should be merged into DrawDeck and the file renamed
 }

@@ -38,8 +38,14 @@ public class GameCLI {
      */
     private static Game unoGame;
 
+    /**
+     * The Player idNum for the human player
+     */
     private final static int HUMAN_PLAYER = 1;
 
+    /**
+     * A scanner for the keyboard input
+     */
     private static Scanner keyboard = new Scanner(System.in);
 
     /**
@@ -54,23 +60,37 @@ public class GameCLI {
 
         //create new game
         unoGame = new Game();
-        setNewDefaultGame(unoGame);
+        setNewDefaultGame();
 
         unoGame.startGame();
 
         //TODO [Basic Game] Change this infinite loop
         while (true) {
-            playerTurn();
+            //Add whitespace to console screen
+            for (int i = 0; i < 20; ++i) {
+                System.out.println();
+            }
+
+            //Process player's turn
+            humanPlayerTurn();
+
+            //Process computer's turn
+            //TODO [Basic Game] Computer's turn
         }
     }
 
-    private static void setNewDefaultGame(Game g) throws EmptyDeckException {
+    /**
+     * Creates a new default game
+     *
+     * @throws EmptyDeckException
+     */
+    private static void setNewDefaultGame() throws EmptyDeckException {
         try {
             //create player
-            g.makePlayer(PlayerHand.HUMAN);
+            unoGame.makePlayer(PlayerHand.HUMAN);
             //create computer players
             for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
-                g.makePlayer(PlayerHand.COMPUTER);
+                unoGame.makePlayer(PlayerHand.COMPUTER);
             }
         } catch (GameNotStartedException ex) {
             //Unable to play game if unable to add players - should never be hit
@@ -79,15 +99,18 @@ public class GameCLI {
         }
     }
 
-    private static void playerTurn() {
+    /**
+     * Completes a human player's turn
+     */
+    private static void humanPlayerTurn() {
         displayGameBoard();
 
         int playCommand = getPlayCommand();
         switch (playCommand) {
             case 1: //Play Card
-                int playCard = getPlayCard();
+                int playCardIndex = getPlayCard();
                 try {
-                    unoGame.playCard(HUMAN_PLAYER, playCard - 1);
+                    unoGame.playCard(HUMAN_PLAYER, playCardIndex);
                 } catch (EmptyDeckException ex) {
                     //playCard is already limited to only cards in the hand.  This should never be hit.
                     System.out.println(ex);
@@ -96,6 +119,16 @@ public class GameCLI {
                 break;
             case 2: //Draw Card
                 //TODO [Basic Game]
+                boolean isDrawSuccessful = false;
+                //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
+                while (!isDrawSuccessful) {
+                    try {
+                        unoGame.drawCard(HUMAN_PLAYER);
+                        isDrawSuccessful = true;
+                    } catch (EmptyDeckException ex) {
+                        unoGame.shuffleDiscardToDrawDeck();
+                    }
+                }
                 break;
         }
 
@@ -105,7 +138,6 @@ public class GameCLI {
      * Displays the game board as of the current game state
      *
      * @author Lily Romano
-     * @param g The {@code Game} to display
      */
     public static void displayGameBoard() {
         //Assumes Player is player 1 and computers are remaining players
@@ -113,14 +145,21 @@ public class GameCLI {
 
         //Display information about various decks
         String drawDeck;
-        if (unoGame.theDiscardDeck.getDeckSize() == 0) {
+        String discardDeck;
+        if (unoGame.theDrawDeck.getDeckSize() == 0) {
             drawDeck = "No Draw Deck";
         }
         else {
             drawDeck = "*";
         }
-        String discardDeck = easyCardDescription(
-                unoGame.theDiscardDeck.peekBottomCard());
+        if (unoGame.theDiscardDeck.getDeckSize() == 0) {
+            discardDeck = "*";
+        }
+        else {
+            discardDeck = easyCardDescription(
+                    unoGame.theDiscardDeck.peekBottomCard());
+        }
+
         System.out.printf("| Draw Deck: %s  Discard Deck: %s%n|%n", drawDeck,
                           discardDeck);
 
@@ -142,6 +181,9 @@ public class GameCLI {
         System.out.println("===================================================");
     }
 
+    /**
+     * Displays the cards in the player's hand
+     */
     private static void displayPlayersHand() {
         CopyOnWriteArrayList<Card> playerHand = unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER);
@@ -159,7 +201,13 @@ public class GameCLI {
         System.out.println();
     }
 
+    /**
+     * Gets what type of play the player wishes to make
+     *
+     * @return an integer representing the play command
+     */
     private static int getPlayCommand() {
+        //TODO [Basic Game] Set up enums instead of int?
         if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).size() == 0) {
             System.out.println(
                     ">>Select an option: \n  1. Draw a card    2. Call Uno");
@@ -172,18 +220,50 @@ public class GameCLI {
         }
     }
 
+    /**
+     * Gets what card the player wishes to play
+     *
+     * @return an the index of the card in the player's hand.
+     */
     private static int getPlayCard() {
-        System.out.println(
-                ">>Select an card to play: \n");
+        String discardDeck;
+        if (unoGame.theDiscardDeck.getDeckSize() == 0) {
+            discardDeck = "*";
+        }
+        else {
+            discardDeck = easyCardDescription(
+                    unoGame.theDiscardDeck.peekBottomCard());
+        }
 
-        return getKeyboardInt(unoGame.getPlayersHandCopy(HUMAN_PLAYER).size());
+        System.out.println("===================================================");
+        System.out.println(
+                "|\n| >>Select an card to play: ");
+        System.out.println("|    Discard Pile: " + discardDeck + "\n| ");
+
+        displayPlayersHand();
+        System.out.println("===================================================");
+
+        return getKeyboardInt(unoGame.getPlayersHandCopy(HUMAN_PLAYER).size()) - 1;
     }
 
+    /**
+     * Returns a Card description in easy to read format.
+     *
+     * @param card
+     * @return a Card description in easy to read format.
+     */
     protected static String easyCardDescription(Card card) {
         return properCase(
                 card.getColor().toString() + " " + card.getType().toString());
     }
 
+    /**
+     * Returns a string as proper case. If more than one word is sent, each word
+     * is converted to proper case.
+     *
+     * @param string the string to convert to proper case.
+     * @return a string as proper case
+     */
     protected static String properCase(String string) {
         String[] words = string.split("\\s+");
         String result = "";
@@ -194,8 +274,17 @@ public class GameCLI {
         return String.join(" ", words);
     }
 
+    /**
+     * Returns an integer from the keyboard input. Acceptable values range from
+     * 1 to maxValue.
+     *
+     * @param maxValue the maximum value allowed. Should be greater than or
+     * equal to one.
+     * @return the integer input by the keyboard.
+     */
     private static int getKeyboardInt(int maxValue) {
         int response = -1;
+        //TODO [Basic Game] Test to ensure maxValue >= 1
 
         while (response < 1 || response > maxValue) {
             if (keyboard.hasNextInt()) {

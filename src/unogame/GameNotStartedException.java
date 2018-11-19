@@ -16,8 +16,10 @@
 package unogame;
 
 /**
+ * Thrown when a command is issued that is only acceptable when a game has not
+ * started yet the game has been started.
  *
- * @author lilyheart
+ * @author Lily Romano
  */
 public class GameNotStartedException extends Exception {
 
