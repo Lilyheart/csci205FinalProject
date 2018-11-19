@@ -108,13 +108,22 @@ public class GameCLI {
         int playCommand = getPlayCommand();
         switch (playCommand) {
             case 1: //Play Card
-                int playCardIndex = getPlayCard();
-                try {
-                    unoGame.playCard(HUMAN_PLAYER, playCardIndex);
-                } catch (EmptyDeckException ex) {
-                    //playCard is already limited to only cards in the hand.  This should never be hit.
-                    System.out.println(ex);
-                    System.exit(-1);
+                boolean cardIsLegal = false;
+                while (!cardIsLegal) {
+                    int playCardIndex = getPlayCard();
+                    if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
+                            HUMAN_PLAYER).get(playCardIndex))) {
+                        System.out.println("Invalid play");
+                        continue;
+                    }
+                    try {
+                        unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+                        cardIsLegal = true;
+                    } catch (EmptyDeckException ex) {
+                        //playCard is already limited to only cards in the hand.  This should never be hit.
+                        System.out.println(ex);
+                        System.exit(-1);
+                    }
                 }
                 break;
             case 2: //Draw Card

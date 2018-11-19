@@ -211,4 +211,27 @@ public class Game {
             System.exit(-1);
         }
     }
+
+    /**
+     * Tests to see if card is a legal play
+     *
+     * @param playerCard the {@code Card to test}
+     * @return True if the play is legal, otherwise false
+     */
+    public boolean isLegalPlay(Card playerCard) {
+        boolean isLegal = false;
+        Card discardCard = theDiscardDeck.peekBottomCard();
+        System.out.println(playerCard.getColor() + " " + playerCard.getType());
+
+        //test color
+        if (playerCard.getColor() == discardCard.getColor()) {
+            isLegal = true;
+        }
+        //test number
+        else if (playerCard.getType() == discardCard.getType()) {
+            isLegal = true;
+        }
+
+        return isLegal;
+    }
 }
