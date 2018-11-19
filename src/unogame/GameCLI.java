@@ -46,7 +46,7 @@ public class GameCLI {
     /**
      * A scanner for the keyboard input
      */
-    private static Scanner keyboard = new Scanner(System.in);
+    private static Scanner keyboard;
 
     /**
      * Runs the CLI version of the UNO game. Assumes one human player and set
@@ -57,6 +57,7 @@ public class GameCLI {
      */
     public static void main(String[] args) throws EmptyDeckException {
         //TODO [Exception Handling]
+        keyboard = new Scanner(System.in);
 
         //create new game
         unoGame = new Game();
@@ -177,7 +178,7 @@ public class GameCLI {
             System.out.println("| Other Players");
             for (int i = 1; i <= unoGame.getNumComputerPlayers(); i++) {
                 System.out.printf("|   Player %d: Cards ", i);
-                for (int j = 0; j < unoGame.getPlayersHandCopy(i + 1).size(); j++) {
+                for (Card playersHandCopy : unoGame.getPlayersHandCopy(i + 1)) {
                     System.out.print("*");
                 }
                 System.out.println();
@@ -217,7 +218,7 @@ public class GameCLI {
      */
     private static int getPlayCommand() {
         //TODO [Basic Game] Set up enums instead of int?
-        if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).size() == 0) {
+        if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).isEmpty()) {
             System.out.println(
                     ">>Select an option: \n  1. Draw a card    2. Call Uno");
             return getKeyboardInt(2);

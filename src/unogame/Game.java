@@ -20,7 +20,7 @@ import deck.DrawDeck;
 import deck.EmptyDeckException;
 import deck.PlayerHand;
 import deck.card.Card;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -43,7 +43,7 @@ public class Game {
     /**
      * An {@code ArrayList} of player
      */
-    private ArrayList<PlayerHand> players;
+    private final LinkedList<PlayerHand> players;
 
     /**
      * The total number of players. Also used to set the player's idNum.
@@ -62,7 +62,7 @@ public class Game {
      */
     public Game() {
         //Instantiate variables
-        players = new ArrayList<>();
+        players = new LinkedList<>();
         numPlayers = 0;
         isGameStarted = false;
 
@@ -152,12 +152,13 @@ public class Game {
      */
     public void makePlayer(Boolean isComputerPlayer) throws EmptyDeckException, GameNotStartedException {
         //TODO [Exception Handling]
+        numPlayers++;
+
         if (isGameStarted) {
             String player = isComputerPlayer ? "computer" : "human";
             throw new GameNotStartedException(
                     "Attempting to create a " + player + " player after the game has started");
         }
-        numPlayers++;
         PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
 
         for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {

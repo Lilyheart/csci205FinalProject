@@ -171,9 +171,9 @@ public abstract class BUnoDeck {
      * @param cards The {@code CopyOnWriteArrayList} of {@code Card}s to add.
      */
     public void addCards(CopyOnWriteArrayList<Card> cards) {
-        for (Card card : cards) {
+        cards.forEach((card) -> {
             deck.add(card);
-        }
+        });
     }
 
     /**

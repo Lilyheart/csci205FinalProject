@@ -104,8 +104,9 @@ public enum CardType {
      * An explicit constructor for the Card Type enumerated type
      *
      * @author Lily Romano
-     *
-     * @param cardText a {@code String} representing the card type
+     * @param cardCornerText The text for the corners of the card
+     * @param cardMainText The text for the middle of the card
+     * @param cardValue The point value of the card
      */
     private CardType(String cardCornerText, String cardMainText, int cardValue) {
         this.cardCornerText = cardCornerText;
