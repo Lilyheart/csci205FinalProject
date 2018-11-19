@@ -86,4 +86,17 @@ public class PlayerHand extends BUnoDeck {
         return isComputerPlayer;
     }
 
+    /**
+     * Returns a well formatted string representing the deck.
+     *
+     * @author jameskelly
+     *
+     * @return a well formatted string representing the deck.
+     */
+    @Override
+    public String toString() {
+        String player = isComputerPlayer ? "computer" : "human";
+        return "Player " + idNum + "[" + player + "]" + super.toString();
+    }
+
 }
