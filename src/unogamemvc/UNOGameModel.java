@@ -15,9 +15,11 @@
  */
 package unogamemvc;
 
-import deck.DrawDeck;
 import deck.EmptyDeckException;
+import deck.PlayerHand;
 import deck.card.Card;
+import unogame.Game;
+import unogame.GameNotStartedException;
 
 /**
  * A GUI Card Prototype MVC model Main GUI
@@ -27,16 +29,45 @@ import deck.card.Card;
 public class UNOGameModel {
 
     /**
-     * Creates a deck of cards
+     * Total number of computer players
      */
-    private final DrawDeck theDrawDeck;
+    private final static int NUM_OF_COMPUTER_PLAYERS = 3;
+
+    /**
+     * The Player idNum for the human player
+     */
+    private final static int HUMAN_PLAYER = 1;
+
+    private static Game unoGame;
 
     /**
      * An explicit constructor for the UNO Main GUI Model
      */
-    public UNOGameModel() {
-        theDrawDeck = new DrawDeck();
-        theDrawDeck.shuffle();
+    public UNOGameModel() throws EmptyDeckException {
+        unoGame = new Game();
+        setNewDefaultGame();
+        unoGame.startGame();
+
+    }
+
+    /**
+     * Creates a new default game
+     *
+     * @throws EmptyDeckException
+     */
+    private static void setNewDefaultGame() throws EmptyDeckException {
+        try {
+            //create player
+            unoGame.makePlayer(PlayerHand.HUMAN);
+            //create computer players
+            for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
+                unoGame.makePlayer(PlayerHand.COMPUTER);
+            }
+        } catch (GameNotStartedException ex) {
+            //Unable to play game if unable to add players - should never be hit
+            System.out.println(ex);
+            System.exit(-1);
+        }
     }
 
     /**
@@ -46,7 +77,7 @@ public class UNOGameModel {
      * @throws EmptyDeckException
      */
     Card popNextDrawCard() throws EmptyDeckException {
-        return theDrawDeck.popTopCard();
+        return unoGame.getTheDrawDeck().popTopCard();
     }
 
     /**
@@ -56,7 +87,7 @@ public class UNOGameModel {
      * @throws EmptyDeckException
      */
     Card peekNextDrawCard() throws EmptyDeckException {
-        return theDrawDeck.peekTopCard();
+        return unoGame.getTheDrawDeck().peekTopCard();
     }
 
 }

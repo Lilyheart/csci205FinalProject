@@ -55,7 +55,20 @@ public class UNOGameView {
      */
     private GridPane cardsInPlayersHand;
 
+    /**
+     * The Grid which hold the two decks.
+     */
     private GridPane drawAndDiscardDecks;
+
+    /**
+     * The deck to draw from.
+     */
+    private StackPane drawDeck;
+
+    /**
+     * The deck that you put the next card on top of.
+     */
+    private StackPane discardDeck;
 
     /**
      * An explicit constructor for the UNO game view
@@ -91,6 +104,7 @@ public class UNOGameView {
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
         for (int i = 0; i <= 7; i++) {
+
             //TODO [Card Display] Get cards from hand instead
             System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
 
@@ -148,7 +162,7 @@ public class UNOGameView {
 
         //create a card to represent the draw deck
         //TODO [Card Display] Draw deck should show top card of draw pile.
-        StackPane drawDeck = CardBackView.createCardBackView();
+        drawDeck = CardBackView.createCardBackView();
 
         drawDeck.setPrefSize(
                 128, 178);
@@ -156,7 +170,7 @@ public class UNOGameView {
                 128, 178);
 
         //create a card to represent the discard deck
-        StackPane discardDeck = CardFrontView.createCardFrontView(
+        discardDeck = CardFrontView.createCardFrontView(
                 theModel.popNextDrawCard());
 
         discardDeck.setPrefSize(128, 178);
@@ -223,6 +237,10 @@ public class UNOGameView {
      */
     public GridPane getDrawAndDiscardDecks() {
         return drawAndDiscardDecks;
+    }
+
+    public StackPane getDrawDeck() {
+        return drawDeck;
     }
 
 }

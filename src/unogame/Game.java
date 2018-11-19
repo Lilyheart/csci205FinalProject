@@ -235,4 +235,9 @@ public class Game {
 
         return isLegal;
     }
+
+    public DrawDeck getTheDrawDeck() {
+        return theDrawDeck;
+    }
+
 }

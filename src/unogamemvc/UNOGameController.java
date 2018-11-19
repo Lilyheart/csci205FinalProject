@@ -100,15 +100,15 @@ public class UNOGameController implements EventHandler<Event> {
     }
 
     /**
-     * Creates an event when the draw deck is clicked on. Prints to the console
-     * as of now.
+     * Creates an event when the draw deck is clicked on. Puts the card in your
+     * hand. Prints to the console as of now.
      */
     public void activateDrawDeck() {
-        this.theView.getDrawAndDiscardDecks().getChildren().forEach(item -> {
+        this.theView.getDrawDeck().getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println("DECK");
+                    System.out.println("Draw DECK");
 
                 }
             });

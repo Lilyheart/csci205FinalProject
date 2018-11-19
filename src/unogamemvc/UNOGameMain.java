@@ -18,6 +18,7 @@ package unogamemvc;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import unogame.Game;
 
 /**
  * GUI of the java playing screen.
@@ -42,6 +43,8 @@ public class UNOGameMain extends Application {
      */
     private UNOGameController theControl;
 
+    private static Game unoGame;
+
     /**
      * The primary method that is called by the JavaFX application to initialize
      * the GUI
@@ -54,6 +57,7 @@ public class UNOGameMain extends Application {
         super.init(); //To change body of generated methods, choose Tools | Templates.
         this.theModel = new UNOGameModel();
         this.theView = new UNOGameView(theModel);
+        unoGame = new Game();
     }
 
     /**
