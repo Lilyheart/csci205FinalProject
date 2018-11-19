@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * A GUI Card Prototype MVC controller
@@ -49,12 +50,14 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-                             UNOGameView theView) {
+            UNOGameView theView) {
         this.theModel = theModel;
         this.theView = theView;
 
         this.theView.getRootNode().addEventFilter(KeyEvent.KEY_PRESSED, this);
 
+        this.activateCardsInPlayersHand();
+        this.activateDrawDeck();
     }
 
     /**
@@ -74,7 +77,43 @@ public class UNOGameController implements EventHandler<Event> {
             if (target.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
             }
+
         }
+
+    }
+
+    /**
+     * Creates an event when the cards in the players hands are clicked on.
+     * Prints to the console as of now.
+     */
+    public void activateCardsInPlayersHand() {
+        this.theView.getCardsInPlayersHand().getChildren().forEach(item -> {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("Clicke on card");
+
+                }
+            });
+
+        });
+    }
+
+    /**
+     * Creates an event when the draw deck is clicked on. Prints to the console
+     * as of now.
+     */
+    public void activateDrawDeck() {
+        this.theView.getDrawAndDiscardDecks().getChildren().forEach(item -> {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("DECK");
+
+                }
+            });
+
+        });
     }
 
 }

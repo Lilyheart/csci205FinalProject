@@ -16,6 +16,8 @@
 package unogamemvc;
 
 import deck.DrawDeck;
+import deck.EmptyDeckException;
+import deck.card.Card;
 
 /**
  * A GUI Card Prototype MVC model Main GUI
@@ -35,6 +37,26 @@ public class UNOGameModel {
     public UNOGameModel() {
         theDrawDeck = new DrawDeck();
         theDrawDeck.shuffle();
+    }
+
+    /**
+     * Pops the top card from the draw deck so we can add it to hand.
+     *
+     * @return
+     * @throws EmptyDeckException
+     */
+    Card popNextDrawCard() throws EmptyDeckException {
+        return theDrawDeck.popTopCard();
+    }
+
+    /**
+     * Peeks the next card, useful for testing.
+     *
+     * @return
+     * @throws EmptyDeckException
+     */
+    Card peekNextDrawCard() throws EmptyDeckException {
+        return theDrawDeck.peekTopCard();
     }
 
 }
