@@ -15,6 +15,7 @@
  */
 package unogamemvc;
 
+import deck.EmptyDeckException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -67,7 +68,7 @@ public class UNOGameMain extends Application {
      * @param primaryStage The initial stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws EmptyDeckException {
         this.theControl = new UNOGameController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());

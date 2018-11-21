@@ -15,6 +15,7 @@
  */
 package unogamemvc;
 
+import deck.EmptyDeckException;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -50,7 +51,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-            UNOGameView theView) {
+            UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
 
@@ -58,6 +59,7 @@ public class UNOGameController implements EventHandler<Event> {
 
         this.activateCardsInPlayersHand();
         this.activateDrawDeck();
+
     }
 
     /**
@@ -108,7 +110,9 @@ public class UNOGameController implements EventHandler<Event> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println("Draw DECK");
+                    System.out.println(
+                            "Clicked on draw deck...next card will be added to hand");
+                    theModel.tryToDrawCardAction();
 
                 }
             });

@@ -52,6 +52,7 @@ public class UNOGameModel {
         unoGame = new Game();
         setNewDefaultGame();
         unoGame.startGame();
+        System.out.println(unoGame.getTheDrawDeck());
 
     }
 
@@ -103,4 +104,18 @@ public class UNOGameModel {
         return STARTING_NUM_OF_CARDS;
     }
 
+    public void tryToDrawCardAction() {
+        //TODO [Basic Game]
+        boolean isDrawSuccessful = false;
+        //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
+        while (!isDrawSuccessful) {
+            try {
+                unoGame.drawCard(HUMAN_PLAYER);
+                System.out.println("JUST DRAWED A CARD!!");
+                isDrawSuccessful = true;
+            } catch (EmptyDeckException ex) {
+                unoGame.shuffleDiscardToDrawDeck();
+            }
+        }
+    }
 }

@@ -81,8 +81,8 @@ public class UNOGameView {
      */
     public UNOGameView(UNOGameModel theModel) throws EmptyDeckException {
         //TODO [Exception Handling]
-
         this.theModel = theModel;
+        setDiscardDeck();
 
         root = new BorderPane();
         root.setId("rootNode");
@@ -103,7 +103,7 @@ public class UNOGameView {
          */
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
-        for (int i = 1; i <= UNOGameModel.getSTARTING_NUM_OF_CARDS(); i++) {
+        for (int i = 0; i <= UNOGameModel.getSTARTING_NUM_OF_CARDS(); i++) {
 
             //TODO [Card Display] Get cards from hand instead
             System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
@@ -170,9 +170,6 @@ public class UNOGameView {
                 128, 178);
 
         //create a card to represent the discard deck
-        discardDeck = CardFrontView.createCardFrontView(
-                theModel.popNextDrawCard());
-
         discardDeck.setPrefSize(128, 178);
         discardDeck.setMaxSize(128, 178);
 
@@ -241,6 +238,15 @@ public class UNOGameView {
 
     public StackPane getDrawDeck() {
         return drawDeck;
+    }
+
+    public StackPane getDiscardDeck() {
+        return discardDeck;
+    }
+
+    public void setDiscardDeck() throws EmptyDeckException {
+        this.discardDeck = CardFrontView.createCardFrontView(
+                theModel.popNextDrawCard());;
     }
 
 }
