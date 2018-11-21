@@ -103,7 +103,7 @@ public class UNOGameView {
          */
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 1; i <= UNOGameModel.getSTARTING_NUM_OF_CARDS(); i++) {
 
             //TODO [Card Display] Get cards from hand instead
             System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out

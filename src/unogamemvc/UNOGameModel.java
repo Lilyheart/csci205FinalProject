@@ -34,6 +34,11 @@ public class UNOGameModel {
     private final static int NUM_OF_COMPUTER_PLAYERS = 3;
 
     /**
+     * Number of cards a player should start the game with
+     */
+    private final static int STARTING_NUM_OF_CARDS = 7;
+
+    /**
      * The Player idNum for the human player
      */
     private final static int HUMAN_PLAYER = 1;
@@ -92,6 +97,10 @@ public class UNOGameModel {
 
     public static int getNUM_OF_COMPUTER_PLAYERS() {
         return NUM_OF_COMPUTER_PLAYERS;
+    }
+
+    public static int getSTARTING_NUM_OF_CARDS() {
+        return STARTING_NUM_OF_CARDS;
     }
 
 }
