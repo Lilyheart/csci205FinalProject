@@ -128,7 +128,7 @@ public class UNOGameView {
         GridPane opponents = new GridPane();
 
         for (int i = 0;
-                i < 3; i++) {
+                i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
             StackPane opponentStack = new StackPane();
             /* TODO [Card Display] This is hardcoded to seven not linked to
                the actual number in the oppenent's hand.  This needs to be

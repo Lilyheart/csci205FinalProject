@@ -90,4 +90,8 @@ public class UNOGameModel {
         return unoGame.getTheDrawDeck().peekTopCard();
     }
 
+    public static int getNUM_OF_COMPUTER_PLAYERS() {
+        return NUM_OF_COMPUTER_PLAYERS;
+    }
+
 }
