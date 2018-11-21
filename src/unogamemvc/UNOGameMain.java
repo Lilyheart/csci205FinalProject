@@ -43,6 +43,8 @@ public class UNOGameMain extends Application {
      */
     private UNOGameController theControl;
 
+    private static Scene scene;
+
     /**
      * The primary method that is called by the JavaFX application to initialize
      * the GUI
@@ -71,12 +73,14 @@ public class UNOGameMain extends Application {
     public void start(Stage primaryStage) throws EmptyDeckException {
         this.theControl = new UNOGameController(theModel, theView);
 
-        Scene scene = new Scene(this.theView.getRootNode());
+        scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(
                 getClass().getResource("resource/stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("BUno!");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+
         primaryStage.show();
     }
 
@@ -87,6 +91,10 @@ public class UNOGameMain extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static Scene getScene() {
+        return scene;
     }
 
 }

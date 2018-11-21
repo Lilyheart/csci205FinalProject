@@ -112,7 +112,16 @@ public class UNOGameController implements EventHandler<Event> {
                 public void handle(MouseEvent event) {
                     System.out.println(
                             "Clicked on draw deck...next card will be added to hand");
-                    theModel.tryToDrawCardAction();
+
+                    try {
+                        theView.getCardsInPlayersHand().add(
+                                theView.createNextFaceUpCard(), theView.NUM_COLS,
+                                0);
+                        theView.NUM_COLS++;
+                    } catch (EmptyDeckException ex) {
+                        System.out.println("EMPTY DECK EXCEPTION!");
+                    }
+                    theModel.tryToDrawCardAction(); // pops card from the deck
 
                 }
             });

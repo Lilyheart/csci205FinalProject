@@ -36,7 +36,7 @@ public class UNOGameModel {
     /**
      * Number of cards a player should start the game with
      */
-    private final static int STARTING_NUM_OF_CARDS = 7;
+    private final static int STARTING_NUM_OF_CARDS = 2;
 
     /**
      * The Player idNum for the human player
@@ -104,6 +104,9 @@ public class UNOGameModel {
         return STARTING_NUM_OF_CARDS;
     }
 
+    /**
+     * Takes a card from the draw deck and adds it to the players hand.
+     */
     public void tryToDrawCardAction() {
         //TODO [Basic Game]
         boolean isDrawSuccessful = false;
