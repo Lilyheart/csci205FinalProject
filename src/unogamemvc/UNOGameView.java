@@ -71,11 +71,6 @@ public class UNOGameView {
      * The deck that you put the next card on top of.
      */
     private StackPane discardDeck;
-    /**
-     * The number of columns in the GridPane. Used to know where to add new
-     * cards to the GridPane.
-     */
-    public int NUM_COLS;
 
     /**
      * An explicit constructor for the UNO game view
@@ -103,23 +98,7 @@ public class UNOGameView {
         cardsInPlayersHand.setVgap(20);
         cardsInPlayersHand.setPadding(new Insets(40));
 
-        /*TODO [Card Display] The way these cards are being created, they cannot be
-          referenced by the controller.  A suggestion would be to create a class
-          instance variable that stores some type of datastructure that makes sense
-          cards and work from there.
-         */
-        //make list of cards, add each card to pane, just pass future players hand of cards
-        //  instead of hardcoding
-        CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
-                theModel.getHUMAN_PLAYER());
-
-        for (Card card : playersHand) {
-            StackPane faceUpCard = CardFrontView.createCardFrontView(
-                    card);
-            faceUpCard.setId(String.valueOf(NUM_COLS));
-            cardsInPlayersHand.add(faceUpCard, NUM_COLS, 0);
-            NUM_COLS++;
-        }
+        drawPlayerHand();
 
         /*
 
@@ -146,7 +125,7 @@ public class UNOGameView {
         GridPane opponents = new GridPane();
 
         for (int i = 0;
-                i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
+             i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
             StackPane opponentStack = new StackPane();
             /* TODO [Card Display] This is hardcoded to seven not linked to
                the actual number in the oppenent's hand.  This needs to be
@@ -223,6 +202,26 @@ public class UNOGameView {
 
         root.setBottom(playersHandHBox);
 
+    }
+
+    private void drawPlayerHand() {
+        /*TODO [Card Display] The way these cards are being created, they cannot be
+        referenced by the controller.  A suggestion would be to create a class
+        instance variable that stores some type of datastructure that makes sense
+        cards and work from there.
+         */
+        //make list of cards, add each card to pane, just pass future players hand of cards
+        //  instead of hardcoding
+        CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
+                theModel.getHUMAN_PLAYER());
+        int nextCol = 0;
+        for (Card card : playersHand) {
+            StackPane faceUpCard = CardFrontView.createCardFrontView(
+                    card);
+            faceUpCard.setId(String.valueOf(nextCol));
+            cardsInPlayersHand.add(faceUpCard, nextCol, 0);
+            nextCol++;
+        }
     }
 
     /**

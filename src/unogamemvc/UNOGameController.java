@@ -56,7 +56,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-            UNOGameView theView) throws EmptyDeckException {
+                             UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -132,14 +132,14 @@ public class UNOGameController implements EventHandler<Event> {
                     System.out.println(
                             "***\nClicked on draw deck...next added to hand***");
 
-                    try {
-                        theView.getCardsInPlayersHand().add(
-                                theView.createNextFaceUpCard(), theView.NUM_COLS,
-                                0);
-                        theView.NUM_COLS++;
-                    } catch (EmptyDeckException ex) {
-                        System.out.println("EMPTY DECK EXCEPTION!");
-                    }
+//                    try {
+//                        theView.getCardsInPlayersHand().add(
+//                                theView.createNextFaceUpCard(), theView.NUM_COLS,
+//                                0);
+//                        theView.NUM_COLS++;
+//                    } catch (EmptyDeckException ex) {
+//                        System.out.println("EMPTY DECK EXCEPTION!");
+//                    }
                     theModel.tryToDrawCardAction(); // pops card from the deck
 
                 }
