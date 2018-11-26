@@ -40,8 +40,8 @@ public final class AIHelper {
      * @return
      * @throws NoValidCardException
      */
-    public int getValidCard(CopyOnWriteArrayList<Card> hand,
-                            Card discardCard) throws NoValidCardException {
+    public static int getValidCard(CopyOnWriteArrayList<Card> hand,
+                                   Card discardCard) throws NoValidCardException {
         CardType discardType = discardCard.getType();
         CardColor discardColor = discardCard.getColor();
         boolean isCardPlayable = false;
@@ -69,8 +69,8 @@ public final class AIHelper {
         return -1;
     }
 
-    public PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
-                                      Card discardCard) {
+    public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
+                                             Card discardCard) {
         //TODO [AI] If one card left, call Uno
         if (hand.size() == 1) {
             return PlayCommand.BUNO;

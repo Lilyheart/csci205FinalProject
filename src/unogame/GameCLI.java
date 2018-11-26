@@ -20,6 +20,9 @@ import deck.PlayerHand;
 import deck.card.Card;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import unogame.helpers.AIHelper;
 import unogame.helpers.CLIHelper;
 
 /**
@@ -73,8 +76,12 @@ public class GameCLI {
                 System.out.println();
             }
 
+            //TODO [Advanced Game] Change direction code
             //Process player's turn
             humanPlayerTurn();
+            for (int i = 0; i < unoGame.getNumComputerPlayers(); i++) {
+                computerPlayerTurn(i + 2);
+            }
 
             //Process computer's turn
             //TODO [Basic Game] Computer's turn
@@ -128,6 +135,54 @@ public class GameCLI {
                     }
                 }
                 break;
+            case DRAW: //Draw Card
+                //TODO [Basic Game]
+                boolean isDrawSuccessful = false;
+                //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
+                while (!isDrawSuccessful) {
+                    try {
+                        unoGame.drawCard(HUMAN_PLAYER);
+                        isDrawSuccessful = true;
+                    } catch (EmptyDeckException ex) {
+                        unoGame.shuffleDiscardToDrawDeck();
+                    }
+                }
+                break;
+            case BUNO:
+                //TODO [Basic Game] Call Buno
+                break;
+        }
+
+    }
+
+    /**
+     * Completes a human player's turn
+     */
+    private static void computerPlayerTurn(int playerID) {
+
+        PlayCommand playCommand = AIHelper.getPlayCommand(
+                unoGame.getPlayersHandCopy(playerID),
+                unoGame.getTheDiscardDeck().peekBottomCard());
+        System.out.print(
+                "XXXXXXXXXX      " + playerID + "       XXXXXXXXXXXXXX:   " + playCommand);
+        switch (playCommand) {
+            case PLAYCARD: //Play Card
+                try {
+                    int playCardIndex = AIHelper.getValidCard(
+                            unoGame.getPlayersHandCopy(playerID),
+                            unoGame.getTheDiscardDeck().peekBottomCard());
+                    unoGame.playCard(playerID, playCardIndex);
+                } catch (NoValidCardException ex) {
+                    //getValidCard is already limited to only cards in the hand.  This should never be hit.
+                    System.out.println(ex);
+                    System.exit(-1);
+                } catch (EmptyDeckException ex) {
+                    //playCard is already limited to only cards in the hand.  This should never be hit.
+                    System.out.println(ex);
+                    System.exit(-1);
+                }
+                break;
+
             case DRAW: //Draw Card
                 //TODO [Basic Game]
                 boolean isDrawSuccessful = false;
