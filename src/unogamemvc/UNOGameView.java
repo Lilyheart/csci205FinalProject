@@ -204,7 +204,7 @@ public class UNOGameView {
 
     }
 
-    private void drawPlayerHand() {
+    protected void drawPlayerHand() {
         /*TODO [Card Display] The way these cards are being created, they cannot be
         referenced by the controller.  A suggestion would be to create a class
         instance variable that stores some type of datastructure that makes sense

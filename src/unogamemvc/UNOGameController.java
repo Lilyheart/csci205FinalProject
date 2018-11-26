@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -86,7 +87,29 @@ public class UNOGameController implements EventHandler<Event> {
             }
 
         }
+        else if (eType == MouseEvent.MOUSE_CLICKED) {
+            Object source = event.getSource();
+            if (source instanceof StackPane) { //Any card clicked
+                System.out.println(((StackPane) source).getId());
+                this.activateCardsInPlayersHand();
+            }
 
+        }
+
+//        System.out.println("***Clicked on card in hand***");
+//        //cardGUIIndex = Integer.parseInt(item.getId());
+//        System.out.println(item.getId());
+//        try {
+//            theModel.tryToPlayCardAction(Integer.parseInt(
+//                    item.getId()));
+//
+//            theView.drawPlayerHand();
+//
+//        } catch (EmptyDeckException ex) {
+//            Logger.getLogger(UNOGameController.class.getName()).log(
+//                    Level.SEVERE,
+//                    null, ex);
+//        }
     }
 
     /**
@@ -96,26 +119,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     public void activateCardsInPlayersHand() {
         this.theView.getCardsInPlayersHand().getChildren().forEach(item -> {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    System.out.println("***Clicked on card in hand***");
-                    //cardGUIIndex = Integer.parseInt(item.getId());
-                    System.out.println(item.getId());
-                    try {
-                        theModel.tryToPlayCardAction(Integer.parseInt(
-                                item.getId()));
-
-                        theView.getDiscardDeck().getChildren().add(
-                                (StackPane) item);
-
-                    } catch (EmptyDeckException ex) {
-                        Logger.getLogger(UNOGameController.class.getName()).log(
-                                Level.SEVERE,
-                                null, ex);
-                    }
-                }
-            });
+            item.setOnMouseClicked(this);
 
         });
     }
@@ -132,15 +136,12 @@ public class UNOGameController implements EventHandler<Event> {
                     System.out.println(
                             "***\nClicked on draw deck...next added to hand***");
 
-//                    try {
-//                        theView.getCardsInPlayersHand().add(
-//                                theView.createNextFaceUpCard(), theView.NUM_COLS,
-//                                0);
-//                        theView.NUM_COLS++;
-//                    } catch (EmptyDeckException ex) {
-//                        System.out.println("EMPTY DECK EXCEPTION!");
-//                    }
+                    //draw the card into the play
                     theModel.tryToDrawCardAction(); // pops card from the deck
+
+                    //redraw the hand
+                    theView.drawPlayerHand();
+                    activateCardsInPlayersHand();
 
                 }
             });
