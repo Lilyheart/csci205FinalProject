@@ -20,6 +20,7 @@ import deck.PlayerHand;
 import deck.card.Card;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
+import unogame.playhelpers.CLIHelper;
 
 /**
  * A CLI version of the BUno game.
@@ -169,7 +170,7 @@ public class GameCLI {
             discardDeck = "*";
         }
         else {
-            discardDeck = easyCardDescription(
+            discardDeck = CLIHelper.easyCardDescription(
                     unoGame.theDiscardDeck.peekBottomCard());
         }
 
@@ -203,7 +204,7 @@ public class GameCLI {
         System.out.print("|");
         for (int i = 0; i < playerHand.size(); i++) {
             String cardText = String.format("%1$-" + 20 + "s",
-                                            easyCardDescription(
+                                            CLIHelper.easyCardDescription(
                                                     playerHand.get(i)));
             System.out.printf("  %d) %s", i + 1, cardText);
             int numCols = 3;
@@ -224,7 +225,7 @@ public class GameCLI {
         if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).isEmpty()) {
             System.out.println(
                     ">>Select an option: \n  1. Draw a card    2. Call Uno");
-            int keyboardInt = getKeyboardInt(2);
+            int keyboardInt = CLIHelper.getKeyboardInt(2);
             switch (keyboardInt) {
                 case 1:
                     return PlayCommand.DRAW;
@@ -236,7 +237,7 @@ public class GameCLI {
         System.out.println(
                 ">>Select an option: \n  1. Play a card     2. Draw a card    3. Call Uno");
 
-        int keyboardInt = getKeyboardInt(3);
+        int keyboardInt = CLIHelper.getKeyboardInt(3);
         switch (keyboardInt) {
             case 1:
                 return PlayCommand.PLAYCARD;
@@ -259,7 +260,7 @@ public class GameCLI {
             discardDeck = "*";
         }
         else {
-            discardDeck = easyCardDescription(
+            discardDeck = CLIHelper.easyCardDescription(
                     unoGame.theDiscardDeck.peekBottomCard());
         }
 
@@ -271,64 +272,7 @@ public class GameCLI {
         displayPlayersHand();
         System.out.println("===================================================");
 
-        return getKeyboardInt(unoGame.getPlayersHandCopy(HUMAN_PLAYER).size()) - 1;
+        return CLIHelper.getKeyboardInt(
+                unoGame.getPlayersHandCopy(HUMAN_PLAYER).size()) - 1;
     }
-
-    /**
-     * Returns a Card description in easy to read format.
-     *
-     * @param card
-     * @return a Card description in easy to read format.
-     */
-    protected static String easyCardDescription(Card card) {
-        return properCase(
-                card.getColor().toString() + " " + card.getType().toString());
-    }
-
-    /**
-     * Returns a string as proper case. If more than one word is sent, each word
-     * is converted to proper case.
-     *
-     * @param string the string to convert to proper case.
-     * @return a string as proper case
-     */
-    protected static String properCase(String string) {
-        String[] words = string.split("\\s+");
-        String result = "";
-        for (int i = 0; i < words.length; i++) {
-            String s = words[i];
-            words[i] = s.toUpperCase().charAt(0) + s.substring(1, s.length()).toLowerCase();
-        }
-        return String.join(" ", words);
-    }
-
-    /**
-     * Returns an integer from the keyboard input. Acceptable values range from
-     * 1 to maxValue.
-     *
-     * @param maxValue the maximum value allowed. Should be greater than or
-     * equal to one.
-     * @return the integer input by the keyboard.
-     */
-    private static int getKeyboardInt(int maxValue) {
-        int response = -1;
-        //TODO [Basic Game] Test to ensure maxValue >= 1
-
-        while (response < 1 || response > maxValue) {
-            if (keyboard.hasNextInt()) {
-                response = keyboard.nextInt();
-                if (response < 1 || response > unoGame.getPlayersHandCopy(
-                        HUMAN_PLAYER).size()) {
-                    System.out.print(">> Input a valid option");
-                }
-            }
-            else {
-                System.out.print(">> You didn't input a number.  "
-                                 + "Please input a number");
-            }
-        }
-
-        return response;
-    }
-
 }
