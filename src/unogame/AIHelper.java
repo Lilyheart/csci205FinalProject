@@ -19,6 +19,8 @@ import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
 import java.util.concurrent.CopyOnWriteArrayList;
+import unogame.NoValidCardException;
+import unogame.PlayCommand;
 
 /**
  * Help class for Artificial Players to determine the action of the computer

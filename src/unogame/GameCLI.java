@@ -106,9 +106,9 @@ public class GameCLI {
     private static void humanPlayerTurn() {
         displayGameBoard();
 
-        int playCommand = getPlayCommand();
+        PlayCommand playCommand = getPlayCommand();
         switch (playCommand) {
-            case 1: //Play Card
+            case PLAYCARD: //Play Card
                 boolean cardIsLegal = false;
                 while (!cardIsLegal) {
                     int playCardIndex = getPlayCard();
@@ -127,7 +127,7 @@ public class GameCLI {
                     }
                 }
                 break;
-            case 2: //Draw Card
+            case DRAW: //Draw Card
                 //TODO [Basic Game]
                 boolean isDrawSuccessful = false;
                 //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
@@ -139,6 +139,9 @@ public class GameCLI {
                         unoGame.shuffleDiscardToDrawDeck();
                     }
                 }
+                break;
+            case BUNO:
+                //TODO [Basic Game] Call Buno
                 break;
         }
 
@@ -171,7 +174,7 @@ public class GameCLI {
         }
 
         System.out.printf("| Draw Deck: %s  Discard Deck: %s%n|%n", drawDeck,
-                discardDeck);
+                          discardDeck);
 
         //Display information about the other players
         if (unoGame.getNumComputerPlayers() > 0) {
@@ -200,8 +203,8 @@ public class GameCLI {
         System.out.print("|");
         for (int i = 0; i < playerHand.size(); i++) {
             String cardText = String.format("%1$-" + 20 + "s",
-                    easyCardDescription(
-                            playerHand.get(i)));
+                                            easyCardDescription(
+                                                    playerHand.get(i)));
             System.out.printf("  %d) %s", i + 1, cardText);
             int numCols = 3;
             if (i % numCols == (numCols - 1) || i == playerHand.size() - 1) {
@@ -216,17 +219,32 @@ public class GameCLI {
      *
      * @return an integer representing the play command
      */
-    private static int getPlayCommand() {
+    private static PlayCommand getPlayCommand() {
         //TODO [Basic Game] Set up enums instead of int?
         if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).isEmpty()) {
             System.out.println(
                     ">>Select an option: \n  1. Draw a card    2. Call Uno");
-            return getKeyboardInt(2);
+            int keyboardInt = getKeyboardInt(2);
+            switch (keyboardInt) {
+                case 1:
+                    return PlayCommand.DRAW;
+                case 2:
+                    return PlayCommand.BUNO;
+            }
         }
-        else {
-            System.out.println(
-                    ">>Select an option: \n  1. Play a card     2. Draw a card    3. Call Uno");
-            return getKeyboardInt(3);
+        //else
+        System.out.println(
+                ">>Select an option: \n  1. Play a card     2. Draw a card    3. Call Uno");
+
+        int keyboardInt = getKeyboardInt(3);
+        switch (keyboardInt) {
+            case 1:
+                return PlayCommand.PLAYCARD;
+            case 2:
+                return PlayCommand.DRAW;
+            case 3:
+            default:
+                return PlayCommand.BUNO;
         }
     }
 
@@ -306,7 +324,7 @@ public class GameCLI {
             }
             else {
                 System.out.print(">> You didn't input a number.  "
-                        + "Please input a number");
+                                 + "Please input a number");
             }
         }
 
