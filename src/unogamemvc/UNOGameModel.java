@@ -130,9 +130,27 @@ public class UNOGameModel {
 //==============================================================================================
 
     public void tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
+        System.out.println(unoGame.getPlayersHandCopy(
+                HUMAN_PLAYER).get(playCardIndex));
+        System.out.println(unoGame.getPlayersHandCopy(
+                HUMAN_PLAYER));
 
-        unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+        if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
+                HUMAN_PLAYER).get(playCardIndex))) {
+            System.out.println("Invalid play");
 
+            unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+
+        }
+
+    }
+
+    public static Game getUnoGame() {
+        return unoGame;
+    }
+
+    public static int getHUMAN_PLAYER() {
+        return HUMAN_PLAYER;
     }
 
 }

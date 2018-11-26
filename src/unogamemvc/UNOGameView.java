@@ -16,6 +16,8 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
+import deck.card.Card;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -48,7 +50,7 @@ public class UNOGameView {
     /**
      * The JavaFX object which represents the players hand.
      */
-    private HBox playersHand;
+    private HBox playersHandHBox;
 
     /**
      * The Grid on which the Player's cards are displayed.
@@ -92,9 +94,9 @@ public class UNOGameView {
         root = new BorderPane();
         root.setId("rootNode");
 
-        playersHand = new HBox();
-        playersHand.setSpacing(100);
-        playersHand.setPadding(new Insets(10, 10, 10, 10));
+        playersHandHBox = new HBox();
+        playersHandHBox.setSpacing(100);
+        playersHandHBox.setPadding(new Insets(10, 10, 10, 10));
 
         cardsInPlayersHand = new GridPane();
         cardsInPlayersHand.setHgap(20);
@@ -108,6 +110,19 @@ public class UNOGameView {
          */
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
+        CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
+                theModel.getHUMAN_PLAYER());
+
+        for (Card card : playersHand) {
+            StackPane faceUpCard = CardFrontView.createCardFrontView(
+                    card);
+            faceUpCard.setId(String.valueOf(NUM_COLS));
+            cardsInPlayersHand.add(faceUpCard, NUM_COLS, 0);
+            NUM_COLS++;
+        }
+
+        /*
+
         for (NUM_COLS = 0; NUM_COLS < UNOGameModel.getSTARTING_NUM_OF_CARDS(); NUM_COLS++) {
 
             StackPane faceUpCard = createNextFaceUpCard();
@@ -116,8 +131,8 @@ public class UNOGameView {
 
             cardsInPlayersHand.add(faceUpCard, NUM_COLS, 0);
         }
-
-        playersHand.getChildren()
+         */
+        playersHandHBox.getChildren()
                 .add(cardsInPlayersHand);
 
         VBox opponentsAndDeck = new VBox();
@@ -206,7 +221,7 @@ public class UNOGameView {
 
         root.setRight(rightPanel);
 
-        root.setBottom(playersHand);
+        root.setBottom(playersHandHBox);
 
     }
 
