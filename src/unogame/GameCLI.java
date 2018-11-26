@@ -171,7 +171,7 @@ public class GameCLI {
         }
 
         System.out.printf("| Draw Deck: %s  Discard Deck: %s%n|%n", drawDeck,
-                          discardDeck);
+                discardDeck);
 
         //Display information about the other players
         if (unoGame.getNumComputerPlayers() > 0) {
@@ -200,8 +200,8 @@ public class GameCLI {
         System.out.print("|");
         for (int i = 0; i < playerHand.size(); i++) {
             String cardText = String.format("%1$-" + 20 + "s",
-                                            easyCardDescription(
-                                                    playerHand.get(i)));
+                    easyCardDescription(
+                            playerHand.get(i)));
             System.out.printf("  %d) %s", i + 1, cardText);
             int numCols = 3;
             if (i % numCols == (numCols - 1) || i == playerHand.size() - 1) {
@@ -306,7 +306,7 @@ public class GameCLI {
             }
             else {
                 System.out.print(">> You didn't input a number.  "
-                                 + "Please input a number");
+                        + "Please input a number");
             }
         }
 

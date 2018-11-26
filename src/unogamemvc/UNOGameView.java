@@ -69,7 +69,10 @@ public class UNOGameView {
      * The deck that you put the next card on top of.
      */
     private StackPane discardDeck;
-
+    /**
+     * The number of columns in the GridPane. Used to know where to add new
+     * cards to the GridPane.
+     */
     public int NUM_COLS;
 
     /**
@@ -105,9 +108,10 @@ public class UNOGameView {
          */
         //make list of cards, add each card to pane, just pass future players hand of cards
         //  instead of hardcoding
-        for (NUM_COLS = 0; NUM_COLS <= UNOGameModel.getSTARTING_NUM_OF_CARDS(); NUM_COLS++) {
+        for (NUM_COLS = 0; NUM_COLS < UNOGameModel.getSTARTING_NUM_OF_CARDS(); NUM_COLS++) {
 
             StackPane faceUpCard = createNextFaceUpCard();
+            faceUpCard.setId(String.valueOf(NUM_COLS));
             theModel.popNextDrawCard();
 
             cardsInPlayersHand.add(faceUpCard, NUM_COLS, 0);
@@ -138,7 +142,7 @@ public class UNOGameView {
             opponentStack.getChildren().add(bottomCard);
 
             //Make next card
-            for (int j = 1; j < 6; j++) {
+            for (int j = 1; j < UNOGameModel.getSTARTING_NUM_OF_CARDS(); j++) {
 
                 StackPane nextCard = CardBackView.createCardBackView();
                 nextCard.setTranslateX(5 * j);
@@ -207,21 +211,6 @@ public class UNOGameView {
     }
 
     /**
-     * Creates a GUI object of the next card to add to add to the gridpane.
-     *
-     * @return
-     * @throws EmptyDeckException
-     */
-    public StackPane createNextFaceUpCard() throws EmptyDeckException {
-        //TODO [Card Display] Get cards from hand instead
-        System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
-        //test to see if correct cards come out
-        StackPane faceUpCard = CardFrontView.createCardFrontView(
-                theModel.peekNextDrawCard());
-        return faceUpCard;
-    }
-
-    /**
      * Returns the root BorderPane node
      *
      * @author Lily Romano
@@ -263,4 +252,18 @@ public class UNOGameView {
                 theModel.popNextDrawCard());;
     }
 
+    /**
+     * Creates a GUI object of the next card to add to add to the gridpane.
+     *
+     * @return
+     * @throws EmptyDeckException
+     */
+    public StackPane createNextFaceUpCard() throws EmptyDeckException {
+        //TODO [Card Display] Get cards from hand instead
+        System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
+        //test to see if correct cards come out
+        StackPane faceUpCard = CardFrontView.createCardFrontView(
+                theModel.peekNextDrawCard());
+        return faceUpCard;
+    }
 }

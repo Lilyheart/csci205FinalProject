@@ -240,4 +240,8 @@ public class Game {
         return theDrawDeck;
     }
 
+    public DiscardDeck getTheDiscardDeck() {
+        return theDiscardDeck;
+    }
+
 }

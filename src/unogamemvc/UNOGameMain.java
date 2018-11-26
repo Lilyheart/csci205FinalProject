@@ -78,8 +78,8 @@ public class UNOGameMain extends Application {
                 getClass().getResource("resource/stylesheet.css").toExternalForm());
 
         primaryStage.setTitle("BUno!");
-        primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+        primaryStage.setScene(scene);
 
         primaryStage.show();
     }

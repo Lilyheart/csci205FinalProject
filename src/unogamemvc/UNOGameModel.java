@@ -94,6 +94,12 @@ public class UNOGameModel {
      */
     Card peekNextDrawCard() throws EmptyDeckException {
         return unoGame.getTheDrawDeck().peekTopCard();
+
+    }
+
+    Card peekDiscardPileNextCard() throws EmptyDeckException {
+        return unoGame.getTheDiscardDeck().peekBottomCard();
+
     }
 
     public static int getNUM_OF_COMPUTER_PLAYERS() {
@@ -121,4 +127,12 @@ public class UNOGameModel {
             }
         }
     }
+//==============================================================================================
+
+    public void tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
+
+        unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+
+    }
+
 }

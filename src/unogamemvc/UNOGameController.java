@@ -16,6 +16,8 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -23,6 +25,7 @@ import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 /**
  * A GUI Card Prototype MVC controller
@@ -41,6 +44,8 @@ public class UNOGameController implements EventHandler<Event> {
      */
     private final UNOGameView theView;
 
+    private int cardGUIIndex;
+
     /**
      * An explicit constructor for the UNO game controller.
      *
@@ -54,7 +59,7 @@ public class UNOGameController implements EventHandler<Event> {
             UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
-
+        //this.cardGUIIndex = cardGUIIndex;
         this.theView.getRootNode().addEventFilter(KeyEvent.KEY_PRESSED, this);
 
         this.activateCardsInPlayersHand();
@@ -85,6 +90,7 @@ public class UNOGameController implements EventHandler<Event> {
     }
 
     /**
+     * ========================================================================
      * Creates an event when the cards in the players hands are clicked on.
      * Prints to the console as of now.
      */
@@ -93,8 +99,21 @@ public class UNOGameController implements EventHandler<Event> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println("Clicke on card");
+                    System.out.println("***Clicked on card in hand***");
+                    //cardGUIIndex = Integer.parseInt(item.getId());
+                    System.out.println(item.getId());
+                    try {
+                        theModel.tryToPlayCardAction(Integer.parseInt(
+                                item.getId()));
 
+                        theView.getDiscardDeck().getChildren().add(
+                                (StackPane) item);
+
+                    } catch (EmptyDeckException ex) {
+                        Logger.getLogger(UNOGameController.class.getName()).log(
+                                Level.SEVERE,
+                                null, ex);
+                    }
                 }
             });
 
@@ -111,7 +130,7 @@ public class UNOGameController implements EventHandler<Event> {
                 @Override
                 public void handle(MouseEvent event) {
                     System.out.println(
-                            "Clicked on draw deck...next card will be added to hand");
+                            "***\nClicked on draw deck...next added to hand***");
 
                     try {
                         theView.getCardsInPlayersHand().add(
