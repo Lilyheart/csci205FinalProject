@@ -20,7 +20,7 @@ import deck.PlayerHand;
 import deck.card.Card;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
-import unogame.playhelpers.CLIHelper;
+import unogame.helpers.CLIHelper;
 
 /**
  * A CLI version of the BUno game.

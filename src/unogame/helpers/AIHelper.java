@@ -13,7 +13,7 @@
 *
 * ****************************************
  */
-package unogame.playhelpers;
+package unogame.helpers;
 
 import deck.card.Card;
 import deck.card.CardColor;
