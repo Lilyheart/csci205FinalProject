@@ -103,7 +103,7 @@ public class UNOGameController implements EventHandler<Event> {
 //            theModel.tryToPlayCardAction(Integer.parseInt(
 //                    item.getId()));
 //
-//            theView.drawPlayerHand();
+//            theView.drawPlayerHandPane();
 //
 //        } catch (EmptyDeckException ex) {
 //            Logger.getLogger(UNOGameController.class.getName()).log(
@@ -118,7 +118,7 @@ public class UNOGameController implements EventHandler<Event> {
      * Prints to the console as of now.
      */
     public void activateCardsInPlayersHand() {
-        this.theView.getCardsInPlayersHand().getChildren().forEach(item -> {
+        this.theView.getCardsInPlayersHandPane().getChildren().forEach(item -> {
             item.setOnMouseClicked(this);
 
         });
@@ -129,7 +129,7 @@ public class UNOGameController implements EventHandler<Event> {
      * hand. Prints to the console as of now.
      */
     public void activateDrawDeck() {
-        this.theView.getDrawDeck().getChildren().forEach(item -> {
+        this.theView.getDrawDeckPane().getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -140,7 +140,7 @@ public class UNOGameController implements EventHandler<Event> {
                     theModel.tryToDrawCardAction(); // pops card from the deck
 
                     //redraw the hand
-                    theView.drawPlayerHand();
+                    theView.drawPlayerHandPane();
                     activateCardsInPlayersHand();
 
                 }

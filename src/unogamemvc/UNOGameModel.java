@@ -120,7 +120,7 @@ public class UNOGameModel {
         while (!isDrawSuccessful) {
             try {
                 unoGame.drawCard(HUMAN_PLAYER);
-                System.out.println("JUST DRAWED A CARD!!");
+                System.out.println("JUST DREW A CARD!!");
                 isDrawSuccessful = true;
             } catch (EmptyDeckException ex) {
                 unoGame.shuffleDiscardToDrawDeck();

@@ -55,22 +55,22 @@ public class UNOGameView {
     /**
      * The Grid on which the Player's cards are displayed.
      */
-    private GridPane cardsInPlayersHand;
+    private GridPane cardsInPlayersHandPane;
 
     /**
      * The Grid which hold the two decks.
      */
-    private GridPane drawAndDiscardDecks;
+    private GridPane drawAndDiscardDecksPane;
 
     /**
      * The deck to draw from.
      */
-    private StackPane drawDeck;
+    private StackPane drawDeckPane;
 
     /**
      * The deck that you put the next card on top of.
      */
-    private StackPane discardDeck;
+    private StackPane discardDeckPane;
 
     /**
      * An explicit constructor for the UNO game view
@@ -84,7 +84,7 @@ public class UNOGameView {
     public UNOGameView(UNOGameModel theModel) throws EmptyDeckException {
         //TODO [Exception Handling]
         this.theModel = theModel;
-        setDiscardDeck();
+        setDiscardDeckPane();
 
         root = new BorderPane();
         root.setId("rootNode");
@@ -93,12 +93,12 @@ public class UNOGameView {
         playersHandHBox.setSpacing(100);
         playersHandHBox.setPadding(new Insets(10, 10, 10, 10));
 
-        cardsInPlayersHand = new GridPane();
-        cardsInPlayersHand.setHgap(20);
-        cardsInPlayersHand.setVgap(20);
-        cardsInPlayersHand.setPadding(new Insets(40));
+        cardsInPlayersHandPane = new GridPane();
+        cardsInPlayersHandPane.setHgap(20);
+        cardsInPlayersHandPane.setVgap(20);
+        cardsInPlayersHandPane.setPadding(new Insets(40));
 
-        drawPlayerHand();
+        drawPlayerHandPane();
 
         /*
 
@@ -108,24 +108,24 @@ public class UNOGameView {
             faceUpCard.setId(String.valueOf(NUM_COLS));
             theModel.popNextDrawCard();
 
-            cardsInPlayersHand.add(faceUpCard, NUM_COLS, 0);
+            cardsInPlayersHandPane.add(faceUpCard, NUM_COLS, 0);
         }
          */
         playersHandHBox.getChildren()
-                .add(cardsInPlayersHand);
+                .add(cardsInPlayersHandPane);
 
-        VBox opponentsAndDeck = new VBox();
+        VBox opponentsAndDeckVBox = new VBox();
 
-        opponentsAndDeck.setSpacing(
+        opponentsAndDeckVBox.setSpacing(
                 100);
-        opponentsAndDeck.setPadding(
+        opponentsAndDeckVBox.setPadding(
                 new Insets(10, 10, 10, 10));
 
-        //create the model of opponents
-        GridPane opponents = new GridPane();
+        //create the model of opponentsPane
+        GridPane opponentsPane = new GridPane();
 
         for (int i = 0;
-             i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
+                i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
             StackPane opponentStack = new StackPane();
             /* TODO [Card Display] This is hardcoded to seven not linked to
                the actual number in the oppenent's hand.  This needs to be
@@ -143,40 +143,35 @@ public class UNOGameView {
                 opponentStack.getChildren().add(nextCard);
             }
 
-            //Add opponentStack to opponents
+            //Add opponentStack to opponentsPane
             /* TODO [Card Display] The hands stack in a weird way*/
-            opponents.setHgap(100);
-            opponents.setVgap(20);
-            opponents.setPadding(new Insets(20, 0, 0, 0));
-            opponents.setAlignment(Pos.TOP_CENTER);
-            opponents.add(opponentStack, i, 0);
+            opponentsPane.setHgap(100);
+            opponentsPane.setVgap(20);
+            opponentsPane.setPadding(new Insets(20, 0, 0, 0));
+            opponentsPane.setAlignment(Pos.TOP_CENTER);
+            opponentsPane.add(opponentStack, i, 0);
         }
 
-        drawAndDiscardDecks = new GridPane();
-        drawAndDiscardDecks.setHgap(20);
-        drawAndDiscardDecks.setVgap(20);
-        drawAndDiscardDecks.setPadding(new Insets(40));
+        drawAndDiscardDecksPane = new GridPane();
+        drawAndDiscardDecksPane.setHgap(20);
+        drawAndDiscardDecksPane.setVgap(20);
+        drawAndDiscardDecksPane.setPadding(new Insets(40));
 
         //create a card to represent the draw deck
         //TODO [Card Display] Draw deck should show top card of draw pile.
-        drawDeck = CardBackView.createCardBackView();
-
-        drawDeck.setPrefSize(
-                128, 178);
-        drawDeck.setMaxSize(
-                128, 178);
+        drawDeckPane = CardBackView.createCardBackView();
 
         //create a card to represent the discard deck
-        discardDeck.setPrefSize(128, 178);
-        discardDeck.setMaxSize(128, 178);
+        discardDeckPane.setPrefSize(128, 178);
+        discardDeckPane.setMaxSize(128, 178);
 
-        drawAndDiscardDecks.add(drawDeck, 0, 0);
-        drawAndDiscardDecks.add(discardDeck, 1, 0);
-        drawAndDiscardDecks.setAlignment(Pos.CENTER);
+        drawAndDiscardDecksPane.add(drawDeckPane, 0, 0);
+        drawAndDiscardDecksPane.add(discardDeckPane, 1, 0);
+        drawAndDiscardDecksPane.setAlignment(Pos.CENTER);
 
-        opponentsAndDeck.getChildren().add(opponents);
-        opponentsAndDeck.getChildren().add(drawAndDiscardDecks);
-        opponentsAndDeck.setAlignment(Pos.CENTER);
+        opponentsAndDeckVBox.getChildren().add(opponentsPane);
+        opponentsAndDeckVBox.getChildren().add(drawAndDiscardDecksPane);
+        opponentsAndDeckVBox.setAlignment(Pos.CENTER);
 
         //create the right box that hold the button
         VBox rightPanel = new VBox();
@@ -196,7 +191,7 @@ public class UNOGameView {
         rightPanel.getChildren()
                 .add(UNOButton);
 
-        root.setCenter(opponentsAndDeck);
+        root.setCenter(opponentsAndDeckVBox);
 
         root.setRight(rightPanel);
 
@@ -204,7 +199,7 @@ public class UNOGameView {
 
     }
 
-    protected void drawPlayerHand() {
+    protected void drawPlayerHandPane() {
         /*TODO [Card Display] The way these cards are being created, they cannot be
         referenced by the controller.  A suggestion would be to create a class
         instance variable that stores some type of datastructure that makes sense
@@ -219,7 +214,7 @@ public class UNOGameView {
             StackPane faceUpCard = CardFrontView.createCardFrontView(
                     card);
             faceUpCard.setId(String.valueOf(nextCol));
-            cardsInPlayersHand.add(faceUpCard, nextCol, 0);
+            cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
             nextCol++;
         }
     }
@@ -240,8 +235,8 @@ public class UNOGameView {
      *
      * @return the GridPane node
      */
-    public GridPane getCardsInPlayersHand() {
-        return cardsInPlayersHand;
+    public GridPane getCardsInPlayersHandPane() {
+        return cardsInPlayersHandPane;
     }
 
     /**
@@ -249,20 +244,20 @@ public class UNOGameView {
      *
      * @return the gridPane node
      */
-    public GridPane getDrawAndDiscardDecks() {
-        return drawAndDiscardDecks;
+    public GridPane getDrawAndDiscardDecksPane() {
+        return drawAndDiscardDecksPane;
     }
 
-    public StackPane getDrawDeck() {
-        return drawDeck;
+    public StackPane getDrawDeckPane() {
+        return drawDeckPane;
     }
 
-    public StackPane getDiscardDeck() {
-        return discardDeck;
+    public StackPane getDiscardDeckPane() {
+        return discardDeckPane;
     }
 
-    public void setDiscardDeck() throws EmptyDeckException {
-        this.discardDeck = CardFrontView.createCardFrontView(
+    public void setDiscardDeckPane() throws EmptyDeckException {
+        this.discardDeckPane = CardFrontView.createCardFrontView(
                 theModel.popNextDrawCard());;
     }
 
