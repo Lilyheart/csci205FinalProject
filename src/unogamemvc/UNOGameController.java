@@ -113,24 +113,11 @@ public class UNOGameController implements EventHandler<Event> {
 
         }
 
-//        System.out.println("***Clicked on card in hand***");
-//        //cardGUIIndex = Integer.parseInt(item.getId());
-//        System.out.println(item.getId());
-//        try {
-//            theModel.tryToPlayCardAction(Integer.parseInt(
-//                    item.getId()));
-//
-//            theView.drawPlayerHandPane();
-//
-//        } catch (EmptyDeckException ex) {
-//            Logger.getLogger(UNOGameController.class.getName()).log(
-//                    Level.SEVERE,
-//                    null, ex);
 //        }
     }
 
     /**
-     * ========================================================================
+     *
      * Creates an event when the cards in the players hands are clicked on.
      * Prints to the console as of now.
      */
