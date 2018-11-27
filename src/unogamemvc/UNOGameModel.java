@@ -40,6 +40,8 @@ public class UNOGameModel {
 
     private static Game unoGame;
 
+    private InvalidPlayPopup invalidPlayPopup;
+
     /**
      * An explicit constructor for the UNO Main GUI Model
      */
@@ -48,6 +50,7 @@ public class UNOGameModel {
         setNewDefaultGame();
         unoGame.startGame();
         System.out.println(unoGame.getTheDrawDeck());
+        this.invalidPlayPopup = new InvalidPlayPopup();
 
     }
 
@@ -128,6 +131,7 @@ public class UNOGameModel {
         if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex))) {
             System.out.println("Invalid play\n");
+            invalidPlayPopup.display();
             //POP-UP BOX
         }
         else {
@@ -144,6 +148,10 @@ public class UNOGameModel {
 
     public static int getHUMAN_PLAYER() {
         return HUMAN_PLAYER;
+    }
+
+    public InvalidPlayPopup getInvalidPlayPopup() {
+        return invalidPlayPopup;
     }
 
 }
