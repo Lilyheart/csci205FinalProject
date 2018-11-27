@@ -98,7 +98,11 @@ public class UNOGameController implements EventHandler<Event> {
                     theView.getDiscardDeckPane().getChildren().add(
                             CardFrontView.createCardFrontView(
                                     theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
+
+                    theView.getCardsInPlayersHandPane().getChildren().clear();
                     theView.drawPlayerHandPane();
+                    System.out.println(theModel.getUnoGame().getPlayersHandCopy(
+                            theModel.getHUMAN_PLAYER()));
 
                 } catch (EmptyDeckException ex) {
                     System.out.println("EMPTY DECK EXCEPTION");

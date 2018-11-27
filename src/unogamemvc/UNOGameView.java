@@ -210,6 +210,7 @@ public class UNOGameView {
                     card);
             faceUpCard.setId(String.valueOf(nextCol));
             cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
+
             nextCol++;
         }
     }
