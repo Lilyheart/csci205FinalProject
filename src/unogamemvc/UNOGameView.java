@@ -72,6 +72,10 @@ public class UNOGameView {
      */
     private StackPane discardDeckPane;
 
+    private GridPane opponentsPane;
+
+    private StackPane opponentStack;
+
     /**
      * An explicit constructor for the UNO game view
      *
@@ -122,27 +126,18 @@ public class UNOGameView {
                 new Insets(10, 10, 10, 10));
 
         //create the model of opponentsPane
-        GridPane opponentsPane = new GridPane();
+        opponentsPane = new GridPane();
 
         for (int i = 0;
-                i < UNOGameModel.getNUM_OF_COMPUTER_PLAYERS(); i++) {
-            StackPane opponentStack = new StackPane();
+                i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
+            drawComputerHandPane(
+                    theModel.getUnoGame().getPlayersHandCopy(i + 2).size());
+
             /* TODO [Card Display] This is hardcoded to seven not linked to
                the actual number in the oppenent's hand.  This needs to be
                linked once that code exists.
              */
             //Make bottom card
-            StackPane bottomCard = CardBackView.createCardBackView();
-            opponentStack.getChildren().add(bottomCard);
-
-            //Make next card
-            for (int j = 1; j < UNOGameModel.getSTARTING_NUM_OF_CARDS(); j++) {
-
-                StackPane nextCard = CardBackView.createCardBackView();
-                nextCard.setTranslateX(5 * j);
-                opponentStack.getChildren().add(nextCard);
-            }
-
             //Add opponentStack to opponentsPane
             /* TODO [Card Display] The hands stack in a weird way*/
             opponentsPane.setHgap(100);
@@ -219,6 +214,21 @@ public class UNOGameView {
         }
     }
 
+    protected void drawComputerHandPane(int numCards) {
+        opponentStack = new StackPane();
+
+        StackPane bottomCard = CardBackView.createCardBackView();
+        opponentStack.getChildren().add(bottomCard);
+
+        //Make next card
+        for (int j = 1; j < 7; j++) {
+            StackPane nextCard = CardBackView.createCardBackView();
+            nextCard.setTranslateX(5 * j);
+            opponentStack.getChildren().add(nextCard);
+        }
+
+    }
+
     /**
      * Returns the root BorderPane node
      *
@@ -258,7 +268,7 @@ public class UNOGameView {
 
     public void setDiscardDeckPane() throws EmptyDeckException {
         this.discardDeckPane = CardFrontView.createCardFrontView(
-                theModel.popNextDrawCard());;
+                theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
     }
 
     /**

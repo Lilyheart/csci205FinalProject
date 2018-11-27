@@ -16,17 +16,15 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import unogamemvc.cardcreator.CardFrontView;
 
 /**
  * A GUI Card Prototype MVC controller
@@ -57,7 +55,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-                             UNOGameView theView) throws EmptyDeckException {
+            UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -91,7 +89,22 @@ public class UNOGameController implements EventHandler<Event> {
             Object source = event.getSource();
             if (source instanceof StackPane) { //Any card clicked
                 System.out.println(((StackPane) source).getId());
+                try {
+                    System.out.println("XXXX"
+                            + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
+                    theModel.tryToPlayCardAction(
+                            Integer.parseInt(((StackPane) source).getId()));
+
+                    theView.getDiscardDeckPane().getChildren().add(
+                            CardFrontView.createCardFrontView(
+                                    theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
+                    theView.drawPlayerHandPane();
+
+                } catch (EmptyDeckException ex) {
+                    System.out.println("EMPTY DECK EXCEPTION");
+                }
                 this.activateCardsInPlayersHand();
+                //this.theView.drawPlayerHandPane();
             }
 
         }

@@ -34,11 +34,6 @@ public class UNOGameModel {
     private final static int NUM_OF_COMPUTER_PLAYERS = 3;
 
     /**
-     * Number of cards a player should start the game with
-     */
-    private final static int STARTING_NUM_OF_CARDS = 2;
-
-    /**
      * The Player idNum for the human player
      */
     private final static int HUMAN_PLAYER = 1;
@@ -106,10 +101,6 @@ public class UNOGameModel {
         return NUM_OF_COMPUTER_PLAYERS;
     }
 
-    public static int getSTARTING_NUM_OF_CARDS() {
-        return STARTING_NUM_OF_CARDS;
-    }
-
     /**
      * Takes a card from the draw deck and adds it to the players hand.
      */
@@ -127,7 +118,6 @@ public class UNOGameModel {
             }
         }
     }
-//==============================================================================================
 
     public void tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
         System.out.println(unoGame.getPlayersHandCopy(
@@ -137,9 +127,12 @@ public class UNOGameModel {
 
         if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex))) {
-            System.out.println("Invalid play");
-
+            System.out.println("Invalid play\n");
+            //POP-UP BOX
+        }
+        else {
             unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+            System.out.println("Valid Play\n");
 
         }
 
