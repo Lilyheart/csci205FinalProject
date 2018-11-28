@@ -30,6 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public final class AIHelper {
 
     /**
+     * get a valid card to play
      *
      * @param hand
      * @param discardCard
@@ -44,7 +45,7 @@ public final class AIHelper {
 
         //Testing color and type of number cards
         for (int i = 0; i < hand.size(); i++) {
-            //TODO [AI] Only test color and value of number cards
+            //Only test color and value of number cards
 
             //Testing color, play the card if matches
             if (hand.get(i).getColor() == discardColor) {
@@ -65,9 +66,16 @@ public final class AIHelper {
         return -1;
     }
 
+    /**
+     * get the correct play command
+     *
+     * @param hand
+     * @param discardCard
+     * @return
+     */
     public PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
                                       Card discardCard) {
-        //TODO [AI] If one card left, call Uno
+        //If one card left, call Uno
         if (hand.size() == 1) {
             return PlayCommand.BUNO;
         }

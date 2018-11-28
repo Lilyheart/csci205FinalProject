@@ -16,9 +16,9 @@
 package unogame;
 
 /**
- * enum for storing playCommand
+ * enum class for storing playCommand
  *
- * @author user
+ * @author Rachel Wang
  */
 public enum PlayCommand {
 
