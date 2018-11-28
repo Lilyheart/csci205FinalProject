@@ -20,8 +20,7 @@ import deck.PlayerHand;
 import deck.card.Card;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 import unogame.helpers.AIHelper;
 import unogame.helpers.CLIHelper;
 
@@ -199,6 +198,14 @@ public class GameCLI {
             case BUNO:
                 //TODO [Basic Game] Call Buno
                 break;
+        }
+
+        //Provide feedback on screen and pause for effect
+        System.out.println("Playing computer player " + playerID);
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException ex) {
+            //If sleep doesn't happen, game can continue to progress, it's purely for effect
         }
 
     }
