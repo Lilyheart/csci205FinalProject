@@ -18,9 +18,13 @@ package unogamemvc;
 import deck.EmptyDeckException;
 import deck.card.Card;
 import java.util.concurrent.CopyOnWriteArrayList;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -97,6 +101,26 @@ public class UNOGameView {
     private Button UNOButton;
 
     /**
+     * Menu bar that displays options to click
+     */
+    private MenuBar menuBar;
+
+    /**
+     * Menu option that displays UNO rules
+     */
+    private Menu getHelp;
+
+    /**
+     * Menu option that shows choice to exit the game
+     */
+    private Menu exit;
+
+    /**
+     * Menu Item that exits the game
+     */
+    private MenuItem exit2;
+
+    /**
      * An explicit constructor for the UNO game view
      *
      * @author Lily Romano
@@ -129,9 +153,6 @@ public class UNOGameView {
         drawDeckPane = CardBackView.createCardBackView();
 
         //create a card to represent the discard deck
-        discardDeckPane.setPrefSize(128, 178);
-        discardDeckPane.setMaxSize(128, 178);
-
         drawAndDiscardDecksPane.add(drawDeckPane, 0, 0);
         drawAndDiscardDecksPane.add(discardDeckPane, 1, 0);
         drawAndDiscardDecksPane.setAlignment(Pos.CENTER);
@@ -145,6 +166,16 @@ public class UNOGameView {
 
         rightPanel.getChildren().add(UNOButton);
 
+        menuBar = new MenuBar();
+        getHelp = new Menu("Help");
+        exit = new Menu("Exit");
+        exit2 = new MenuItem("Goodbye!");
+        exit2.setOnAction(e -> Platform.exit());
+        exit.getItems().add(this.exit2);
+
+        menuBar.getMenus().addAll(getHelp, exit);
+
+        root.setTop(menuBar);
         root.setCenter(opponentsAndDeckVBox);
         root.setRight(rightPanel);
         root.setBottom(playersHandHBox);
@@ -214,12 +245,23 @@ public class UNOGameView {
         CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
                 theModel.getHUMAN_PLAYER());
         int nextCol = 0;
+        int secondRow = 0;
+
         for (Card card : playersHand) {
             StackPane faceUpCard = CardFrontView.createCardFrontView(
                     card);
             faceUpCard.setId(String.valueOf(nextCol));
-            cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
+            /*
+            if (nextCol >= 9) {//Make final global
+                cardsInPlayersHandPane.add(faceUpCard, secondRow, 1);
+                secondRow++;
+            }
+            else {
+                cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
+                nextCol++;
 
+            }*/
+            cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
             nextCol++;
         }
     }
