@@ -59,7 +59,7 @@ public class UNOGameView {
     /**
      * The Grid on which the Player's cards are displayed.
      */
-    private GridPane cardsInPlayersHandPane;
+    private StackPane cardsInPlayersHandPane;
 
     /**
      * The Grid which hold the two decks.
@@ -186,7 +186,7 @@ public class UNOGameView {
         return root;
     }
 
-    public GridPane getCardsInPlayersHandPane() {
+    public StackPane getCardsInPlayersHandPane() {
         return cardsInPlayersHandPane;
     }
 
@@ -246,11 +246,12 @@ public class UNOGameView {
                 theModel.getHUMAN_PLAYER());
         int nextCol = 0;
         int secondRow = 0;
-
+        int j = 1;
         for (Card card : playersHand) {
             StackPane faceUpCard = CardFrontView.createCardFrontView(
                     card);
             faceUpCard.setId(String.valueOf(nextCol));
+            faceUpCard.setTranslateX(30 * j);
             /*
             if (nextCol >= 9) {//Make final global
                 cardsInPlayersHandPane.add(faceUpCard, secondRow, 1);
@@ -261,8 +262,13 @@ public class UNOGameView {
                 nextCol++;
 
             }*/
-            cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
+            //cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
+
+            //cardsInPlayersHandPane.setHgap(1);
+            cardsInPlayersHandPane.getChildren().add(faceUpCard);
             nextCol++;
+            j++;
+
         }
     }
 
@@ -352,9 +358,9 @@ public class UNOGameView {
         playersHandHBox.setSpacing(100);
         playersHandHBox.setPadding(new Insets(10, 10, 10, 10));
 
-        cardsInPlayersHandPane = new GridPane();
-        cardsInPlayersHandPane.setHgap(20);
-        cardsInPlayersHandPane.setVgap(20);
+        cardsInPlayersHandPane = new StackPane();
+        //cardsInPlayersHandPane.setHgap(20);
+        //cardsInPlayersHandPane.setVgap(20);
         cardsInPlayersHandPane.setPadding(new Insets(40));
     }
 
