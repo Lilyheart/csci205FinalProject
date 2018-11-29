@@ -18,7 +18,6 @@ package unogame.helpers;
 import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
-import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import unogame.NoValidCardException;
 import unogame.PlayCommand;
@@ -32,7 +31,6 @@ import unogame.PlayCommand;
  */
 public final class AIHelper {
 
-//    private boolean BUno = false;
     /**
      * get a valid card to play
      *
@@ -81,45 +79,15 @@ public final class AIHelper {
     public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
                                              Card discardCard) {
 
+        System.out.println("H: " + hand);
+
         try {
             getValidCard(hand, discardCard);
-            //If second to last card, call Uno
-            if (hand.size() == 2) {
-                Random rand = new Random();
-                double chance = rand.nextDouble();
-                if (chance > .1) {
-//                    BUno = true;
-                }
-            }
         } catch (NoValidCardException ex) {
             return PlayCommand.DRAW;
-        } finally { //check if there is a playable card, if so play; else pass
-            try {
-                hand = new CopyOnWriteArrayList<Card>();
-                getValidCard(hand, discardCard);
-                return PlayCommand.PLAYCARD;
-            } catch (NoValidCardException ex) {
-                return PlayCommand.PASS;
-            }
         }
-    }
 
-    /**
-     * the AI has 90% chance to correctly catch if the previous player forgot to
-     * call BUno
-     *
-     * @param hand
-     * @return whether the previous player forgot to call BUno
-     *
-     */
-    public static boolean catchBuno(CopyOnWriteArrayList<Card> hand) {
-        if (hand.size() == 1) {
-            Random rand = new Random();
-            double chance = rand.nextDouble();
-//            if (chance > .1 && BUno == false) {
-//                return true; // the previous player forgot to call BUno
-//            }
-        }
-        return false;
+        return PlayCommand.PLAYCARD;
+
     }
 }
