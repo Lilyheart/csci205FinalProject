@@ -34,7 +34,7 @@ import unogame.PlayCommand;
 public final class AIHelper {
 
     /**
-     * get a valid card to play
+     * get a valid card to play and play the "best" playable card
      *
      * @param hand
      * @param discardCard
@@ -48,26 +48,38 @@ public final class AIHelper {
         boolean isCardPlayable = false;
 
         //Testing color and type of number cards
+        int maxValue = 0;
+        int maxID = 0;
+
         for (int i = 0; i < hand.size(); i++) {
             //Only test color and value of number cards
-
+            //Keep track of maxID and maxValue of the playable card
+            int curValue = hand.get(i).getType().getCardPointValue();
             //Testing color, play the card if matches
             if (hand.get(i).getColor() == discardColor) {
                 isCardPlayable = true;
-                return i;
+
+                if (maxValue < curValue) {
+                    maxValue = curValue;
+                    maxID = i;
+                }
             }
             //Testing type, play the card if matches
             if (hand.get(i).getType() == discardType) {
                 isCardPlayable = true;
-                return i;
+                if (maxValue < curValue) {
+                    maxValue = curValue;
+                    maxID = i;
+                }
             }
         }
-        if (!isCardPlayable) {
+
+        if (isCardPlayable) {
+            return maxID; //AI will always play the card with the highest value
+        }
+        else {
             throw new NoValidCardException();
         }
-
-        //Should never hit this point
-        return -1;
     }
 
     /**
