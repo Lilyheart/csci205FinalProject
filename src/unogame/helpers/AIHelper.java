@@ -13,13 +13,15 @@
 *
 * ****************************************
  */
-package unogame;
+package unogame.helpers;
 
 import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import unogame.NoValidCardException;
+import unogame.PlayCommand;
 
 /**
  * Helper class for Artificial Players to determine the action of the computer
@@ -30,8 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class AIHelper {
 
-    private boolean BUno = false;
-
+//    private boolean BUno = false;
     /**
      * get a valid card to play
      *
@@ -40,8 +41,8 @@ public final class AIHelper {
      * @return
      * @throws NoValidCardException
      */
-    public int getValidCard(CopyOnWriteArrayList<Card> hand,
-                            Card discardCard) throws NoValidCardException {
+    public static int getValidCard(CopyOnWriteArrayList<Card> hand,
+                                   Card discardCard) throws NoValidCardException {
         CardType discardType = discardCard.getType();
         CardColor discardColor = discardCard.getColor();
         boolean isCardPlayable = false;
@@ -77,8 +78,8 @@ public final class AIHelper {
      * @param discardCard
      * @return the correct play command
      */
-    public PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
-                                      Card discardCard) {
+    public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
+                                             Card discardCard) {
 
         try {
             getValidCard(hand, discardCard);
@@ -87,7 +88,7 @@ public final class AIHelper {
                 Random rand = new Random();
                 double chance = rand.nextDouble();
                 if (chance > .1) {
-                    BUno = true;
+//                    BUno = true;
                 }
             }
         } catch (NoValidCardException ex) {
@@ -111,13 +112,13 @@ public final class AIHelper {
      * @return whether the previous player forgot to call BUno
      *
      */
-    public boolean catchBuno(CopyOnWriteArrayList<Card> hand) {
+    public static boolean catchBuno(CopyOnWriteArrayList<Card> hand) {
         if (hand.size() == 1) {
             Random rand = new Random();
             double chance = rand.nextDouble();
-            if (chance > .1 && BUno == false) {
-                return true; // the previous player forgot to call BUno
-            }
+//            if (chance > .1 && BUno == false) {
+//                return true; // the previous player forgot to call BUno
+//            }
         }
         return false;
     }

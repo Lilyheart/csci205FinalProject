@@ -22,10 +22,10 @@ package unogame;
  */
 public enum PlayCommand {
 
-//    /**
-//     * enum when player wants to call BUNO
-//     */
-//    BUNO,
+    /**
+     * enum when player wants to call BUNO
+     */
+    BUNO,
     /**
      * enum when player wants to draw
      */
