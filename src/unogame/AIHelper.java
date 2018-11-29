@@ -18,16 +18,19 @@ package unogame;
 import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Help class for Artificial Players to determine the action of the computer
+ * Helper class for Artificial Players to determine the action of the computer
  * player
  *
  * @author Rachel Wang
  *
  */
 public final class AIHelper {
+
+    private boolean BUno = false;
 
     /**
      * get a valid card to play
@@ -67,25 +70,54 @@ public final class AIHelper {
     }
 
     /**
-     * get the correct play command
+     * draw and/or discard a valid card call BUno if second to last card is
+     * playable the AI has 90% chance to call BUno correctly
      *
      * @param hand
      * @param discardCard
-     * @return
+     * @return the correct play command
      */
     public PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
                                       Card discardCard) {
-        //If one card left, call Uno
-        if (hand.size() == 1) {
-            return PlayCommand.BUNO;
-        }
+
         try {
             getValidCard(hand, discardCard);
+            //If second to last card, call Uno
+            if (hand.size() == 2) {
+                Random rand = new Random();
+                double chance = rand.nextDouble();
+                if (chance > .1) {
+                    BUno = true;
+                }
+            }
         } catch (NoValidCardException ex) {
             return PlayCommand.DRAW;
-        } finally {
-            return PlayCommand.PLAYCARD;
+        } finally { //check if there is a playable card, if so play; else pass
+            try {
+                getValidCard(hand, discardCard);
+                return PlayCommand.PLAYCARD;
+            } catch (NoValidCardException ex) {
+                return PlayCommand.PASS;
+            }
         }
+    }
 
+    /**
+     * the AI has 90% chance to correctly catch if the previous player forgot to
+     * call BUno
+     *
+     * @param hand
+     * @return whether the previous player forgot to call BUno
+     *
+     */
+    public boolean catchBuno(CopyOnWriteArrayList<Card> hand) {
+        if (hand.size() == 1) {
+            Random rand = new Random();
+            double chance = rand.nextDouble();
+            if (chance > .1 && BUno == false) {
+                return true; // the previous player forgot to call BUno
+            }
+        }
+        return false;
     }
 }

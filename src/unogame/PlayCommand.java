@@ -22,10 +22,10 @@ package unogame;
  */
 public enum PlayCommand {
 
-    /**
-     * enum when player wants to call BUNO
-     */
-    BUNO,
+//    /**
+//     * enum when player wants to call BUNO
+//     */
+//    BUNO,
     /**
      * enum when player wants to draw
      */
@@ -33,5 +33,10 @@ public enum PlayCommand {
     /**
      * enum when player wnats to play a card
      */
-    PLAYCARD;
+    PLAYCARD,
+    /**
+     * enum when still no valid card to play after the draw or the user chooses
+     * to skip a playable card
+     */
+    PASS;
 }
