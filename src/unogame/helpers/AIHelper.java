@@ -15,6 +15,7 @@
  */
 package unogame.helpers;
 
+import deck.PlayerHand;
 import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
@@ -32,7 +33,6 @@ import unogame.PlayCommand;
  */
 public final class AIHelper {
 
-//    private boolean BUno = false;
     /**
      * get a valid card to play
      *
@@ -71,31 +71,43 @@ public final class AIHelper {
     }
 
     /**
-     * draw and/or discard a valid card call BUno if second to last card is
-     * playable the AI has 90% chance to call BUno correctly
+     * call BUno if second to last card is playable the AI has 90% chance to
+     * call BUno correctly
+     *
+     * @param hand
+     * @return true if it's ready to call Buno; false otherwise
+     */
+    public boolean isTimeForBuno(PlayerHand hand) {
+        //If second to last card, call Uno
+        if (hand.getDeckSize() == 2) {
+            Random rand = new Random();
+            double chance = rand.nextDouble();
+            if (chance > .1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * draw and/or discard a valid card
      *
      * @param hand
      * @param discardCard
-     * @return the correct play command
+     * @return the correct play command: Draw/Play/Pass
      */
     public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
                                              Card discardCard) {
 
         try {
             getValidCard(hand, discardCard);
-            //If second to last card, call Uno
-            if (hand.size() == 2) {
-                Random rand = new Random();
-                double chance = rand.nextDouble();
-                if (chance > .1) {
-//                    BUno = true;
-                }
-            }
+
         } catch (NoValidCardException ex) {
             return PlayCommand.DRAW;
         } finally { //check if there is a playable card, if so play; else pass
             try {
-                hand = new CopyOnWriteArrayList<Card>();
+                //hand = new CopyOnWriteArrayList<Card>();
+
                 getValidCard(hand, discardCard);
                 return PlayCommand.PLAYCARD;
             } catch (NoValidCardException ex) {
@@ -105,20 +117,19 @@ public final class AIHelper {
     }
 
     /**
-     * the AI has 90% chance to correctly catch if the previous player forgot to
-     * call BUno
+     * the AI has 90% chance to Buno the active player
      *
      * @param hand
-     * @return whether the previous player forgot to call BUno
+     * @return true if Buno the active player
      *
      */
-    public static boolean catchBuno(CopyOnWriteArrayList<Card> hand) {
-        if (hand.size() == 1) {
+    public static boolean isTimeToBunoActivePlayer(PlayerHand activePlayerHand) {
+        if (activePlayerHand.getDeckSize() == 1) {
             Random rand = new Random();
             double chance = rand.nextDouble();
-//            if (chance > .1 && BUno == false) {
-//                return true; // the previous player forgot to call BUno
-//            }
+            if (chance > .1) {
+                return true;
+            }
         }
         return false;
     }
