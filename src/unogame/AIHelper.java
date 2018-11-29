@@ -94,6 +94,7 @@ public final class AIHelper {
             return PlayCommand.DRAW;
         } finally { //check if there is a playable card, if so play; else pass
             try {
+                hand = new CopyOnWriteArrayList<Card>();
                 getValidCard(hand, discardCard);
                 return PlayCommand.PLAYCARD;
             } catch (NoValidCardException ex) {
