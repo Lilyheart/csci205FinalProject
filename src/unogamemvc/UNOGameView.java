@@ -376,4 +376,8 @@ public class UNOGameView {
         drawAndDiscardDecksPane.setPadding(new Insets(40));
     }
 
+    public GridPane getOpponentsPane() {
+        return opponentsPane;
+    }
+
 }

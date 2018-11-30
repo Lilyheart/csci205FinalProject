@@ -145,6 +145,8 @@ public class UNOGameController implements EventHandler<Event> {
 
                     //redraw the hand
                     theView.drawPlayerHandPane();
+                    //theView.getOpponentsPane().getChildren().clear();
+
                     activateCardsInPlayersHand();
 
                 }
