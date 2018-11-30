@@ -16,6 +16,7 @@
 package prototypegui;
 
 import deck.card.Card;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -73,11 +74,57 @@ public class MainGuiController implements EventHandler<Event> {
             CardFrontView.changeCardFrontView(newCard,
                                               (StackPane) theView.getFaceUpPane());
         }
+        else if (event.getSource() == theView.getBtn()) {
+            System.out.println("XXX");
+            startTask();
+        }
 
         if (eType == KeyEvent.KEY_PRESSED) {
             KeyEvent target = (KeyEvent) event;
             if (target.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
+            }
+        }
+    }
+
+    public void startTask() {
+        // Create a Runnable
+        Runnable task = new Runnable() {
+            public void run() {
+                runTask();
+            }
+        };
+
+        // Run the task in a background thread
+        Thread backgroundThread = new Thread(task);
+        // Terminate the running thread if the application exits
+        backgroundThread.setDaemon(true);
+        // Start the thread
+        backgroundThread.start();
+    }
+
+    public void runTask() {
+        for (int i = 0; i < 1000; i++) {
+            try {
+                // Update the card on the JavaFx Application Thread
+                Platform.runLater((new Runnable() {
+                    @Override
+                    public void run() {
+                        Card newCard = theModel.getNextComputerCard();
+                        CardFrontView.changeCardFrontView(newCard,
+                                                          (StackPane) theView.getFaceUpComputerPane());
+                    }
+                }));
+                Thread.sleep(1000);
+
+                //Sleep the computer for 2 seconds
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException ex) {
+                    //If sleep doesn't happen, game can continue to progress, it's purely for effect
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Error: " + e);
             }
         }
     }
