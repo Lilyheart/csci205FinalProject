@@ -22,6 +22,7 @@ import deck.PlayerHand;
 import deck.card.Card;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
+import unogame.helpers.AIHelper;
 
 /**
  * Creates and manages an unoGame
@@ -56,6 +57,8 @@ public class Game {
     private Boolean isGameStarted;
 
     private ScorePanel scorePanel;
+
+    private Boolean isBUnoLastTurnPlayed;
 
     /**
      * An explicit constructor for a new game.
@@ -126,6 +129,19 @@ public class Game {
     }
 
     /**
+     * Returns a copy of the player's hand.
+     *
+     * @author Lily Romano
+     *
+     * @param playerID The playerID of the player's hand to return.
+     * @return a copy of the player's hand.
+     */
+    public PlayerHand getPlayersCopy(int playerID) {
+        int playerIndex = playerID - 1;
+        return players.get(playerIndex);
+    }
+
+    /**
      * Starts a new game by popping the top card of the draw deck onto the
      * discard deck
      *
@@ -170,6 +186,45 @@ public class Game {
         }
 
         players.add(newPlayer);
+    }
+
+    public void computerTurn(int playerID) throws NoValidCardException, EmptyDeckException {
+        PlayerHand hand = getPlayersCopy(playerID);
+        Card discardCard = getTheDiscardDeck().peekBottomCard();
+
+        PlayCommand playcommand = AIHelper.getPlayCommand(
+                getPlayersHandCopy(playerID),
+                discardCard);
+
+        //TODO [Refactor] Dry out this code
+        switch (playcommand) {
+            case DRAW:
+                playcommand = AIHelper.getPlayCommand(
+                        getPlayersHandCopy(playerID),
+                        discardCard);
+                if (playcommand == PlayCommand.PLAYCARD) {
+                    boolean isbuno = AIHelper.isTimeForBuno(hand);
+                    if (isbuno) {
+                        isBUnoLastTurnPlayed = true;
+                    }
+                    int cardToPlay = AIHelper.getValidCard(
+                            getPlayersHandCopy(playerID),
+                            discardCard);
+                    playCard(playerID, cardToPlay);
+                }
+                break;
+            case PLAYCARD:
+                boolean isbuno = AIHelper.isTimeForBuno(hand);
+                if (isbuno) {
+                    isBUnoLastTurnPlayed = true;
+                }
+                int cardToPlay = AIHelper.getValidCard(
+                        getPlayersHandCopy(playerID),
+                        discardCard);
+                playCard(playerID, cardToPlay);
+                break;
+        }
+
     }
 
     /**
@@ -254,6 +309,13 @@ public class Game {
 
     public LinkedList<PlayerHand> getPlayers() {
         return players;
+    }
+
+    public Boolean getAndClearIsBUnoLastTurnPlayed() {
+        Boolean originalValue = isBUnoLastTurnPlayed;
+        isBUnoLastTurnPlayed = false;
+
+        return originalValue;
     }
 
 }
