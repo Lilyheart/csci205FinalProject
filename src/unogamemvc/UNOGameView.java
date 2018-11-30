@@ -16,12 +16,14 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
+import deck.PlayerHand;
 import deck.card.Card;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -30,6 +32,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import unogamemvc.cardcreator.CardBackView;
 import unogamemvc.cardcreator.CardFrontView;
 
@@ -95,6 +100,12 @@ public class UNOGameView {
      * Container that holds the button
      */
     private VBox rightPanel;
+
+    /**
+     * Container that holds the button
+     */
+    private VBox leftPanel;
+
     /**
      * The button to press when a user wants to shout UNO!
      */
@@ -178,6 +189,37 @@ public class UNOGameView {
         root.setTop(menuBar);
         root.setCenter(opponentsAndDeckVBox);
         root.setRight(rightPanel);
+        //----------------------------------------------------------------------
+        leftPanel = new VBox();
+        leftPanel.setPadding(new Insets(10, 10, 10, 10));
+        //leftPanel.setAlignment(Pos.BOTTOM_RIGHT);
+        leftPanel.setSpacing(20);
+        int i = 0;
+        for (PlayerHand player : theModel.getUnoGame().getPlayers()) {
+            Label name;
+            Label score;
+            if (!player.isComputerPlayer()) {
+                name = new Label("HUMAN PLAYER");
+                score = new Label(String.valueOf(
+                        theModel.getUnoGame().getScorePanel().getScores(0)));
+
+            }
+            else {
+                name = new Label("Computer " + i);
+                score = new Label(String.valueOf(
+                        theModel.getUnoGame().getScorePanel().getScores(0)));
+            }
+            i++;
+            name.setFont(Font.font("Verdana", FontWeight.BLACK,
+                    FontPosture.REGULAR, 30));
+            name.setUnderline(true);
+            score.setFont(Font.font("Arial", 26));
+            leftPanel.getChildren().addAll(name, score);
+            leftPanel.setAlignment(Pos.CENTER);
+        }
+
+        root.setLeft(leftPanel);
+        //----------------------------------------------------------------------
         root.setBottom(playersHandHBox);
 
     }

@@ -55,6 +55,8 @@ public class Game {
      */
     private Boolean isGameStarted;
 
+    private ScorePanel scorePanel;
+
     /**
      * An explicit constructor for a new game.
      *
@@ -138,6 +140,8 @@ public class Game {
             System.out.println(ex);
             System.exit(-1);
         }
+        scorePanel = new ScorePanel(players);
+        //System.out.println(scorePanel.getScores(0));
     }
 
     /**
@@ -242,6 +246,14 @@ public class Game {
 
     public DiscardDeck getTheDiscardDeck() {
         return theDiscardDeck;
+    }
+
+    public ScorePanel getScorePanel() {
+        return scorePanel;
+    }
+
+    public LinkedList<PlayerHand> getPlayers() {
+        return players;
     }
 
 }

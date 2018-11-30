@@ -54,6 +54,22 @@ public class UNOGameModel {
 
     }
 
+    public static int getNUM_OF_COMPUTER_PLAYERS() {
+        return NUM_OF_COMPUTER_PLAYERS;
+    }
+
+    public static Game getUnoGame() {
+        return unoGame;
+    }
+
+    public static int getHUMAN_PLAYER() {
+        return HUMAN_PLAYER;
+    }
+
+    public InvalidPlayPopup getInvalidPlayPopup() {
+        return invalidPlayPopup;
+    }
+
     /**
      * Creates a new default game
      *
@@ -100,10 +116,6 @@ public class UNOGameModel {
 
     }
 
-    public static int getNUM_OF_COMPUTER_PLAYERS() {
-        return NUM_OF_COMPUTER_PLAYERS;
-    }
-
     /**
      * Takes a card from the draw deck and adds it to the players hand.
      */
@@ -140,18 +152,6 @@ public class UNOGameModel {
 
         }
 
-    }
-
-    public static Game getUnoGame() {
-        return unoGame;
-    }
-
-    public static int getHUMAN_PLAYER() {
-        return HUMAN_PLAYER;
-    }
-
-    public InvalidPlayPopup getInvalidPlayPopup() {
-        return invalidPlayPopup;
     }
 
 }
