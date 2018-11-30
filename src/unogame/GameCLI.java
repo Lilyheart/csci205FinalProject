@@ -78,12 +78,11 @@ public class GameCLI {
             //TODO [Advanced Game] Change direction code
             //Process player's turn
             humanPlayerTurn();
+
+            //Process computer's turn
             for (int i = 0; i < unoGame.getNumComputerPlayers(); i++) {
                 computerPlayerTurn(i + 2);
             }
-
-            //Process computer's turn
-            //TODO [Basic Game] Computer's turn
         }
     }
 
@@ -113,7 +112,7 @@ public class GameCLI {
     private static void humanPlayerTurn() {
         displayGameBoard();
 
-        PlayCommand playCommand = getPlayCommand();
+        PlayCommand playCommand = getPlayCommand(1);
         switch (playCommand) {
             case PLAYCARD: //Play Card
                 boolean cardIsLegal = false;
@@ -135,9 +134,10 @@ public class GameCLI {
                 }
                 break;
             case DRAW: //Draw Card
-                //TODO [Basic Game]
                 boolean isDrawSuccessful = false;
-                //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
+                //XXX [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
+                //Coding this fix doesn't have enough of a payoff.  Close the CLI and restart as CLI is just used
+                //For testing prior to GUI implementation.
                 while (!isDrawSuccessful) {
                     try {
                         unoGame.drawCard(HUMAN_PLAYER);
@@ -146,10 +146,40 @@ public class GameCLI {
                         unoGame.shuffleDiscardToDrawDeck();
                     }
                 }
+
+                //Play again
+                displayGameBoard();
+
+                playCommand = getPlayCommand(2);
+                switch (playCommand) {
+                    case PLAYCARD: //Play Card
+                        cardIsLegal = false;
+                        while (!cardIsLegal) {
+                            int playCardIndex = getPlayCard();
+                            if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
+                                    HUMAN_PLAYER).get(playCardIndex))) {
+                                System.out.println("Invalid play");
+                                continue;
+                            }
+                            try {
+                                unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+                                cardIsLegal = true;
+                            } catch (EmptyDeckException ex) {
+                                //playCard is already limited to only cards in the hand.  This should never be hit.
+                                System.out.println(ex);
+                                System.exit(-1);
+                            }
+                        }
+                        break;
+                    case BUNO:
+                        System.out.println("Called BUno!");
+                        break;
+                }
+
                 break;
-//            case BUNO:
-//                //TODO [Basic Game] Call Buno
-//                break;
+            case BUNO:
+                //TODO [Basic Game] Call Buno
+                break;
         }
 
     }
@@ -163,7 +193,7 @@ public class GameCLI {
                 unoGame.getPlayersHandCopy(playerID),
                 unoGame.getTheDiscardDeck().peekBottomCard());
         System.out.print(
-                "XXXXXXXXXX      " + playerID + "       XXXXXXXXXXXXXX:   " + playCommand);
+                ">>>>>>>> Player " + playerID + " chooses to: " + playCommand);
         switch (playCommand) {
             case PLAYCARD: //Play Card
                 try {
@@ -194,6 +224,37 @@ public class GameCLI {
                         unoGame.shuffleDiscardToDrawDeck();
                     }
                 }
+
+                //Play again
+                displayGameBoard();
+
+                playCommand = AIHelper.getPlayCommand(
+                        unoGame.getPlayersHandCopy(playerID),
+                        unoGame.getTheDiscardDeck().peekBottomCard());
+                System.out.print(
+                        ">>>>>>>> Player " + playerID + " chooses to: " + playCommand);
+                switch (playCommand) {
+                    case PLAYCARD: //Play Card
+                        try {
+                            int playCardIndex = AIHelper.getValidCard(
+                                    unoGame.getPlayersHandCopy(playerID),
+                                    unoGame.getTheDiscardDeck().peekBottomCard());
+                            unoGame.playCard(playerID, playCardIndex);
+                        } catch (NoValidCardException ex) {
+                            //getValidCard is already limited to only cards in the hand.  This should never be hit.
+                            System.out.println(ex);
+                            System.exit(-1);
+                        } catch (EmptyDeckException ex) {
+                            //playCard is already limited to only cards in the hand.  This should never be hit.
+                            System.out.println(ex);
+                            System.exit(-1);
+                        }
+                        break;
+                    case BUNO:
+
+                        break;
+                }
+
                 break;
 //            case BUNO:
 //                //TODO [Basic Game] Call Buno
@@ -282,32 +343,48 @@ public class GameCLI {
      *
      * @return an integer representing the play command
      */
-    private static PlayCommand getPlayCommand() {
-        //TODO [Basic Game] Set up enums instead of int?
-        if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).isEmpty()) {
+    private static PlayCommand getPlayCommand(int playTurn) {
+        if (playTurn == 1) {
+            if (unoGame.getPlayersHandCopy(HUMAN_PLAYER).isEmpty()) {
+                System.out.println(
+                        ">>Select an option: \n  1. Draw a card    2. Call Uno on another player");
+                int keyboardInt = CLIHelper.getKeyboardInt(2);
+                switch (keyboardInt) {
+                    case 1:
+                        return PlayCommand.DRAW;
+                    case 2:
+                        return PlayCommand.BUNO;
+                }
+            }
+            //else
             System.out.println(
-                    ">>Select an option: \n  1. Draw a card    2. Call Uno");
-            int keyboardInt = CLIHelper.getKeyboardInt(2);
+                    ">>Select an option: \n  1. Play a card     2. Draw a card    3. Call Uno on another player");
+
+            int keyboardInt = CLIHelper.getKeyboardInt(3);
             switch (keyboardInt) {
                 case 1:
-                    return PlayCommand.DRAW;
+                    return PlayCommand.PLAYCARD;
                 case 2:
+                    return PlayCommand.DRAW;
+                case 3:
+                default:
                     return PlayCommand.BUNO;
             }
         }
-        //else
-        System.out.println(
-                ">>Select an option: \n  1. Play a card     2. Draw a card    3. Call Uno");
+        else {
+            System.out.println(
+                    ">>Select an option: \n  1. Play a card     2. Call Uno on another player");
 
-        int keyboardInt = CLIHelper.getKeyboardInt(3);
-        switch (keyboardInt) {
-            case 1:
-                return PlayCommand.PLAYCARD;
-            case 2:
-                return PlayCommand.DRAW;
-            case 3:
-            default:
-                return PlayCommand.BUNO;
+            int keyboardInt = CLIHelper.getKeyboardInt(3);
+            switch (keyboardInt) {
+                case 1:
+                    return PlayCommand.PLAYCARD;
+                case 2:
+                    return PlayCommand.DRAW;
+                case 3:
+                default:
+                    return PlayCommand.BUNO;
+            }
         }
     }
 
