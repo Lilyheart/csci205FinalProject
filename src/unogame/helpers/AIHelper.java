@@ -111,8 +111,6 @@ public final class AIHelper {
     public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
                                              Card discardCard) {
 
-        System.out.println("H: " + hand);
-
         try {
             getValidCard(hand, discardCard);
         } catch (NoValidCardException ex) {

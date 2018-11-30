@@ -189,6 +189,9 @@ public class Game {
     }
 
     public void computerTurn(int playerID) throws NoValidCardException, EmptyDeckException {
+        System.out.printf(">>User %d playing: ", playerID);//TODO
+        System.out.print(
+                "\n\tBefore Hand: " + getPlayersHandCopy(playerID) + "\n\t");//TODO
         PlayerHand hand = getPlayersCopy(playerID);
         Card discardCard = getTheDiscardDeck().peekBottomCard();
 
@@ -196,34 +199,44 @@ public class Game {
                 getPlayersHandCopy(playerID),
                 discardCard);
 
+        System.out.print(playcommand + " ");//TODO
+
         //TODO [Refactor] Dry out this code
         switch (playcommand) {
             case DRAW:
                 playcommand = AIHelper.getPlayCommand(
                         getPlayersHandCopy(playerID),
                         discardCard);
+
+                System.out.print(playcommand + " ");//TODO
                 if (playcommand == PlayCommand.PLAYCARD) {
                     boolean isbuno = AIHelper.isTimeForBuno(hand);
                     if (isbuno) {
                         isBUnoLastTurnPlayed = true;
+                        System.out.print("BUNO! ");//TOOD
                     }
                     int cardToPlay = AIHelper.getValidCard(
                             getPlayersHandCopy(playerID),
                             discardCard);
                     playCard(playerID, cardToPlay);
+                    System.out.print("Playing Card " + cardToPlay);//TODO
                 }
                 break;
             case PLAYCARD:
                 boolean isbuno = AIHelper.isTimeForBuno(hand);
                 if (isbuno) {
                     isBUnoLastTurnPlayed = true;
+                    System.out.print("BUNO! ");//TOOD
                 }
                 int cardToPlay = AIHelper.getValidCard(
                         getPlayersHandCopy(playerID),
                         discardCard);
                 playCard(playerID, cardToPlay);
+                System.out.print("Playing Card " + cardToPlay);//TODO
                 break;
         }
+
+        System.out.println("\n\tAfter Hand: " + getPlayersHandCopy(playerID));//TODO
 
     }
 

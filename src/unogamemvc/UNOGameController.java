@@ -113,7 +113,7 @@ public class UNOGameController implements EventHandler<Event> {
                             theModel.getHUMAN_PLAYER()));
 
                     //TODO test code
-                    for (int i = 1; i <= 3; i++) {
+                    for (int i = 2; i <= 4; i++) {
                         try {
                             theModel.getUnoGame().computerTurn(i);
                             //TODO redraw stuffs
