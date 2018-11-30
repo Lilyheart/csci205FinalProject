@@ -191,10 +191,18 @@ public class UNOGameView {
         root.setRight(rightPanel);
         //----------------------------------------------------------------------
         leftPanel = new VBox();
+        leftPanel.setStyle("-fx-padding: 10;"
+                + "-fx-border-style: solid inside;"
+                + "-fx-border-width: 2;"
+                + "-fx-border-insets: 5;"
+                + "-fx-border-radius: 5;"
+                + "-fx-border-color: blue;");
+
         leftPanel.setPadding(new Insets(10, 10, 10, 10));
         //leftPanel.setAlignment(Pos.BOTTOM_RIGHT);
         leftPanel.setSpacing(20);
         int i = 0;
+        theModel.getUnoGame().getScorePanel().updateScore(0);
         for (PlayerHand player : theModel.getUnoGame().getPlayers()) {
             Label name;
             Label score;
@@ -207,7 +215,7 @@ public class UNOGameView {
             else {
                 name = new Label("Computer " + i);
                 score = new Label(String.valueOf(
-                        theModel.getUnoGame().getScorePanel().getScores(0)));
+                        theModel.getUnoGame().getScorePanel().getScores(1)));
             }
             i++;
             name.setFont(Font.font("Verdana", FontWeight.BLACK,
