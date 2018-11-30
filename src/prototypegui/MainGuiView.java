@@ -16,6 +16,7 @@
 package prototypegui;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -50,6 +51,13 @@ public class MainGuiView {
     StackPane faceUp;
 
     /**
+     * Add stuff for two decks
+     */
+    StackPane faceDownComputer;
+    StackPane faceUpComputer;
+    Button btn;
+
+    /**
      * An explicit constructor for the Card Prototype view Main GUI
      *
      * @param theModel The model for the Card Prototype Main GUI
@@ -59,8 +67,33 @@ public class MainGuiView {
 
         root = new BorderPane();
         root.setId("rootNode");
+
+        //Create Computer
+        GridPane gridComputer = new GridPane();
+        root.setCenter(gridComputer);
+
+        gridComputer.setHgap(20);
+        gridComputer.setVgap(20);
+        gridComputer.setPadding(new Insets(40));
+
+        //Face down card
+        faceDownComputer = CardBackView.createCardBackView();
+        gridComputer.add(faceDownComputer, 0, 0);
+
+        //Face up card
+        faceUpComputer = CardFrontView.createCardFrontView(
+                theModel.getNextComputerCard());
+        gridComputer.add(faceUpComputer, 1, 0);
+
+        GridPane buttonPane = new GridPane();
+        root.setTop(buttonPane);
+
+        btn = new Button("Start");
+        buttonPane.add(btn, 0, 0);
+
+        //Create Player
         GridPane grid = new GridPane();
-        root.setCenter(grid);
+        root.setBottom(grid);
 
         grid.setHgap(20);
         grid.setVgap(20);
@@ -102,4 +135,27 @@ public class MainGuiView {
     public StackPane getFaceUpPane() {
         return faceUp;
     }
+
+    /**
+     * Returns the StackPane of the facedown pile of cards.
+     *
+     * @return the StackPane of the facedown pile of cards.
+     */
+    public StackPane getFaceDownComputerPane() {
+        return faceDownComputer;
+    }
+
+    /**
+     * Returns the StackPane of the faceup pile of cards.
+     *
+     * @return the StackPane of the faceup pile of cards.
+     */
+    public StackPane getFaceUpComputerPane() {
+        return faceUpComputer;
+    }
+
+    public Button getBtn() {
+        return btn;
+    }
+
 }

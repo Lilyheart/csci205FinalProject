@@ -15,8 +15,8 @@
  */
 package prototypegui;
 
-import deck.card.Card;
 import deck.Deck;
+import deck.card.Card;
 
 /**
  * A GUI Card Prototype MVC model Main GUI
@@ -29,6 +29,7 @@ public class MainGuiModel {
      * Creates a deck of cards
      */
     private Deck theDeck;
+    private Deck theCompterDeck;
 
     /**
      * An explicit constructor for the Card Prototype Model Main GUI
@@ -36,6 +37,8 @@ public class MainGuiModel {
     public MainGuiModel() {
         theDeck = new Deck();
         theDeck.shuffle();
+        theCompterDeck = new Deck();
+        theCompterDeck.shuffle();
     }
 
     /**
@@ -45,6 +48,15 @@ public class MainGuiModel {
      */
     public Card getNextCard() {
         return theDeck.getNextCard();
+    }
+
+    /**
+     * Returns the next card in the deck
+     *
+     * @return the next card in the deck
+     */
+    public Card getNextComputerCard() {
+        return theCompterDeck.getNextCard();
     }
 
 }

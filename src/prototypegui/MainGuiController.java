@@ -15,7 +15,6 @@
  */
 package prototypegui;
 
-import prototypegui.cardcreator.CardFrontView;
 import deck.card.Card;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -24,6 +23,7 @@ import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import prototypegui.cardcreator.CardFrontView;
 
 /**
  * A GUI Card Prototype MVC controller
@@ -57,6 +57,11 @@ public class MainGuiController implements EventHandler<Event> {
         this.theView.getRootNode().addEventFilter(KeyEvent.KEY_PRESSED, this);
         this.theView.getFaceDownPane().setOnMouseClicked(this);
         this.theView.getFaceUpPane().setOnMouseClicked(this);
+
+        this.theView.getFaceDownComputerPane().setOnMouseClicked(this);
+        this.theView.getFaceUpComputerPane().setOnMouseClicked(this);
+
+        this.theView.getBtn().setOnMouseClicked(this);
     }
 
     @Override
