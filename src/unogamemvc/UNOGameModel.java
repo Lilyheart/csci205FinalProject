@@ -31,14 +31,14 @@ public class UNOGameModel {
     /**
      * Total number of computer players
      */
-    private final static int NUM_OF_COMPUTER_PLAYERS = 3;
+    private final int NUM_OF_COMPUTER_PLAYERS = 3;
 
     /**
      * The Player idNum for the human player
      */
-    private final static int HUMAN_PLAYER = 1;
+    private final int HUMAN_PLAYER = 1;
 
-    private static Game unoGame;
+    private Game unoGame;
 
     private InvalidPlayPopup invalidPlayPopup;
 
@@ -54,15 +54,15 @@ public class UNOGameModel {
 
     }
 
-    public static int getNUM_OF_COMPUTER_PLAYERS() {
+    public int getNUM_OF_COMPUTER_PLAYERS() {
         return NUM_OF_COMPUTER_PLAYERS;
     }
 
-    public static Game getUnoGame() {
+    public Game getUnoGame() {
         return unoGame;
     }
 
-    public static int getHUMAN_PLAYER() {
+    public int getHUMAN_PLAYER() {
         return HUMAN_PLAYER;
     }
 
@@ -75,7 +75,7 @@ public class UNOGameModel {
      *
      * @throws EmptyDeckException
      */
-    private static void setNewDefaultGame() throws EmptyDeckException {
+    private void setNewDefaultGame() throws EmptyDeckException {
         try {
             //create player
             unoGame.makePlayer(PlayerHand.HUMAN);
@@ -151,7 +151,5 @@ public class UNOGameModel {
             System.out.println("Valid Play\n");
 
         }
-
     }
-
 }
