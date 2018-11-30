@@ -89,7 +89,7 @@ public final class AIHelper {
      * @param hand
      * @return true if it's ready to call Buno; false otherwise
      */
-    public boolean isTimeForBuno(PlayerHand hand) {
+    public static boolean isTimeForBuno(PlayerHand hand) {
         //If second to last card, call Uno
         if (hand.getDeckSize() == 2) {
             Random rand = new Random();
@@ -113,19 +113,11 @@ public final class AIHelper {
 
         try {
             getValidCard(hand, discardCard);
-
         } catch (NoValidCardException ex) {
             return PlayCommand.DRAW;
-        } finally { //check if there is a playable card, if so play; else pass
-            try {
-                //hand = new CopyOnWriteArrayList<Card>();
-
-                getValidCard(hand, discardCard);
-                return PlayCommand.PLAYCARD;
-            } catch (NoValidCardException ex) {
-                return PlayCommand.PASS;
-            }
         }
+
+        return PlayCommand.PLAYCARD;
     }
 
     /**
