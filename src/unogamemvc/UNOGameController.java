@@ -108,14 +108,20 @@ public class UNOGameController implements EventHandler<Event> {
                     //Clears the players and and redraws
                     theView.getCardsInPlayersHandPane().getChildren().clear();
                     theView.drawPlayerHandPane();
+                    
 
                     System.out.println(theModel.getUnoGame().getPlayersHandCopy(
                             theModel.getHUMAN_PLAYER()));
 
                     //TODO test code
+                                       theView.getOpponentsPane().getChildren().clear();
+
                     for (int i = 2; i <= 4; i++) {
                         try {
                             theModel.getUnoGame().computerTurn(i);
+                            //theView.getOpponentsPane().getChildren().clear();
+                            //theView.createOpponentsPane();
+                            //theView.dr
                             //TODO redraw stuffs
 
                             //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
@@ -128,17 +134,25 @@ public class UNOGameController implements EventHandler<Event> {
                             System.out.println("Played " + i
                                                + theModel.getUnoGame().getPlayersHandCopy(
                                             i));
+                            System.out.println("Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
+                                            i).size());
 
+                        theView.getOpponentsPane().add(theView.createComputerPlayerStackPane(theModel.getUnoGame().getPlayersHandCopy(
+                                           i).size()),i-2,0);
+                            /*
                             try {
                                 TimeUnit.SECONDS.sleep(2);
+                                System.out.println(">>>>>>SLEPT FOR 2 ");
                             } catch (InterruptedException ex) {
                                 //grrrrr
-                            }
+                            } */
 
                         } catch (NoValidCardException ex) {
                             Logger.getLogger(UNOGameController.class.getName()).log(
                                     Level.SEVERE, null, ex);
                         }
+                        
+                        //theView.createOpponentsPane();
                     }
 
                 } catch (EmptyDeckException ex) {
