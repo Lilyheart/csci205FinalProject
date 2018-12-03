@@ -154,7 +154,6 @@ public class UNOGameView {
 
         playersHandHBox.getChildren().add(cardsInPlayersHandPane);
 
-        
         createOpponentsPane();
 
         createDrawAndDiscardDecksGridPane();
@@ -191,18 +190,18 @@ public class UNOGameView {
         root.setRight(rightPanel);
         //----------------------------------------------------------------------
         leftPanel = new VBox();
-        leftPanel.setStyle("-fx-padding: 10;"
+        /*leftPanel.setStyle("-fx-padding: 10;"
                 + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;"
-                + "-fx-border-color: blue;");
+                + "-fx-border-color: blue;");*/
 
         leftPanel.setPadding(new Insets(10, 10, 10, 10));
         //leftPanel.setAlignment(Pos.BOTTOM_RIGHT);
         leftPanel.setSpacing(20);
         int i = 0;
-        theModel.getUnoGame().getScorePanel().updateScore(0);
+        //theModel.getUnoGame().getScorePanel().updateScore(0);
         for (PlayerHand player : theModel.getUnoGame().getPlayers()) {
             Label name;
             Label score;
@@ -247,8 +246,8 @@ public class UNOGameView {
     public StackPane getDrawDeckPane() {
         return drawDeckPane;
     }
-    
-     public StackPane getOpponentStack() {
+
+    public StackPane getOpponentStack() {
         return opponentStack;
     }
 
@@ -259,6 +258,7 @@ public class UNOGameView {
     public GridPane getOpponentsPane() {
         return opponentsPane;
     }
+
     /**
      * Sets the discard deck card as the last card from the draw deck
      *
@@ -329,10 +329,6 @@ public class UNOGameView {
         }
     }
 
-   
-    
-    
-
     /**
      * Creates and adds the opponents facedown cards to the GUI
      *
@@ -351,24 +347,23 @@ public class UNOGameView {
             nextCard.setTranslateX(5 * j);
             opponentStack.getChildren().add(nextCard);
         }
-        
+
     }
-    
-    protected StackPane createComputerPlayerStackPane(int numCards){
+
+    protected StackPane createComputerPlayerStackPane(int numCards) {
         StackPane thePane = new StackPane();
         StackPane bottomCard = CardBackView.createCardBackView();
         thePane.getChildren().add(bottomCard);
-        
+
         for (int j = 1; j < numCards; j++) {
             StackPane nextCard = CardBackView.createCardBackView();
             nextCard.setTranslateX(5 * j);
             thePane.getChildren().add(nextCard);
         }
-        
+
         return thePane;
-        
+
     }
-    
 
     /**
      * Creates the UNO button
@@ -402,7 +397,7 @@ public class UNOGameView {
     protected void createOpponentsPane() {
         //create the model of opponentsPane
         createOpponentsAndDeckVBox();
-        
+
         opponentsPane = new GridPane();
         for (int i = 0; i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
             drawComputerHandPane(
@@ -415,10 +410,6 @@ public class UNOGameView {
             opponentsPane.add(opponentStack, i, 0);
         }
     }
-    
-    
-        
-        
 
     /**
      * Creates the container that holds the opponents hands and decks
@@ -458,7 +449,5 @@ public class UNOGameView {
         drawAndDiscardDecksPane.setVgap(20);
         drawAndDiscardDecksPane.setPadding(new Insets(40));
     }
-
-    
 
 }

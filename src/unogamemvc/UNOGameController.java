@@ -16,7 +16,6 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -59,7 +58,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-                             UNOGameView theView) throws EmptyDeckException {
+            UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -93,71 +92,29 @@ public class UNOGameController implements EventHandler<Event> {
             Object source = event.getSource();
             if (source instanceof StackPane) { //Any card clicked
                 System.out.println(((StackPane) source).getId());
+
+                System.out.println("XXXX"
+                        + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
                 try {
-                    System.out.println("XXXX"
-                                       + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
                     //Plays the card via unogame.Game
                     theModel.tryToPlayCardAction(
                             Integer.parseInt(((StackPane) source).getId()));
-
-                    //Redraws the discard deck - TODO [Refactor] Could be own method?
-                    theView.getDiscardDeckPane().getChildren().add(
-                            CardFrontView.createCardFrontView(
-                                    theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
-
-                    //Clears the players and and redraws
-                    theView.getCardsInPlayersHandPane().getChildren().clear();
-                    theView.drawPlayerHandPane();
-                    
-
-                    System.out.println(theModel.getUnoGame().getPlayersHandCopy(
-                            theModel.getHUMAN_PLAYER()));
-
-                    //TODO test code
-                                       theView.getOpponentsPane().getChildren().clear();
-
-                    for (int i = 2; i <= 4; i++) {
-                        try {
-                            theModel.getUnoGame().computerTurn(i);
-                            //theView.getOpponentsPane().getChildren().clear();
-                            //theView.createOpponentsPane();
-                            //theView.dr
-                            //TODO redraw stuffs
-
-                            //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
-                            theView.getDiscardDeckPane().getChildren().add(
-                                    CardFrontView.createCardFrontView(
-                                            theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
-                            //TODO [GUI] Redraw the computer's hand
-                            //TODO [GUI] Deal with BUno
-
-                            System.out.println("Played " + i
-                                               + theModel.getUnoGame().getPlayersHandCopy(
-                                            i));
-                            System.out.println("Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
-                                            i).size());
-
-                        theView.getOpponentsPane().add(theView.createComputerPlayerStackPane(theModel.getUnoGame().getPlayersHandCopy(
-                                           i).size()),i-2,0);
-                            /*
-                            try {
-                                TimeUnit.SECONDS.sleep(2);
-                                System.out.println(">>>>>>SLEPT FOR 2 ");
-                            } catch (InterruptedException ex) {
-                                //grrrrr
-                            } */
-
-                        } catch (NoValidCardException ex) {
-                            Logger.getLogger(UNOGameController.class.getName()).log(
-                                    Level.SEVERE, null, ex);
-                        }
-                        
-                        //theView.createOpponentsPane();
-                    }
-
                 } catch (EmptyDeckException ex) {
-                    System.out.println("EMPTY DECK EXCEPTION");
+                    System.out.println("EMPTY DECK");
                 }
+
+                //Redraws the discard deck - TODO [Refactor] Could be own method?
+                updateDiscardDeck();
+
+                //Clears the players and and redraws
+                theView.getCardsInPlayersHandPane().getChildren().clear();
+                theView.drawPlayerHandPane();
+
+                System.out.println(theModel.getUnoGame().getPlayersHandCopy(
+                        theModel.getHUMAN_PLAYER()));
+
+                runOpponentsTurns();
+
                 this.activateCardsInPlayersHand();
                 //this.theView.drawPlayerHandPane();
             }
@@ -165,6 +122,12 @@ public class UNOGameController implements EventHandler<Event> {
         }
 
 //        }
+    }
+
+    private void updateDiscardDeck() {
+        theView.getDiscardDeckPane().getChildren().add(
+                CardFrontView.createCardFrontView(
+                        theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
     }
 
     /**
@@ -179,11 +142,59 @@ public class UNOGameController implements EventHandler<Event> {
         });
     }
 
+    private void runOpponentsTurns() {
+        try {
+
+            theView.getOpponentsPane().getChildren().clear();
+
+            for (int i = 2; i <= 4; i++) {
+                updateDiscardDeck();
+
+                try {
+                    theModel.getUnoGame().computerTurn(i);
+
+                    //TODO redraw stuffs
+                    //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
+                    updateDiscardDeck();
+                    //TODO [GUI] Redraw the computer's hand
+                    //TODO [GUI] Deal with BUno
+                    System.out.println("Played " + i
+                            + theModel.getUnoGame().getPlayersHandCopy(
+                                    i));
+                    System.out.println(
+                            "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
+                                    i).size());
+
+                    theView.getOpponentsPane().add(
+                            theView.createComputerPlayerStackPane(
+                                    theModel.getUnoGame().getPlayersHandCopy(
+                                            i).size()), i - 2, 0);
+                    /*
+                                try {
+                                TimeUnit.SECONDS.sleep(2);
+                                System.out.println(">>>>>>SLEPT FOR 2 ");
+                                } catch (InterruptedException ex) {
+                                //grrrrr
+                                } */
+
+                } catch (NoValidCardException ex) {
+                    Logger.getLogger(
+                            UNOGameController.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+
+            }
+        } catch (EmptyDeckException ex) {
+            System.out.println("EMPTY DECK EXCEPTION");
+        }
+    }
+
     /**
      * Creates an event when the draw deck is clicked on. Puts the card in your
      * hand. Prints to the console as of now.
      */
     public void activateDrawDeck() {
+        // add computer turn code here
         this.theView.getDrawDeckPane().getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -200,7 +211,10 @@ public class UNOGameController implements EventHandler<Event> {
 
                     activateCardsInPlayersHand();
 
+                    runOpponentsTurns();
+
                 }
+
             });
 
         });

@@ -204,6 +204,7 @@ public class Game {
         //TODO [Refactor] Dry out this code
         switch (playcommand) {
             case DRAW:
+                drawCard(playerID);
                 playcommand = AIHelper.getPlayCommand(
                         getPlayersHandCopy(playerID),
                         discardCard);
