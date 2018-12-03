@@ -143,6 +143,10 @@ public class Game {
         return players.get(playerIndex);
     }
 
+    public void setIsBUnoLastTurnPlayed(Boolean isBUnoLastTurnPlayed) {
+        this.isBUnoLastTurnPlayed = isBUnoLastTurnPlayed;
+    }
+
     /**
      * Starts a new game by popping the top card of the draw deck onto the
      * discard deck
@@ -199,60 +203,6 @@ public class Game {
         PlayerHand newPlayer = new PlayerHand(isComputerPlayer);
 
         players.add(newPlayer);
-    }
-
-    public void computerTurn(int playerID) throws NoValidCardException {
-        //DEBUG output
-        System.out.printf(">>User %d playing: ", playerID);
-        System.out.print(
-                "\n\tBefore Hand: " + getPlayersHandCopy(playerID) + "\n\t");
-
-        PlayerHand hand = getPlayersCopy(playerID);
-        Card discardCard = getTheDiscardDeck().peekBottomCard();
-
-        PlayCommand playcommand = AIHelper.determinePlayCommand(
-                hand.getCopyOfHand(), discardCard);
-
-        System.out.print(playcommand + " ");//TODO
-
-        //TODO [Refactor] Dry out this code
-        switch (playcommand) {
-            case NOPLAYABLECARD:
-                drawCard(playerID);
-                playcommand = AIHelper.determinePlayCommand(
-                        getPlayersHandCopy(playerID),
-                        discardCard);
-
-                System.out.print(playcommand + " ");//TODO
-                if (playcommand == PlayCommand.PLAYABLECARD) {
-                    boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
-                    if (isbuno) {
-                        isBUnoLastTurnPlayed = true;
-                        System.out.print("BUNO! ");//TOOD
-                    }
-                    int cardToPlay = AIHelper.findValidCard(
-                            getPlayersHandCopy(playerID),
-                            discardCard);
-                    playCard(playerID, cardToPlay);
-                    System.out.print("Playing Card " + cardToPlay);//TODO
-                }
-                break;
-            case PLAYABLECARD:
-                boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
-                if (isbuno) {
-                    isBUnoLastTurnPlayed = true;
-                    System.out.print("BUNO! ");//TOOD
-                }
-                int cardToPlay = AIHelper.findValidCard(
-                        getPlayersHandCopy(playerID),
-                        discardCard);
-                playCard(playerID, cardToPlay);
-                System.out.print("Playing Card " + cardToPlay);//TODO
-                break;
-        }
-
-        System.out.println("\n\tAfter Hand: " + getPlayersHandCopy(playerID));//TODO
-
     }
 
     /**

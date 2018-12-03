@@ -31,25 +31,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public final class AIHelper {
 
     /**
-     * The percent (1=100%) of the time the AI catches that BUno should have
-     * been called.
-     *
-     * @author Rachel Wang
-     */
-    private static final double BUNO_CATCH = 0.9;
-
-    /**
      * Finds a valid card to play and play the "best" playable card
      *
      * @author Rachel Wang
      *
-     * @param hand A copy of the hand of the player
+     * @param playersHand the {@code PlayerHand} in question
      * @param discardCard The top card of the discard pile
      * @return the index of the playable card in the {@code hand}.
      * @throws NoValidCardException When there is no valid card to play
      */
-    public static int findValidCard(CopyOnWriteArrayList<Card> hand,
+    public static int findValidCard(PlayerHand playersHand,
                                     Card discardCard) throws NoValidCardException {
+        CopyOnWriteArrayList<Card> hand = playersHand.getCopyOfHand();
         boolean isCardPlayable = false;
 
         //Get the information about the discard card
@@ -99,16 +92,15 @@ public final class AIHelper {
      *
      * @author Rachel Wang
      *
-     * @param hand A copy of the hand of the player
+     * @param playersHand the {@code PlayerHand} in question
      * @param discardCard The top card of the discard pile
      * @return the desired {@code PlayCommand}.
      */
-    public static PlayCommand determinePlayCommand(
-            CopyOnWriteArrayList<Card> hand,
-            Card discardCard) {
+    public static PlayCommand determinePlayCommand(PlayerHand playersHand,
+                                                   Card discardCard) {
 
         try {
-            findValidCard(hand, discardCard);
+            findValidCard(playersHand, discardCard);
         } catch (NoValidCardException e) {
             return PlayCommand.NOPLAYABLECARD;
         }
@@ -121,16 +113,16 @@ public final class AIHelper {
      *
      * @author Rachel Wang
      *
-     * @param hand the {@code PlayerHand} in question
+     * @param playersHand the {@code PlayerHand} in question
      * @return true if it's ready to call BUno; false otherwise
      */
-    public static boolean checkIsTimeForBuno(PlayerHand hand) {
+    public static boolean checkIsTimeForBuno(PlayerHand playersHand) {
 
         //If second to last card, call Uno
-        if (hand.getDeckSize() == 2) {
+        if (playersHand.getDeckSize() == 2) {
             Random rand = new Random();
             double chance = rand.nextDouble();
-            if (chance < BUNO_CATCH) {
+            if (chance < playersHand.getAIintelligence().getBunoCatchPercent()) {
                 return true;
             }
         }
@@ -141,19 +133,60 @@ public final class AIHelper {
      * the AI has 90% chance to BUno the active player
      *
      * @author Rachel Wang
-     * @param activePlayerHand the {@code PlayerHand} of the active player
+     * @param activePlayersHand the {@code PlayerHand} of the active player
      * @return true if BUno the active player
      *
      */
     public static boolean checkIsTimeToBunoActivePlayer(
-            PlayerHand activePlayerHand) {
-        if (activePlayerHand.getDeckSize() == 1) {
+            PlayerHand activePlayersHand) {
+        if (activePlayersHand.getDeckSize() == 1) {
             Random rand = new Random();
             double chance = rand.nextDouble();
-            if (chance > .1) {
+            if (chance < activePlayersHand.getAIintelligence().getBunoCatchPercent()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static void computerTurn(Game unoGame, int playerIndex) throws NoValidCardException {
+        //DEBUG output
+        System.out.printf(">>User %d playing: ", (playerIndex + 1));
+        System.out.print("\n\tBefore Hand: " + unoGame.getPlayersHandCopy(
+                playerIndex) + "\n\t");
+
+        PlayerHand hand = unoGame.getPlayersCopy(playerIndex);
+        Card discardCard = unoGame.getTheDiscardDeck().peekBottomCard();
+
+        PlayCommand playcommand = determinePlayCommand(hand, discardCard);
+
+        System.out.print(playcommand + " ");
+
+        switch (playcommand) {
+            case NOPLAYABLECARD:
+                unoGame.drawCard(playerIndex);
+                break;
+
+            case PLAYABLECARD:
+                //TODO [!Finalize] Does this mirror a player method?
+                boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
+
+                if (isbuno) {
+                    unoGame.setIsBUnoLastTurnPlayed(true);
+                    System.out.print("BUNO! ");
+                }
+                int cardToPlay = AIHelper.findValidCard(
+                        hand, discardCard);
+                unoGame.playCard(playerIndex, cardToPlay);
+                System.out.print("Playing Card " + cardToPlay);
+                break;
+        }
+        System.out.println("\n\tAfter Hand: " + unoGame.getPlayersHandCopy(
+                playerIndex));
+
+    }
+
+    public enum AIintelligenceLevel {
+
     }
 }

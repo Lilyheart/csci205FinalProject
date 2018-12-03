@@ -26,6 +26,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import unogame.AIHelper;
 import unogame.NoValidCardException;
 import unogame.RoundOverException;
 import unogamemvc.cardcreator.CardFrontView;
@@ -59,7 +60,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-            UNOGameView theView) {
+                             UNOGameView theView) {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -188,14 +189,14 @@ public class UNOGameController implements EventHandler<Event> {
                         //If sleep doesn't happen, game can continue to progress, it's purely for effect
                     }
 
-                    theModel.getUnoGame().computerTurn(i);
+                    AIHelper.computerTurn(theModel.getUnoGame(), i);
 
                     //TODO redraw stuffs
                     //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
                     //TODO [GUI] Redraw the computer's hand
                     //TODO [GUI] Deal with BUno
                     System.out.println("Played " + i
-                            + theModel.getUnoGame().getPlayersHandCopy(
+                                       + theModel.getUnoGame().getPlayersHandCopy(
                                     i));
                     System.out.println(
                             "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
@@ -242,7 +243,7 @@ public class UNOGameController implements EventHandler<Event> {
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(UNOGameController.class.getName()).log(Level.SEVERE,
-                    null, ex);
+                                                                    null, ex);
         }
 
         theModel.setIsComputerTurn(false);

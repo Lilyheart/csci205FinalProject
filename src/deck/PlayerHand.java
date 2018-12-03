@@ -31,6 +31,11 @@ public class PlayerHand extends BUnoDeck {
     private final boolean isComputerPlayer;
 
     /**
+     * True if the player is a computer player, false if it is a human player
+     */
+    private AIintelligenceLevel AIintelligence;
+
+    /**
      * The number of cards in a new hand
      */
     public final static int NEWHANDCARDNUM = 7;
@@ -46,7 +51,8 @@ public class PlayerHand extends BUnoDeck {
     public static final Boolean COMPUTER = true;
 
     /**
-     * An explicit constructor to create a new player's hand.
+     * An explicit constructor to create a new player's hand. Defaults a
+     * computer player to SMART intelligence level
      *
      * @author Lily Romano
      *
@@ -55,6 +61,22 @@ public class PlayerHand extends BUnoDeck {
      */
     public PlayerHand(boolean isComputerPlayer) {
         this.isComputerPlayer = isComputerPlayer;
+        AIintelligence = AIintelligenceLevel.SMART;
+    }
+
+    /**
+     * An explicit constructor to create a new player's hand.
+     *
+     * @author Lily Romano
+     *
+     * @param isComputerPlayer True if the player is a computer player, false if
+     * it is a human player
+     * @param AIintelligence The intelligence level of the AI
+     */
+    public PlayerHand(boolean isComputerPlayer,
+                      AIintelligenceLevel AIintelligence) {
+        this.isComputerPlayer = isComputerPlayer;
+        this.AIintelligence = AIintelligence;
     }
 
     /**
@@ -77,6 +99,10 @@ public class PlayerHand extends BUnoDeck {
      */
     public boolean isComputerPlayer() {
         return isComputerPlayer;
+    }
+
+    public AIintelligenceLevel getAIintelligence() {
+        return AIintelligence;
     }
 
     /**
