@@ -84,14 +84,14 @@ public final class CardFrontView {
      * @return The StackPane for displaying
      */
     public static Node changeCardFrontView(Card newCard, StackPane cardPane) {
-
-        //Get values of card to display
-        String cardColor = newCard.getColorString();
         String cardMainString = newCard.getType().getCardMainText();
         String cardCornerString = newCard.getType().getCardCornerText();
 
         //Get VBox in StackPane
         VBox inside = (VBox) cardPane.getChildren().get(0);
+
+        //Get values of card to display
+        String cardColor = newCard.getColorString();
 
         //Iterate through VBox and update all card types and text color of middle
         for (Node n : inside.getChildren()) {

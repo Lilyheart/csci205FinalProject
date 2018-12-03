@@ -13,7 +13,7 @@
 *
 * ****************************************
  */
-package unogame.helpers;
+package unogame;
 
 import deck.PlayerHand;
 import deck.card.Card;

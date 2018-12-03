@@ -91,7 +91,6 @@ public abstract class BUnoDeck {
      *
      * @param index the index of the card to remove and return.
      * @return the card at a specific index in the deck and remove it.
-     * @throws deck.EmptyDeckException when the deck is empty
      */
     public Card popCardAtIndex(int index) {
         return deck.remove(index);
@@ -103,7 +102,6 @@ public abstract class BUnoDeck {
      * @author Lily Romano
      *
      * @return the next card in the deck and remove it.
-     * @throws deck.EmptyDeckException when the deck is empty
      */
     public Card popTopCard() {
         return popCardAtIndex(0);

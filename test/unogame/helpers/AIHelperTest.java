@@ -15,6 +15,7 @@
  */
 package unogame.helpers;
 
+import unogame.AIHelper;
 import deck.PlayerHand;
 import deck.card.Card;
 import deck.card.CardColor;
