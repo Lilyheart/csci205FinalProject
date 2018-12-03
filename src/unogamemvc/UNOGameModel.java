@@ -42,6 +42,8 @@ public class UNOGameModel {
 
     private InvalidPlayPopup invalidPlayPopup;
 
+    private boolean isComputerTurn;
+
     /**
      * An explicit constructor for the UNO Main GUI Model
      */
@@ -49,9 +51,19 @@ public class UNOGameModel {
         unoGame = new Game();
         setNewDefaultGame();
         unoGame.startGame();
+        //TODO [GUI] get starting player
+        isComputerTurn = false;
         System.out.println(unoGame.getTheDrawDeck());
         this.invalidPlayPopup = new InvalidPlayPopup();
 
+    }
+
+    public boolean isIsComputerTurn() {
+        return isComputerTurn;
+    }
+
+    public void setIsComputerTurn(boolean isComputerTurn) {
+        this.isComputerTurn = isComputerTurn;
     }
 
     public int getNUM_OF_COMPUTER_PLAYERS() {

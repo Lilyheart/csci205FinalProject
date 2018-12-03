@@ -91,7 +91,8 @@ public class UNOGameController implements EventHandler<Event> {
         }
         else if (eType == MouseEvent.MOUSE_CLICKED) {
             Object source = event.getSource();
-            if (source instanceof StackPane) { //Any card clicked
+            if (source instanceof StackPane && !theModel.isIsComputerTurn()) { //Any card clicked
+
                 System.out.println(((StackPane) source).getId());
 
                 System.out.println("XXXX"
@@ -160,6 +161,7 @@ public class UNOGameController implements EventHandler<Event> {
     }
 
     public void runOpponentsTurnsTask() {
+        theModel.setIsComputerTurn(true);
         try {
 
             Platform.runLater((new Runnable() {
@@ -174,6 +176,13 @@ public class UNOGameController implements EventHandler<Event> {
             for (int i = 2; i <= 4; i++) {
 
                 try {
+                    //Sleep the computer for 2 seconds
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException ex) {
+                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
+                    }
+
                     theModel.getUnoGame().computerTurn(i);
 
                     //TODO redraw stuffs
@@ -186,10 +195,6 @@ public class UNOGameController implements EventHandler<Event> {
                     System.out.println(
                             "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
                                     i).size());
-
-                    int size = theModel.getUnoGame().getPlayersHandCopy(i).size();
-                    StackPane toAdd = theView.createComputerPlayerStackPane(size);
-                    int position = i - 2;
 
                     try {
                         // Update the card on the JavaFx Application Thread
@@ -225,6 +230,7 @@ public class UNOGameController implements EventHandler<Event> {
                                                                     null, ex);
         }
 
+        theModel.setIsComputerTurn(false);
     }
 
     /**
@@ -237,20 +243,23 @@ public class UNOGameController implements EventHandler<Event> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println(
-                            "***\nClicked on draw deck...next added to hand***");
 
-                    //draw the card into the play
-                    theModel.tryToDrawCardAction(); // pops card from the deck
+                    if (!theModel.isIsComputerTurn()) {
+                        //TODO [GUI] ?? Move this to method in Model?
+                        System.out.println(
+                                "***\nClicked on draw deck...next added to hand***");
 
-                    //redraw the hand
-                    theView.drawPlayerHandPane();
-                    //theView.getOpponentsPane().getChildren().clear();
+                        //draw the card into the play
+                        theModel.tryToDrawCardAction(); // pops card from the deck
 
-                    activateCardsInPlayersHand();
+                        //redraw the hand
+                        theView.drawPlayerHandPane();
+                        //theView.getOpponentsPane().getChildren().clear();
 
-                    startTask();
+                        activateCardsInPlayersHand();
 
+                        startTask();
+                    }
                 }
 
             });
