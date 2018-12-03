@@ -17,7 +17,6 @@ package unogame;
 
 import deck.DiscardDeck;
 import deck.DrawDeck;
-import deck.EmptyDeckException;
 import deck.PlayerHand;
 import deck.card.Card;
 import java.util.LinkedList;
@@ -70,13 +69,6 @@ public class Game {
         players = new LinkedList<>();
         numPlayers = 0;
         isGameStarted = false;
-
-        //create draw decks
-        theDrawDeck = new DrawDeck();
-        theDiscardDeck = new DiscardDeck();
-        //shuffle draw deck
-        theDrawDeck.shuffle();
-
     }
 
     /**
@@ -149,15 +141,33 @@ public class Game {
      */
     public void startGame() {
         isGameStarted = true;
-        try {
-            theDiscardDeck.addCard(theDrawDeck.popTopCard());
-        } catch (EmptyDeckException ex) {
-            //Unable to play game if unable to create discard pile
-            System.out.println(ex);
-            System.exit(-1);
-        }
         scorePanel = new ScorePanel(players);
-        //System.out.println(scorePanel.getScores(0));
+        startRound();
+    }
+
+    /**
+     * Starts a new game by popping the top card of the draw deck onto the
+     * discard deck
+     *
+     * @author Lily Romano
+     */
+    public void startRound() {
+        //create draw decks
+        theDrawDeck = new DrawDeck();
+        theDiscardDeck = new DiscardDeck();
+        //shuffle draw deck
+        theDrawDeck.shuffle();
+
+        //set hands
+        for (PlayerHand hand : players) {
+            hand.removeAllCards();
+            for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
+                hand.addCard(theDrawDeck.popTopCard());
+            }
+        }
+
+        //set up discard pile
+        theDiscardDeck.addCard(theDrawDeck.popTopCard());
     }
 
     /**
@@ -167,28 +177,23 @@ public class Game {
      *
      * @param isComputerPlayer true of the player is a computer player,
      * otherwise false
-     * @throws deck.EmptyDeckException
      * @throws unogame.GameNotStartedException
      */
-    public void makePlayer(Boolean isComputerPlayer) throws EmptyDeckException, GameNotStartedException {
+    public void makePlayer(Boolean isComputerPlayer) throws GameNotStartedException {
         //TODO [Exception Handling]
-        numPlayers++;
-
         if (isGameStarted) {
             String player = isComputerPlayer ? "computer" : "human";
             throw new GameNotStartedException(
                     "Attempting to create a " + player + " player after the game has started");
         }
-        PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
+        numPlayers++;
 
-        for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
-            newPlayer.addCard(theDrawDeck.popTopCard());
-        }
+        PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
 
         players.add(newPlayer);
     }
 
-    public void computerTurn(int playerID) throws NoValidCardException, EmptyDeckException {
+    public void computerTurn(int playerID) throws NoValidCardException {
         System.out.printf(">>User %d playing: ", playerID);//TODO
         System.out.print(
                 "\n\tBefore Hand: " + getPlayersHandCopy(playerID) + "\n\t");//TODO
@@ -250,7 +255,7 @@ public class Game {
      * @param cardIndex the index of the card to play
      * @throws EmptyDeckException
      */
-    public void playCard(int playerID, int cardIndex) throws EmptyDeckException {
+    public void playCard(int playerID, int cardIndex) {
         //TODO [Basic Game] Add Rules
         int playerIndex = playerID - 1;
         theDiscardDeck.addCard(
@@ -263,9 +268,8 @@ public class Game {
      * @author Lily Romano
      *
      * @param playerID the player ID [Starting from 1]
-     * @throws EmptyDeckException
      */
-    public void drawCard(int playerID) throws EmptyDeckException {
+    public void drawCard(int playerID) {
         int playerIndex = playerID - 1;
         players.get(playerIndex).addCard(theDrawDeck.popTopCard());
     }
@@ -277,13 +281,7 @@ public class Game {
      */
     public void shuffleDiscardToDrawDeck() {
         theDrawDeck.addCards(theDiscardDeck.removeAllCards());
-        try {
-            theDiscardDeck.addCard(theDrawDeck.popTopCard());
-        } catch (EmptyDeckException ex) {
-            //Unable to play game if unable to create discard pile
-            System.out.println(ex);
-            System.exit(-1);
-        }
+        theDiscardDeck.addCard(theDrawDeck.popTopCard());
     }
 
     /**

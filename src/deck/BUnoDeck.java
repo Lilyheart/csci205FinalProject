@@ -93,12 +93,7 @@ public abstract class BUnoDeck {
      * @return the card at a specific index in the deck and remove it.
      * @throws deck.EmptyDeckException when the deck is empty
      */
-    public Card popCardAtIndex(int index) throws EmptyDeckException {
-
-        if (deck.isEmpty()) {
-            throw new EmptyDeckException(this.getClass() + " is empty");
-        }
-
+    public Card popCardAtIndex(int index) {
         return deck.remove(index);
     }
 
@@ -110,8 +105,7 @@ public abstract class BUnoDeck {
      * @return the next card in the deck and remove it.
      * @throws deck.EmptyDeckException when the deck is empty
      */
-    public Card popTopCard() throws EmptyDeckException {
-
+    public Card popTopCard() {
         return popCardAtIndex(0);
     }
 

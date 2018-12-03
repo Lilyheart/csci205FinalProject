@@ -15,7 +15,6 @@
  */
 package unogamemvc;
 
-import deck.EmptyDeckException;
 import deck.PlayerHand;
 import deck.card.Card;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -140,7 +139,7 @@ public class UNOGameView {
      * @param theModel The model for the UNO game
      * @throws deck.EmptyDeckException
      */
-    public UNOGameView(UNOGameModel theModel) throws EmptyDeckException {
+    public UNOGameView(UNOGameModel theModel) {
         //TODO [Exception Handling]
         this.theModel = theModel;
         setDiscardDeckPane();
@@ -192,15 +191,21 @@ public class UNOGameView {
         root.setTop(menuBar);
         root.setCenter(opponentsAndDeckVBox);
         root.setRight(rightPanel);
+        updateScoreboard();
+        //----------------------------------------------------------------------
+        root.setBottom(playersHandHBox);
+
+    }
+
+    public void updateScoreboard() {
         //----------------------------------------------------------------------
         leftPanel = new VBox();
         /*leftPanel.setStyle("-fx-padding: 10;"
-                + "-fx-border-style: solid inside;"
-                + "-fx-border-width: 2;"
-                + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;"
-                + "-fx-border-color: blue;");*/
-
+        + "-fx-border-style: solid inside;"
+        + "-fx-border-width: 2;"
+        + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;"
+        + "-fx-border-color: blue;");*/
         leftPanel.setPadding(new Insets(10, 10, 10, 10));
         //leftPanel.setAlignment(Pos.BOTTOM_RIGHT);
         leftPanel.setSpacing(20);
@@ -213,7 +218,6 @@ public class UNOGameView {
                 name = new Label("HUMAN PLAYER");
                 score = new Label(String.valueOf(
                         theModel.getUnoGame().getScorePanel().getScores(0)));
-
             }
             else {
                 name = new Label("Computer " + i);
@@ -228,11 +232,7 @@ public class UNOGameView {
             leftPanel.getChildren().addAll(name, score);
             leftPanel.setAlignment(Pos.CENTER);
         }
-
         root.setLeft(leftPanel);
-        //----------------------------------------------------------------------
-        root.setBottom(playersHandHBox);
-
     }
 
     public BorderPane getRootNode() {
@@ -269,7 +269,7 @@ public class UNOGameView {
      * @throws EmptyDeckException
      * @author jameskelly
      */
-    public void setDiscardDeckPane() throws EmptyDeckException {
+    public void setDiscardDeckPane() {
         this.discardDeckPane = CardFrontView.createCardFrontView(
                 theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
     }
@@ -281,7 +281,7 @@ public class UNOGameView {
      * @throws EmptyDeckException
      * @author jameskelly
      */
-    public StackPane createNextFaceUpCard() throws EmptyDeckException {
+    public StackPane createNextFaceUpCard() {
         //TODO [Card Display] Get cards from hand instead
         System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
         //test to see if correct cards come out
@@ -296,15 +296,10 @@ public class UNOGameView {
      * @author jameskelly
      */
     protected void drawPlayerHandPane() {
-        /*TODO [Card Display] The way these cards are being created, they cannot be
-        referenced by the controller.  A suggestion would be to create a class
-        instance variable that stores some type of datastructure that makes sense
-        cards and work from there.
-         */
-        //make list of cards, add each card to pane, just pass future players hand of cards
-        //  instead of hardcoding
         CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
                 theModel.getHUMAN_PLAYER());
+        cardsInPlayersHandPane.getChildren().clear();
+        System.out.println("Drawing hand: " + playersHand);
         int nextCol = 0;
         int secondRow = 0;
         int j = 1;
@@ -403,6 +398,9 @@ public class UNOGameView {
         opponentsPane.getChildren().clear();
 
         for (int i = 0; i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
+            System.out.println(
+                    "Drawing computer hand " + (i + 2) + ": " + theModel.getUnoGame().getPlayersHandCopy(
+                            i + 2).size());
             drawComputerHandPane(
                     theModel.getUnoGame().getPlayersHandCopy(i + 2).size());
             /* TODO [Card Display] The hands stack in a weird way*/
@@ -451,6 +449,12 @@ public class UNOGameView {
         drawAndDiscardDecksPane.setHgap(20);
         drawAndDiscardDecksPane.setVgap(20);
         drawAndDiscardDecksPane.setPadding(new Insets(40));
+    }
+
+    public void redrawPanes() {
+        drawPlayerHandPane();
+        createOpponentsPane();
+        updateScoreboard();
     }
 
 }

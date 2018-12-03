@@ -15,16 +15,15 @@
  */
 package unogame.helpers;
 
-import deck.EmptyDeckException;
 import deck.PlayerHand;
 import deck.card.Card;
 import deck.card.CardColor;
 import deck.card.CardType;
 import static junit.framework.TestCase.fail;
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import unogame.NoValidCardException;
 import unogame.PlayCommand;
 
@@ -120,7 +119,7 @@ public class AIHelperTest {
      * Test of isTimeForBuno method, of class AIHelper.
      */
     @Test
-    public void testIsTimeForBunoTrue() throws EmptyDeckException {
+    public void testIsTimeForBunoTrue() {
         System.out.println("testIsTimeForBunoTrue");
 
         //drop a card
@@ -175,7 +174,7 @@ public class AIHelperTest {
      * Test of isTimeToBunoActivePlayer method, of class AIHelper.
      */
     @Test
-    public void testIsTimeToBunoActivePlayerTrue() throws EmptyDeckException {
+    public void testIsTimeToBunoActivePlayerTrue() {
         System.out.println("testIsTimeToBunoActivePlayerTrue");
 
         //drop two cards leaving one

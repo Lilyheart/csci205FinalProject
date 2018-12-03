@@ -15,8 +15,6 @@
  */
 package unogamemvc;
 
-import deck.EmptyDeckException;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -28,6 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import unogame.NoValidCardException;
+import unogame.RoundOverException;
 import unogamemvc.cardcreator.CardFrontView;
 
 /**
@@ -59,7 +58,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-                             UNOGameView theView) throws EmptyDeckException {
+                             UNOGameView theView) {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -94,34 +93,36 @@ public class UNOGameController implements EventHandler<Event> {
             if (source instanceof StackPane && !theModel.isIsComputerTurn()) { //Any card clicked
                 boolean isLegalPlay = false;
 
-                System.out.println(((StackPane) source).getId());
+                System.out.println(
+                        "StackPaneID: " + ((StackPane) source).getId());
 
-                System.out.println("XXXX"
-                                   + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
-                try {
-                    //Plays the card via unogame.Game
-                    isLegalPlay = theModel.tryToPlayCardAction(
-                            Integer.parseInt(((StackPane) source).getId()));
-                } catch (EmptyDeckException ex) {
-                    System.out.println("EMPTY DECK");
-                }
+                System.out.println(
+                        "Discard is: " + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
+                //Plays the card via unogame.Game
+                isLegalPlay = theModel.tryToPlayCardAction(
+                        Integer.parseInt(((StackPane) source).getId()));
 
-                //Redraws the discard deck - TODO [Refactor] Could be own method?
+                //Redraws the discard deck
                 updateDiscardDeck();
 
                 //Clears the players and and redraws
                 theView.getCardsInPlayersHandPane().getChildren().clear();
                 theView.drawPlayerHandPane();
 
-                System.out.println(theModel.getUnoGame().getPlayersHandCopy(
-                        theModel.getHUMAN_PLAYER()));
-
-                if (isLegalPlay) {
-                    startComputerTask();
-                }
+                System.out.println(
+                        "Player's Hand After Play" + theModel.getUnoGame().getPlayersHandCopy(
+                                theModel.getHUMAN_PLAYER()));
 
                 this.activateCardsInPlayersHand();
-                //this.theView.drawPlayerHandPane();
+
+                try {
+                    theModel.checkAndRunEndOfTurn();
+                    if (isLegalPlay) {
+                        startComputerTask();
+                    }
+                } catch (RoundOverException ex) {
+                    theView.redrawPanes();
+                }
             }
 
         }
@@ -180,11 +181,11 @@ public class UNOGameController implements EventHandler<Event> {
 
                 try {
                     //Sleep the computer for 2 seconds
-                    try {
-                        TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException ex) {
-                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
-                    }
+//                    try {
+//                        TimeUnit.SECONDS.sleep(2);
+//                    } catch (InterruptedException ex) {
+//                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
+//                    }
 
                     theModel.getUnoGame().computerTurn(i);
 
@@ -210,12 +211,24 @@ public class UNOGameController implements EventHandler<Event> {
                         }));
                         Thread.sleep(1000);
 
+                        //TODO TODO TODO
+                        Platform.runLater((new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    theModel.checkAndRunEndOfTurn();
+                                } catch (RoundOverException ex) {
+                                    theView.redrawPanes();
+                                }
+                            }
+                        }));
+                        Thread.sleep(1000);
                         //Sleep the computer for 2 seconds
-                        try {
-                            TimeUnit.SECONDS.sleep(2);
-                        } catch (InterruptedException ex) {
-                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
-                        }
+//                        try {
+//                            TimeUnit.SECONDS.sleep(2);
+//                        } catch (InterruptedException ex) {
+//                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
+//                        }
                     } catch (InterruptedException e) {
                         System.out.println("Error: " + e);
                     }
@@ -226,8 +239,6 @@ public class UNOGameController implements EventHandler<Event> {
                 }
 
             }
-        } catch (EmptyDeckException ex) {
-            System.out.println("EMPTY DECK EXCEPTION");
         } catch (InterruptedException ex) {
             Logger.getLogger(UNOGameController.class.getName()).log(Level.SEVERE,
                                                                     null, ex);

@@ -15,11 +15,11 @@
  */
 package unogamemvc;
 
-import deck.EmptyDeckException;
 import deck.PlayerHand;
 import deck.card.Card;
 import unogame.Game;
 import unogame.GameNotStartedException;
+import unogame.RoundOverException;
 
 /**
  * A GUI Card Prototype MVC model Main GUI
@@ -41,13 +41,15 @@ public class UNOGameModel {
     private Game unoGame;
 
     private InvalidPlayPopup invalidPlayPopup;
+    private GameOverPopup gameOverPopup;
+    private RoundOverPopup roundOverPopup;
 
     private boolean isComputerTurn;
 
     /**
      * An explicit constructor for the UNO Main GUI Model
      */
-    public UNOGameModel() throws EmptyDeckException {
+    public UNOGameModel() {
         unoGame = new Game();
         makeNewDefaultGame();
         unoGame.startGame();
@@ -55,6 +57,8 @@ public class UNOGameModel {
         isComputerTurn = false;
         System.out.println(unoGame.getTheDrawDeck());
         this.invalidPlayPopup = new InvalidPlayPopup();
+        this.gameOverPopup = new GameOverPopup();
+        this.roundOverPopup = new RoundOverPopup(unoGame);
 
     }
 
@@ -87,7 +91,7 @@ public class UNOGameModel {
      *
      * @throws EmptyDeckException
      */
-    private void makeNewDefaultGame() throws EmptyDeckException {
+    private void makeNewDefaultGame() {
         try {
             //create player
             unoGame.makePlayer(PlayerHand.HUMAN);
@@ -108,7 +112,7 @@ public class UNOGameModel {
      * @return
      * @throws EmptyDeckException
      */
-    Card popNextDrawCard() throws EmptyDeckException {
+    Card popNextDrawCard() {
         return unoGame.getTheDrawDeck().popTopCard();
     }
 
@@ -118,12 +122,12 @@ public class UNOGameModel {
      * @return
      * @throws EmptyDeckException
      */
-    Card peekNextDrawCard() throws EmptyDeckException {
+    Card peekNextDrawCard() {
         return unoGame.getTheDrawDeck().peekTopCard();
 
     }
 
-    Card peekDiscardPileNextCard() throws EmptyDeckException {
+    Card peekDiscardPileNextCard() {
         return unoGame.getTheDiscardDeck().peekBottomCard();
 
     }
@@ -136,20 +140,16 @@ public class UNOGameModel {
         boolean isDrawSuccessful = false;
         //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
         while (!isDrawSuccessful) {
-            try {
-                unoGame.drawCard(HUMAN_PLAYER);
-                System.out.println("JUST DREW A CARD!!");
-                isDrawSuccessful = true;
-            } catch (EmptyDeckException ex) {
-                unoGame.shuffleDiscardToDrawDeck();
-            }
+            unoGame.drawCard(HUMAN_PLAYER);
+            System.out.println("JUST DREW A CARD!!");
+            isDrawSuccessful = true;
         }
     }
 
-    public boolean tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
-        System.out.println(unoGame.getPlayersHandCopy(
+    public boolean tryToPlayCardAction(int playCardIndex) {
+        System.out.println("Playing card: " + unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex));
-        System.out.println(unoGame.getPlayersHandCopy(
+        System.out.println("Player's Full Hand: " + unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER));
 
         if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
@@ -163,6 +163,38 @@ public class UNOGameModel {
             System.out.println("Valid Play\n");
             return true;
 
+        }
+    }
+
+    public void checkAndRunEndOfTurn() throws RoundOverException {
+        System.out.println("Checking for winner");
+        //TODO HANDLE
+        int winningPlayerID = 0;
+        boolean isEndOfGame = false;
+        //Loop through all players
+        for (int i = 1; i <= unoGame.getNumComputerPlayers() + unoGame.getNumHumanPlayers(); i++) {
+            System.out.print("Player " + i);
+            if (unoGame.getPlayersCopy(i).getDeckSize() == 0) {
+                System.out.print(" won!");
+                winningPlayerID = i;
+            }
+        }
+        System.out.println();
+
+        if (winningPlayerID > 0) {
+            //If any player's hand size is zero
+            isEndOfGame = unoGame.getScorePanel().updateScore(
+                    winningPlayerID - 1);
+            if (isEndOfGame) {
+                //If score > 500, end game
+                gameOverPopup.display();
+            }
+            else {
+                System.out.println("XX" + isEndOfGame);
+                roundOverPopup.display();
+                unoGame.startRound();
+            }
+            throw new RoundOverException();
         }
     }
 }

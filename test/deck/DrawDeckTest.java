@@ -80,7 +80,7 @@ public class DrawDeckTest {
      * Test top card is popped correctly
      */
     @Test
-    public void testTopCare() throws EmptyDeckException {
+    public void testTopCare() {
         assertEquals(unshuffledTopCard, testDeck.popTopCard().toString());
     }
 
@@ -114,43 +114,37 @@ public class DrawDeckTest {
     public void testRemoveNextCard() {
         System.out.println("testRemoveNextCard");
 
-        try {
-            System.out.println("testRemoveNextCard");
+        System.out.println("testRemoveNextCard");
 
-            Card firstCard = testDeck.popTopCard();
-            Card secondCard = testDeck.popTopCard();
+        Card firstCard = testDeck.popTopCard();
+        Card secondCard = testDeck.popTopCard();
 
-            //test that second card does not equal first card
-            assertFalse(firstCard.equals(secondCard));
-
-        } catch (EmptyDeckException ex) {
-            fail("Improper checking for removing card in removeNextCard().  Should not have thrown exception");
-        }
+        //test that second card does not equal first card
+        assertFalse(firstCard.equals(secondCard));
     }
 
-    /**
-     * Test that EmptyDeckException is thrown correctly on empty deck and test
-     * removeAllCards() method.
-     */
-    @Test
-    public void testRemoveNextCardEmptyDeckException() {
-        System.out.println("testRemoveNextCardEmptyDeckException");
-
-        //Remove all cards in deck, fail if exception while deck still has cards
-        testDeck.removeAllCards();
-
-        //Confirm deck is empty
-        assertEquals(0, testDeck.getDeckSize());
-
-        //Attempt to remove card from empty deck
-        try {
-            testDeck.popTopCard();
-            fail("EmptyDeckException should have been throw for removeNextCard().  Should not have thrown exception");
-        } catch (EmptyDeckException e) {
-            assertEquals("class deck.DrawDeck is empty", e.getMessage());
-        }
-    }
-
+//    /**
+//     * Test that EmptyDeckException is thrown correctly on empty deck and test
+//     * removeAllCards() method.
+//     */
+//    @Test
+//    public void testRemoveNextCardEmptyDeckException() {
+//        System.out.println("testRemoveNextCardEmptyDeckException");
+//
+//        //Remove all cards in deck, fail if exception while deck still has cards
+//        testDeck.removeAllCards();
+//
+//        //Confirm deck is empty
+//        assertEquals(0, testDeck.getDeckSize());
+//
+//        //Attempt to remove card from empty deck
+//        try {
+//            testDeck.popTopCard();
+//            fail("EmptyDeckException should have been throw for removeNextCard().  Should not have thrown exception");
+//        } catch (EmptyDeckException e) {
+//            assertEquals("class deck.DrawDeck is empty", e.getMessage());
+//        }
+//    }
     /**
      * Test of addCard method and the peekTopCard method, of class DrawDeck.
      *
@@ -160,21 +154,17 @@ public class DrawDeckTest {
     public void testAddCard() {
         System.out.println("testAddCard");
 
-        try {
-            //get top card
-            Card addCard = testDeck.popTopCard();
+        //get top card
+        Card addCard = testDeck.popTopCard();
 
-            //empty deck and then readd card
-            testDeck.removeAllCards();
-            testDeck.addCard(addCard);
+        //empty deck and then readd card
+        testDeck.removeAllCards();
+        testDeck.addCard(addCard);
 
-            //Confirm deck has one card
-            assertEquals(1, testDeck.getDeckSize());
+        //Confirm deck has one card
+        assertEquals(1, testDeck.getDeckSize());
 
-            //Confirm card added is correct
-            assertEquals(addCard, testDeck.peekTopCard());
-        } catch (EmptyDeckException ex) {
-            fail("Improper checking for removing card in removeNextCard().  Should not have thrown exception");
-        }
+        //Confirm card added is correct
+        assertEquals(addCard, testDeck.peekTopCard());
     }
 }
