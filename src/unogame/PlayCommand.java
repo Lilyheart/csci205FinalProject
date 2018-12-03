@@ -21,6 +21,7 @@ package unogame;
  * @author Rachel Wang
  */
 public enum PlayCommand {
+    //TODO [!Finalize] What enums are used?
 
     /**
      * enum when player wants to call BUNO
@@ -29,11 +30,11 @@ public enum PlayCommand {
     /**
      * enum when player wants to draw
      */
-    DRAW,
+    NOPLAYABLECARD,
     /**
-     * enum when player wnats to play a card
+     * enum when player wants to play a card
      */
-    PLAYCARD,
+    PLAYABLECARD,
     /**
      * enum when still no valid card to play after the draw or the user chooses
      * to skip a playable card

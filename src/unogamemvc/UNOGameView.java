@@ -210,19 +210,19 @@ public class UNOGameView {
         //leftPanel.setAlignment(Pos.BOTTOM_RIGHT);
         leftPanel.setSpacing(20);
         int i = 0;
-        //theModel.getUnoGame().getScorePanel().updateScore(0);
+        //theModel.getUnoGame().getScorePanel().updateScores(0);
         for (PlayerHand player : theModel.getUnoGame().getPlayers()) {
             Label name;
             Label score;
             if (!player.isComputerPlayer()) {
                 name = new Label("HUMAN PLAYER");
                 score = new Label(String.valueOf(
-                        theModel.getUnoGame().getScorePanel().getScores(i)));
+                        theModel.getUnoGame().getScorePanel().getScore(i)));
             }
             else {
                 name = new Label("Computer " + i);
                 score = new Label(String.valueOf(
-                        theModel.getUnoGame().getScorePanel().getScores(i)));
+                        theModel.getUnoGame().getScorePanel().getScore(i)));
             }
             i++;
             name.setFont(Font.font("Verdana", FontWeight.BLACK,

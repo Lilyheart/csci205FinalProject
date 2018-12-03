@@ -26,11 +26,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PlayerHand extends BUnoDeck {
 
     /**
-     * The ID number of the player
-     */
-    private final int idNum;
-
-    /**
      * True if the player is a computer player, false if it is a human player
      */
     private final boolean isComputerPlayer;
@@ -55,12 +50,10 @@ public class PlayerHand extends BUnoDeck {
      *
      * @author Lily Romano
      *
-     * @param idNum ID number of the player
      * @param isComputerPlayer True if the player is a computer player, false if
      * it is a human player
      */
-    public PlayerHand(int idNum, boolean isComputerPlayer) {
-        this.idNum = idNum;
+    public PlayerHand(boolean isComputerPlayer) {
         this.isComputerPlayer = isComputerPlayer;
     }
 
@@ -96,7 +89,7 @@ public class PlayerHand extends BUnoDeck {
     @Override
     public String toString() {
         String player = isComputerPlayer ? "computer" : "human";
-        return "Player " + idNum + "[" + player + "]" + super.toString();
+        return "Player " + "[" + player + "]" + super.toString();
     }
 
 }

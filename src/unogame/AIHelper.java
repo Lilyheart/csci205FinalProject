@@ -21,41 +21,51 @@ import deck.card.CardColor;
 import deck.card.CardType;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
-import unogame.NoValidCardException;
-import unogame.PlayCommand;
 
 /**
  * Helper class for Artificial Players to determine the action of the computer
  * player
  *
  * @author Rachel Wang
- *
  */
 public final class AIHelper {
 
     /**
-     * get a valid card to play and play the "best" playable card
+     * The percent (1=100%) of the time the AI catches that BUno should have
+     * been called.
      *
-     * @param hand
-     * @param discardCard
-     * @return
-     * @throws NoValidCardException
+     * @author Rachel Wang
      */
-    public static int getValidCard(CopyOnWriteArrayList<Card> hand,
-                                   Card discardCard) throws NoValidCardException {
-        CardType discardType = discardCard.getType();
-        CardColor discardColor = discardCard.getColor();
+    private static final double BUNO_CATCH = 0.9;
+
+    /**
+     * Finds a valid card to play and play the "best" playable card
+     *
+     * @author Rachel Wang
+     *
+     * @param hand A copy of the hand of the player
+     * @param discardCard The top card of the discard pile
+     * @return the index of the playable card in the {@code hand}.
+     * @throws NoValidCardException When there is no valid card to play
+     */
+    public static int findValidCard(CopyOnWriteArrayList<Card> hand,
+                                    Card discardCard) throws NoValidCardException {
         boolean isCardPlayable = false;
 
-        //Testing color and type of number cards
+        //Get the information about the discard card
+        CardType discardType = discardCard.getType();
+        CardColor discardColor = discardCard.getColor();
+
+        //[AI Brain] - Always play the large point value card to remove it from hand
         int maxValue = 0;
         int maxID = 0;
 
+        //Testing color and type of number cards
         for (int i = 0; i < hand.size(); i++) {
-            //Only test color and value of number cards
             //Keep track of maxID and maxValue of the playable card
             int curValue = hand.get(i).getType().getCardPointValue();
-            //Testing color, play the card if matches
+
+            //Test color
             if (hand.get(i).getColor() == discardColor) {
                 isCardPlayable = true;
 
@@ -64,7 +74,8 @@ public final class AIHelper {
                     maxID = i;
                 }
             }
-            //Testing type, play the card if matches
+
+            //Test type
             if (hand.get(i).getType() == discardType) {
                 isCardPlayable = true;
                 if (maxValue < curValue) {
@@ -74,8 +85,9 @@ public final class AIHelper {
             }
         }
 
+        //return if the id of the max point value card if playable cards were found
         if (isCardPlayable) {
-            return maxID; //AI will always play the card with the highest value
+            return maxID;
         }
         else {
             throw new NoValidCardException();
@@ -83,18 +95,42 @@ public final class AIHelper {
     }
 
     /**
-     * call BUno if second to last card is playable the AI has 90% chance to
+     * Determines if it needs to draw a card or if has a playable card.
+     *
+     * @author Rachel Wang
+     *
+     * @param hand A copy of the hand of the player
+     * @param discardCard The top card of the discard pile
+     * @return the desired {@code PlayCommand}.
+     */
+    public static PlayCommand determinePlayCommand(
+            CopyOnWriteArrayList<Card> hand,
+            Card discardCard) {
+
+        try {
+            findValidCard(hand, discardCard);
+        } catch (NoValidCardException e) {
+            return PlayCommand.NOPLAYABLECARD;
+        }
+        return PlayCommand.PLAYABLECARD;
+    }
+
+    /**
+     * Call BUno if second to last card is playable. The AI has 90% chance to
      * call BUno correctly
      *
-     * @param hand
-     * @return true if it's ready to call Buno; false otherwise
+     * @author Rachel Wang
+     *
+     * @param hand the {@code PlayerHand} in question
+     * @return true if it's ready to call BUno; false otherwise
      */
-    public static boolean isTimeForBuno(PlayerHand hand) {
+    public static boolean checkIsTimeForBuno(PlayerHand hand) {
+
         //If second to last card, call Uno
         if (hand.getDeckSize() == 2) {
             Random rand = new Random();
             double chance = rand.nextDouble();
-            if (chance > .1) {
+            if (chance < BUNO_CATCH) {
                 return true;
             }
         }
@@ -102,31 +138,15 @@ public final class AIHelper {
     }
 
     /**
-     * draw and/or discard a valid card
+     * the AI has 90% chance to BUno the active player
      *
-     * @param hand
-     * @param discardCard
-     * @return the correct play command: Draw/Play/Pass
-     */
-    public static PlayCommand getPlayCommand(CopyOnWriteArrayList<Card> hand,
-                                             Card discardCard) {
-
-        try {
-            getValidCard(hand, discardCard);
-        } catch (NoValidCardException ex) {
-            return PlayCommand.DRAW;
-        }
-        return PlayCommand.PLAYCARD;
-    }
-
-    /**
-     * the AI has 90% chance to Buno the active player
-     *
-     * @param hand
-     * @return true if Buno the active player
+     * @author Rachel Wang
+     * @param activePlayerHand the {@code PlayerHand} of the active player
+     * @return true if BUno the active player
      *
      */
-    public static boolean isTimeToBunoActivePlayer(PlayerHand activePlayerHand) {
+    public static boolean checkIsTimeToBunoActivePlayer(
+            PlayerHand activePlayerHand) {
         if (activePlayerHand.getDeckSize() == 1) {
             Random rand = new Random();
             double chance = rand.nextDouble();

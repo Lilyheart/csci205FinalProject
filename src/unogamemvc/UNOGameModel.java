@@ -183,7 +183,7 @@ public class UNOGameModel {
 
         if (winningPlayerID > 0) {
             //If any player's hand size is zero
-            isEndOfGame = unoGame.getScorePanel().updateScore(
+            isEndOfGame = unoGame.getScorePanel().updateScores(
                     winningPlayerID - 1);
             if (isEndOfGame) {
                 //If score > 500, end game

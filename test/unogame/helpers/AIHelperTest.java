@@ -41,7 +41,7 @@ public class AIHelperTest {
 
     @Before
     public void setUp() {
-        testHandDeck = new PlayerHand(0, true);
+        testHandDeck = new PlayerHand(true);
 
         //Add known set of cards
         //Hand does not have a Grey or number card greater than 3
@@ -57,7 +57,9 @@ public class AIHelperTest {
     }
 
     /**
-     * Test of getValidCard method, of class AIHelper.
+     * Test of findValidCard method, of class AIHelper.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetValidCardMatchColorOnly() throws Exception {
@@ -66,13 +68,15 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.BLUE, CardType.FOUR);
         int expResult = 0;
 
-        int result = AIHelper.getValidCard(testHandDeck.getCopyOfHand(),
-                                           discardCard);
+        int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
+                                            discardCard);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getValidCard method, of class AIHelper.
+     * Test of findValidCard method, of class AIHelper.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetValidCardMatchTypeOnly() throws Exception {
@@ -81,13 +85,13 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.GRAY, CardType.ONE);
         int expResult = 0;
 
-        int result = AIHelper.getValidCard(testHandDeck.getCopyOfHand(),
-                                           discardCard);
+        int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
+                                            discardCard);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getValidCard method, of class AIHelper.
+     * Test of findValidCard method, of class AIHelper.
      */
     @Test
     public void testGetValidCardNoMatch() {
@@ -97,8 +101,8 @@ public class AIHelperTest {
 
         //test if error is thrown when adding an employee that already exists
         try {
-            int result = AIHelper.getValidCard(testHandDeck.getCopyOfHand(),
-                                               discardCard);
+            int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
+                                                discardCard);
             fail("addEmployee() doesn't error when adding an employee that already exists");
         } catch (NoValidCardException expected) {
         }
@@ -106,18 +110,18 @@ public class AIHelperTest {
     }
 
     /**
-     * Test of isTimeForBuno method, of class AIHelper.
+     * Test of checkIsTimeForBuno method, of class AIHelper.
      */
     @Test
     public void testIsTimeForBunoFalse() {
         System.out.println("testIsTimeForBunoFalse");
 
         //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(false, AIHelper.isTimeForBuno(testHandDeck));
+        assertEquals(false, AIHelper.checkIsTimeForBuno(testHandDeck));
     }
 
     /**
-     * Test of isTimeForBuno method, of class AIHelper.
+     * Test of checkIsTimeForBuno method, of class AIHelper.
      */
     @Test
     public void testIsTimeForBunoTrue() {
@@ -127,11 +131,11 @@ public class AIHelperTest {
         testHandDeck.popTopCard();
 
         //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(true, AIHelper.isTimeForBuno(testHandDeck));
+        assertEquals(true, AIHelper.checkIsTimeForBuno(testHandDeck));
     }
 
     /**
-     * Test of getPlayCommand method, of class AIHelper.
+     * Test of determinePlayCommand method, of class AIHelper.
      */
     @Test
     public void testGetPlayCommandOnDraw() {
@@ -139,14 +143,14 @@ public class AIHelperTest {
 
         Card discardCard = new Card(CardColor.GRAY, CardType.FOUR);
 
-        PlayCommand result = AIHelper.getPlayCommand(
+        PlayCommand result = AIHelper.determinePlayCommand(
                 testHandDeck.getCopyOfHand(), discardCard);
 
-        assertEquals(PlayCommand.DRAW, result);
+        assertEquals(PlayCommand.NOPLAYABLECARD, result);
     }
 
     /**
-     * Test of getPlayCommand method, of class AIHelper.
+     * Test of determinePlayCommand method, of class AIHelper.
      */
     @Test
     public void testGetPlayCommandOnPlay() {
@@ -154,25 +158,25 @@ public class AIHelperTest {
 
         Card discardCard = new Card(CardColor.GRAY, CardType.ONE);
 
-        PlayCommand result = AIHelper.getPlayCommand(
+        PlayCommand result = AIHelper.determinePlayCommand(
                 testHandDeck.getCopyOfHand(), discardCard);
 
-        assertEquals(PlayCommand.PLAYCARD, result);
+        assertEquals(PlayCommand.PLAYABLECARD, result);
     }
 
     /**
-     * Test of isTimeToBunoActivePlayer method, of class AIHelper.
+     * Test of checkIsTimeToBunoActivePlayer method, of class AIHelper.
      */
     @Test
     public void testIsTimeToBunoActivePlayerFalse() {
         System.out.println("testIsTimeToBunoActivePlayerFalse");
 
         //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(false, AIHelper.isTimeToBunoActivePlayer(testHandDeck));
+        assertEquals(false, AIHelper.checkIsTimeToBunoActivePlayer(testHandDeck));
     }
 
     /**
-     * Test of isTimeToBunoActivePlayer method, of class AIHelper.
+     * Test of checkIsTimeToBunoActivePlayer method, of class AIHelper.
      */
     @Test
     public void testIsTimeToBunoActivePlayerTrue() {
@@ -183,6 +187,6 @@ public class AIHelperTest {
         testHandDeck.popTopCard();
 
         //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(true, AIHelper.isTimeToBunoActivePlayer(testHandDeck));
+        assertEquals(true, AIHelper.checkIsTimeToBunoActivePlayer(testHandDeck));
     }
 }

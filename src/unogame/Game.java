@@ -45,17 +45,18 @@ public class Game {
     private final LinkedList<PlayerHand> players;
 
     /**
-     * The total number of players. Also used to set the player's idNum.
-     */
-    private static int numPlayers;
-
-    /**
      * True if the game has started, otherwise false
      */
     private Boolean isGameStarted;
 
+    /**
+     * The ScorePanel object to maintain scores
+     */
     private ScorePanel scorePanel;
 
+    /**
+     * Maintains if BUno was called on the last turn played
+     */
     private Boolean isBUnoLastTurnPlayed;
 
     /**
@@ -66,8 +67,18 @@ public class Game {
     public Game() {
         //Instantiate variables
         players = new LinkedList<>();
-        numPlayers = 0;
         isGameStarted = false;
+    }
+
+    /**
+     * Returns the total number of players.
+     *
+     * @author Lily Romano
+     *
+     * @return the total number of players.
+     */
+    public int getNumPlayers() {
+        return players.size();
     }
 
     /**
@@ -107,7 +118,7 @@ public class Game {
     }
 
     /**
-     * Returns a copy of the player's hand.
+     * Returns a copy of the player's hand as an array list
      *
      * @author Lily Romano
      *
@@ -120,7 +131,7 @@ public class Game {
     }
 
     /**
-     * Returns a copy of the player's hand.
+     * Returns a copy of the player's hand as a PlayerHand object
      *
      * @author Lily Romano
      *
@@ -145,8 +156,8 @@ public class Game {
     }
 
     /**
-     * Starts a new game by popping the top card of the draw deck onto the
-     * discard deck
+     * Starts a new round by recreating all the decks, shuffling and dealing
+     * cards
      *
      * @author Lily Romano
      */
@@ -170,7 +181,7 @@ public class Game {
     }
 
     /**
-     * Makes a new human player
+     * Makes a new player
      *
      * @author Lily Romano
      *
@@ -179,61 +190,60 @@ public class Game {
      * @throws unogame.GameNotStartedException
      */
     public void makePlayer(Boolean isComputerPlayer) throws GameNotStartedException {
-        //TODO [Exception Handling]
         if (isGameStarted) {
             String player = isComputerPlayer ? "computer" : "human";
             throw new GameNotStartedException(
                     "Attempting to create a " + player + " player after the game has started");
         }
-        numPlayers++;
 
-        PlayerHand newPlayer = new PlayerHand(numPlayers, isComputerPlayer);
+        PlayerHand newPlayer = new PlayerHand(isComputerPlayer);
 
         players.add(newPlayer);
     }
 
     public void computerTurn(int playerID) throws NoValidCardException {
-        System.out.printf(">>User %d playing: ", playerID);//TODO
+        //DEBUG output
+        System.out.printf(">>User %d playing: ", playerID);
         System.out.print(
-                "\n\tBefore Hand: " + getPlayersHandCopy(playerID) + "\n\t");//TODO
+                "\n\tBefore Hand: " + getPlayersHandCopy(playerID) + "\n\t");
+
         PlayerHand hand = getPlayersCopy(playerID);
         Card discardCard = getTheDiscardDeck().peekBottomCard();
 
-        PlayCommand playcommand = AIHelper.getPlayCommand(
-                getPlayersHandCopy(playerID),
-                discardCard);
+        PlayCommand playcommand = AIHelper.determinePlayCommand(
+                hand.getCopyOfHand(), discardCard);
 
         System.out.print(playcommand + " ");//TODO
 
         //TODO [Refactor] Dry out this code
         switch (playcommand) {
-            case DRAW:
+            case NOPLAYABLECARD:
                 drawCard(playerID);
-                playcommand = AIHelper.getPlayCommand(
+                playcommand = AIHelper.determinePlayCommand(
                         getPlayersHandCopy(playerID),
                         discardCard);
 
                 System.out.print(playcommand + " ");//TODO
-                if (playcommand == PlayCommand.PLAYCARD) {
-                    boolean isbuno = AIHelper.isTimeForBuno(hand);
+                if (playcommand == PlayCommand.PLAYABLECARD) {
+                    boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
                     if (isbuno) {
                         isBUnoLastTurnPlayed = true;
                         System.out.print("BUNO! ");//TOOD
                     }
-                    int cardToPlay = AIHelper.getValidCard(
+                    int cardToPlay = AIHelper.findValidCard(
                             getPlayersHandCopy(playerID),
                             discardCard);
                     playCard(playerID, cardToPlay);
                     System.out.print("Playing Card " + cardToPlay);//TODO
                 }
                 break;
-            case PLAYCARD:
-                boolean isbuno = AIHelper.isTimeForBuno(hand);
+            case PLAYABLECARD:
+                boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
                 if (isbuno) {
                     isBUnoLastTurnPlayed = true;
                     System.out.print("BUNO! ");//TOOD
                 }
-                int cardToPlay = AIHelper.getValidCard(
+                int cardToPlay = AIHelper.findValidCard(
                         getPlayersHandCopy(playerID),
                         discardCard);
                 playCard(playerID, cardToPlay);
@@ -252,7 +262,6 @@ public class Game {
      *
      * @param playerID the player ID [Starting from 1]
      * @param cardIndex the index of the card to play
-     * @throws EmptyDeckException
      */
     public void playCard(int playerID, int cardIndex) {
         //TODO [Basic Game] Add Rules
