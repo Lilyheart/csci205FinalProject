@@ -61,7 +61,9 @@ public class PlayerHand extends BUnoDeck {
      */
     public PlayerHand(boolean isComputerPlayer) {
         this.isComputerPlayer = isComputerPlayer;
-        AIintelligence = AIintelligenceLevel.SMART;
+        if (isComputerPlayer) {
+            AIintelligence = AIintelligenceLevel.SMART;
+        }
     }
 
     /**
@@ -76,7 +78,9 @@ public class PlayerHand extends BUnoDeck {
     public PlayerHand(boolean isComputerPlayer,
                       AIintelligenceLevel AIintelligence) {
         this.isComputerPlayer = isComputerPlayer;
-        this.AIintelligence = AIintelligence;
+        if (isComputerPlayer) {
+            this.AIintelligence = AIintelligence;
+        }
     }
 
     /**
@@ -115,7 +119,7 @@ public class PlayerHand extends BUnoDeck {
     @Override
     public String toString() {
         String player = isComputerPlayer ? "computer" : "human";
-        return "Player " + "[" + player + "]" + super.toString();
+        return "Player " + "[" + player + "] {" + AIintelligence + "} Player's " + super.toString();
     }
 
 }

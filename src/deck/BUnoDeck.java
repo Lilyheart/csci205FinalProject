@@ -177,7 +177,7 @@ public abstract class BUnoDeck {
      */
     @Override
     public String toString() {
-        return "Deck: \n" + deck;
+        return "Deck: " + deck;
     }
 
 }
