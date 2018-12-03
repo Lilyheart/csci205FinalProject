@@ -15,6 +15,7 @@
  */
 package unogamemvc;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -58,7 +59,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-                             UNOGameView theView) {
+            UNOGameView theView) {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -181,11 +182,11 @@ public class UNOGameController implements EventHandler<Event> {
 
                 try {
                     //Sleep the computer for 2 seconds
-//                    try {
-//                        TimeUnit.SECONDS.sleep(2);
-//                    } catch (InterruptedException ex) {
-//                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
-//                    }
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException ex) {
+                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
+                    }
 
                     theModel.getUnoGame().computerTurn(i);
 
@@ -194,7 +195,7 @@ public class UNOGameController implements EventHandler<Event> {
                     //TODO [GUI] Redraw the computer's hand
                     //TODO [GUI] Deal with BUno
                     System.out.println("Played " + i
-                                       + theModel.getUnoGame().getPlayersHandCopy(
+                            + theModel.getUnoGame().getPlayersHandCopy(
                                     i));
                     System.out.println(
                             "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
@@ -241,7 +242,7 @@ public class UNOGameController implements EventHandler<Event> {
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(UNOGameController.class.getName()).log(Level.SEVERE,
-                                                                    null, ex);
+                    null, ex);
         }
 
         theModel.setIsComputerTurn(false);

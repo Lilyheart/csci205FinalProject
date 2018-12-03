@@ -217,16 +217,16 @@ public class UNOGameView {
             if (!player.isComputerPlayer()) {
                 name = new Label("HUMAN PLAYER");
                 score = new Label(String.valueOf(
-                        theModel.getUnoGame().getScorePanel().getScores(0)));
+                        theModel.getUnoGame().getScorePanel().getScores(i)));
             }
             else {
                 name = new Label("Computer " + i);
                 score = new Label(String.valueOf(
-                        theModel.getUnoGame().getScorePanel().getScores(1)));
+                        theModel.getUnoGame().getScorePanel().getScores(i)));
             }
             i++;
             name.setFont(Font.font("Verdana", FontWeight.BLACK,
-                                   FontPosture.REGULAR, 30));
+                    FontPosture.REGULAR, 30));
             name.setUnderline(true);
             score.setFont(Font.font("Arial", 26));
             leftPanel.getChildren().addAll(name, score);
