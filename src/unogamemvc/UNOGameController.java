@@ -92,6 +92,7 @@ public class UNOGameController implements EventHandler<Event> {
         else if (eType == MouseEvent.MOUSE_CLICKED) {
             Object source = event.getSource();
             if (source instanceof StackPane && !theModel.isIsComputerTurn()) { //Any card clicked
+                boolean isLegalPlay = false;
 
                 System.out.println(((StackPane) source).getId());
 
@@ -99,7 +100,7 @@ public class UNOGameController implements EventHandler<Event> {
                                    + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
                 try {
                     //Plays the card via unogame.Game
-                    theModel.tryToPlayCardAction(
+                    isLegalPlay = theModel.tryToPlayCardAction(
                             Integer.parseInt(((StackPane) source).getId()));
                 } catch (EmptyDeckException ex) {
                     System.out.println("EMPTY DECK");
@@ -115,7 +116,9 @@ public class UNOGameController implements EventHandler<Event> {
                 System.out.println(theModel.getUnoGame().getPlayersHandCopy(
                         theModel.getHUMAN_PLAYER()));
 
-                startTask();
+                if (isLegalPlay) {
+                    startComputerTask();
+                }
 
                 this.activateCardsInPlayersHand();
                 //this.theView.drawPlayerHandPane();
@@ -144,7 +147,7 @@ public class UNOGameController implements EventHandler<Event> {
         });
     }
 
-    public void startTask() {
+    public void startComputerTask() {
         // Create a Runnable
         Runnable task = new Runnable() {
             public void run() {
@@ -258,7 +261,7 @@ public class UNOGameController implements EventHandler<Event> {
 
                         activateCardsInPlayersHand();
 
-                        startTask();
+                        startComputerTask();
                     }
                 }
 

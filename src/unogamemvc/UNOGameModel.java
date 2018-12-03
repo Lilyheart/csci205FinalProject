@@ -49,7 +49,7 @@ public class UNOGameModel {
      */
     public UNOGameModel() throws EmptyDeckException {
         unoGame = new Game();
-        setNewDefaultGame();
+        makeNewDefaultGame();
         unoGame.startGame();
         //TODO [GUI] get starting player
         isComputerTurn = false;
@@ -87,7 +87,7 @@ public class UNOGameModel {
      *
      * @throws EmptyDeckException
      */
-    private void setNewDefaultGame() throws EmptyDeckException {
+    private void makeNewDefaultGame() throws EmptyDeckException {
         try {
             //create player
             unoGame.makePlayer(PlayerHand.HUMAN);
@@ -146,7 +146,7 @@ public class UNOGameModel {
         }
     }
 
-    public void tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
+    public boolean tryToPlayCardAction(int playCardIndex) throws EmptyDeckException {
         System.out.println(unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex));
         System.out.println(unoGame.getPlayersHandCopy(
@@ -156,11 +156,12 @@ public class UNOGameModel {
                 HUMAN_PLAYER).get(playCardIndex))) {
             System.out.println("Invalid play\n");
             invalidPlayPopup.display();
-            //POP-UP BOX
+            return false;
         }
         else {
             unoGame.playCard(HUMAN_PLAYER, playCardIndex);
             System.out.println("Valid Play\n");
+            return true;
 
         }
     }
