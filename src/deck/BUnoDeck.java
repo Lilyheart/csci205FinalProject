@@ -40,7 +40,7 @@ public abstract class BUnoDeck {
      * The count of special cards in the deck that are not colors Wild and Wild
      * Draw 3
      */
-    //TODO [Basic Game] Change following const to 2 for full game
+    //TODO [Special Cards] Change following const to 2 for full game
     protected static final int NUM_SPECIAL_NOTCOLOR = 0;
 
     /**
@@ -52,7 +52,7 @@ public abstract class BUnoDeck {
      * The count of special cards in the deck that are colors Draw 2, Reverse
      * and Skip
      */
-    //TODO [Basic Game] Change following const to 3 for full game
+    //TODO [Special Cards] Change following const to 3 for full game
     protected static final int SPECIAL_COLOR_CARDS = 0;
 
     /**
