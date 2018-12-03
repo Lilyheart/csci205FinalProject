@@ -16,6 +16,7 @@
 package unogamemvc;
 
 import deck.EmptyDeckException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -58,7 +59,7 @@ public class UNOGameController implements EventHandler<Event> {
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public UNOGameController(UNOGameModel theModel,
-            UNOGameView theView) throws EmptyDeckException {
+                             UNOGameView theView) throws EmptyDeckException {
         this.theModel = theModel;
         this.theView = theView;
         //this.cardGUIIndex = cardGUIIndex;
@@ -94,7 +95,7 @@ public class UNOGameController implements EventHandler<Event> {
                 System.out.println(((StackPane) source).getId());
 
                 System.out.println("XXXX"
-                        + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
+                                   + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
                 try {
                     //Plays the card via unogame.Game
                     theModel.tryToPlayCardAction(
@@ -113,7 +114,7 @@ public class UNOGameController implements EventHandler<Event> {
                 System.out.println(theModel.getUnoGame().getPlayersHandCopy(
                         theModel.getHUMAN_PLAYER()));
 
-                runOpponentsTurns();
+                startTask();
 
                 this.activateCardsInPlayersHand();
                 //this.theView.drawPlayerHandPane();
@@ -142,41 +143,74 @@ public class UNOGameController implements EventHandler<Event> {
         });
     }
 
-    private void runOpponentsTurns() {
+    public void startTask() {
+        // Create a Runnable
+        Runnable task = new Runnable() {
+            public void run() {
+                runOpponentsTurnsTask();
+            }
+        };
+
+        // Run the task in a background thread
+        Thread backgroundThread = new Thread(task);
+        // Terminate the running thread if the application exits
+        backgroundThread.setDaemon(true);
+        // Start the thread
+        backgroundThread.start();
+    }
+
+    public void runOpponentsTurnsTask() {
         try {
 
-            theView.getOpponentsPane().getChildren().clear();
+            Platform.runLater((new Runnable() {
+                @Override
+                public void run() {
+//                    theView.getOpponentsPane().getChildren().clear();
+                    updateDiscardDeck();
+                }
+            }));
+            Thread.sleep(1000);
 
             for (int i = 2; i <= 4; i++) {
-                updateDiscardDeck();
 
                 try {
                     theModel.getUnoGame().computerTurn(i);
 
                     //TODO redraw stuffs
                     //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
-                    updateDiscardDeck();
                     //TODO [GUI] Redraw the computer's hand
                     //TODO [GUI] Deal with BUno
                     System.out.println("Played " + i
-                            + theModel.getUnoGame().getPlayersHandCopy(
+                                       + theModel.getUnoGame().getPlayersHandCopy(
                                     i));
                     System.out.println(
                             "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
                                     i).size());
 
-                    theView.getOpponentsPane().add(
-                            theView.createComputerPlayerStackPane(
-                                    theModel.getUnoGame().getPlayersHandCopy(
-                                            i).size()), i - 2, 0);
-                    /*
-                                try {
-                                TimeUnit.SECONDS.sleep(2);
-                                System.out.println(">>>>>>SLEPT FOR 2 ");
-                                } catch (InterruptedException ex) {
-                                //grrrrr
-                                } */
+                    int size = theModel.getUnoGame().getPlayersHandCopy(i).size();
+                    StackPane toAdd = theView.createComputerPlayerStackPane(size);
+                    int position = i - 2;
 
+                    try {
+                        // Update the card on the JavaFx Application Thread
+                        Platform.runLater((new Runnable() {
+                            @Override
+                            public void run() {
+                                updateDiscardDeck();
+                                theView.createOpponentsPane();
+                            }
+                        }));
+                        Thread.sleep(1000);
+
+                        //Sleep the computer for 2 seconds
+                        try {
+                            TimeUnit.SECONDS.sleep(2);
+                        } catch (InterruptedException ex) {
+                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
+                        }
+                    } catch (InterruptedException e) {
+                        System.out.println("Error: " + e);
+                    }
                 } catch (NoValidCardException ex) {
                     Logger.getLogger(
                             UNOGameController.class.getName()).log(
@@ -186,7 +220,11 @@ public class UNOGameController implements EventHandler<Event> {
             }
         } catch (EmptyDeckException ex) {
             System.out.println("EMPTY DECK EXCEPTION");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UNOGameController.class.getName()).log(Level.SEVERE,
+                                                                    null, ex);
         }
+
     }
 
     /**
@@ -211,7 +249,7 @@ public class UNOGameController implements EventHandler<Event> {
 
                     activateCardsInPlayersHand();
 
-                    runOpponentsTurns();
+                    startTask();
 
                 }
 

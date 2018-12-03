@@ -154,6 +154,10 @@ public class UNOGameView {
 
         playersHandHBox.getChildren().add(cardsInPlayersHandPane);
 
+        createOpponentsAndDeckVBox();
+
+        opponentsPane = new GridPane();
+
         createOpponentsPane();
 
         createDrawAndDiscardDecksGridPane();
@@ -218,7 +222,7 @@ public class UNOGameView {
             }
             i++;
             name.setFont(Font.font("Verdana", FontWeight.BLACK,
-                    FontPosture.REGULAR, 30));
+                                   FontPosture.REGULAR, 30));
             name.setUnderline(true);
             score.setFont(Font.font("Arial", 26));
             leftPanel.getChildren().addAll(name, score);
@@ -396,9 +400,8 @@ public class UNOGameView {
      */
     protected void createOpponentsPane() {
         //create the model of opponentsPane
-        createOpponentsAndDeckVBox();
+        opponentsPane.getChildren().clear();
 
-        opponentsPane = new GridPane();
         for (int i = 0; i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
             drawComputerHandPane(
                     theModel.getUnoGame().getPlayersHandCopy(i + 2).size());
