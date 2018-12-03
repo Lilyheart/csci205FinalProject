@@ -63,7 +63,7 @@ public enum CardType {
      * An enum with information on the card nine
      */
     NINE("9", "9", 9);
-    //TODO [Basic Game] Uncomment following lines for full game and fix comma/semicolon
+    //TODO [Special Cards] Uncomment following lines for full game and fix comma/semicolon
 //    /**
 //     * An enum with information on the card draw 2
 //     */
