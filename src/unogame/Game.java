@@ -314,4 +314,15 @@ public class Game {
         return originalValue;
     }
 
+    @Override
+    public String toString() {
+        String result;
+
+        result = "GAME STATUS: " + "isGameStarted=" + isGameStarted + ", isBUnoLastTurnPlayed=" + isBUnoLastTurnPlayed + "\n";
+        for (PlayerHand player : players) {
+            result += " - " + player.toString() + "\n";
+        }
+        return result;
+    }
+
 }

@@ -40,8 +40,7 @@ public final class AIHelper {
      * @return the index of the playable card in the {@code hand}.
      * @throws NoValidCardException When there is no valid card to play
      */
-    public static int findValidCard(PlayerHand playersHand,
-                                    Card discardCard) throws NoValidCardException {
+    public static int findValidCard(PlayerHand playersHand, Card discardCard) throws NoValidCardException {
         CopyOnWriteArrayList<Card> hand = playersHand.getCopyOfHand();
         boolean isCardPlayable = false;
 
@@ -149,7 +148,14 @@ public final class AIHelper {
         return false;
     }
 
-    public static void computerTurn(Game unoGame, int playerIndex) throws NoValidCardException {
+    /**
+     * Processes the computer's turn using the AI
+     *
+     * @param unoGame the {@code Game} object
+     * @param playerIndex the index of the player from the {code players}
+     * ArrayList in the {@code unoGame}
+     */
+    public static void computerTurn(Game unoGame, int playerIndex) {
         //DEBUG output
         System.out.printf(">>User %d playing: ", (playerIndex + 1));
         System.out.print("\n\tBefore Hand: " + unoGame.getPlayersHandCopy(
@@ -175,18 +181,24 @@ public final class AIHelper {
                     unoGame.setIsBUnoLastTurnPlayed(true);
                     System.out.print("BUNO! ");
                 }
-                int cardToPlay = AIHelper.findValidCard(
-                        hand, discardCard);
-                unoGame.playCard(playerIndex, cardToPlay);
-                System.out.print("Playing Card " + cardToPlay);
+
+                int cardToPlay;
+                try {
+                    cardToPlay = AIHelper.findValidCard(
+                            hand, discardCard);
+                    unoGame.playCard(playerIndex, cardToPlay);
+                    System.out.print("Playing Card " + cardToPlay);
+                } catch (NoValidCardException ex) {
+                    /*case PLAYABLECARD is only possible when a valid card is
+                     * locatable, exception cannot be thrown and if it is,
+                     * there an unrecoverable error */
+                    System.exit(-1);
+                }
+
                 break;
         }
         System.out.println("\n\tAfter Hand: " + unoGame.getPlayersHandCopy(
                 playerIndex));
-
-    }
-
-    public enum AIintelligenceLevel {
 
     }
 }

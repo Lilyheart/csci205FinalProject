@@ -226,7 +226,7 @@ public class UNOGameView {
             }
             i++;
             name.setFont(Font.font("Verdana", FontWeight.BLACK,
-                    FontPosture.REGULAR, 30));
+                                   FontPosture.REGULAR, 30));
             name.setUnderline(true);
             score.setFont(Font.font("Arial", 26));
             leftPanel.getChildren().addAll(name, score);
@@ -299,7 +299,7 @@ public class UNOGameView {
         CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
                 theModel.getHUMAN_PLAYER());
         cardsInPlayersHandPane.getChildren().clear();
-        System.out.println("Drawing hand: " + playersHand);
+        System.out.println("Drawing Player hand: " + playersHand);
         int nextCol = 0;
         int secondRow = 0;
         int j = 1;
@@ -410,6 +410,7 @@ public class UNOGameView {
             opponentsPane.setAlignment(Pos.TOP_CENTER);
             opponentsPane.add(opponentStack, i, 0);
         }
+        System.out.println(theModel.getUnoGame());
     }
 
     /**

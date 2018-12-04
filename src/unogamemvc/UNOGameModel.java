@@ -55,7 +55,7 @@ public class UNOGameModel {
         unoGame.startGame();
         //TODO [GUI] get starting player
         isComputerTurn = false;
-        System.out.println(unoGame.getTheDrawDeck());
+        System.out.println("New Game Deck: " + unoGame.getTheDrawDeck());
         this.invalidPlayPopup = new InvalidPlayPopup();
         this.gameOverPopup = new GameOverPopup();
         this.roundOverPopup = new RoundOverPopup(unoGame);
@@ -149,7 +149,7 @@ public class UNOGameModel {
     public boolean tryToPlayCardAction(int playCardIndex) {
         System.out.println("Playing card: " + unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex));
-        System.out.println("Player's Full Hand: " + unoGame.getPlayersHandCopy(
+        System.out.println("New Full Hand: " + unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER));
 
         if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
@@ -167,7 +167,7 @@ public class UNOGameModel {
     }
 
     public void checkAndRunEndOfTurn() throws RoundOverException {
-        System.out.println("Checking for winner");
+        //TODO [???] s/b in Game
         //TODO HANDLE
         int winningPlayerID = 0;
         boolean isEndOfGame = false;

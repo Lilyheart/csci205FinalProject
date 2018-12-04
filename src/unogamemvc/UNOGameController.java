@@ -16,8 +16,6 @@
 package unogamemvc;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -27,7 +25,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import unogame.AIHelper;
-import unogame.NoValidCardException;
 import unogame.RoundOverException;
 import unogamemvc.cardcreator.CardFrontView;
 
@@ -96,7 +93,7 @@ public class UNOGameController implements EventHandler<Event> {
                 boolean isLegalPlay = false;
 
                 System.out.println(
-                        "StackPaneID: " + ((StackPane) source).getId());
+                        "StackPaneID Clicked: " + ((StackPane) source).getId());
 
                 System.out.println(
                         "Discard is: " + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
@@ -133,6 +130,8 @@ public class UNOGameController implements EventHandler<Event> {
     }
 
     private void updateDiscardDeck() {
+        //TODO doesn't this just draw on top of?
+        //TODO should be in view?
         theView.getDiscardDeckPane().getChildren().add(
                 CardFrontView.createCardFrontView(
                         theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
@@ -168,8 +167,8 @@ public class UNOGameController implements EventHandler<Event> {
 
     public void runOpponentsTurnsTask() {
         theModel.setIsComputerTurn(true);
-        try {
 
+        try {
             Platform.runLater((new Runnable() {
                 @Override
                 public void run() {
@@ -181,69 +180,62 @@ public class UNOGameController implements EventHandler<Event> {
 
             for (int i = 2; i <= 4; i++) {
 
+                //Sleep the computer for 2 seconds
                 try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException ex) {
+                    //If sleep doesn't happen, game can continue to progress, it's purely for effect
+                }
+
+                AIHelper.computerTurn(theModel.getUnoGame(), i);
+
+                //TODO redraw stuffs
+                //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
+                //TODO [GUI] Redraw the computer's hand
+                //TODO [GUI] Deal with BUno
+                System.out.println("Played " + i
+                                   + theModel.getUnoGame().getPlayersHandCopy(
+                                i));
+                System.out.println(
+                        "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
+                                i).size());
+
+                try {
+                    // Update the card on the JavaFx Application Thread
+                    Platform.runLater((new Runnable() {
+                        @Override
+                        public void run() {
+                            updateDiscardDeck();
+                            theView.createOpponentsPane();
+                        }
+                    }));
+                    Thread.sleep(1000);
+
+                    //TODO TODO TODO
+                    Platform.runLater((new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                theModel.checkAndRunEndOfTurn();
+                            } catch (RoundOverException ex) {
+                                theView.redrawPanes();
+                            }
+                        }
+                    }));
+                    Thread.sleep(1000);
                     //Sleep the computer for 2 seconds
-                    try {
-                        TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException ex) {
-                        //If sleep doesn't happen, game can continue to progress, it's purely for effect
-                    }
-
-                    AIHelper.computerTurn(theModel.getUnoGame(), i);
-
-                    //TODO redraw stuffs
-                    //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
-                    //TODO [GUI] Redraw the computer's hand
-                    //TODO [GUI] Deal with BUno
-                    System.out.println("Played " + i
-                                       + theModel.getUnoGame().getPlayersHandCopy(
-                                    i));
-                    System.out.println(
-                            "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
-                                    i).size());
-
-                    try {
-                        // Update the card on the JavaFx Application Thread
-                        Platform.runLater((new Runnable() {
-                            @Override
-                            public void run() {
-                                updateDiscardDeck();
-                                theView.createOpponentsPane();
-                            }
-                        }));
-                        Thread.sleep(1000);
-
-                        //TODO TODO TODO
-                        Platform.runLater((new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    theModel.checkAndRunEndOfTurn();
-                                } catch (RoundOverException ex) {
-                                    theView.redrawPanes();
-                                }
-                            }
-                        }));
-                        Thread.sleep(1000);
-                        //Sleep the computer for 2 seconds
 //                        try {
 //                            TimeUnit.SECONDS.sleep(2);
 //                        } catch (InterruptedException ex) {
 //                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
 //                        }
-                    } catch (InterruptedException e) {
-                        System.out.println("Error: " + e);
-                    }
-                } catch (NoValidCardException ex) {
-                    Logger.getLogger(
-                            UNOGameController.class.getName()).log(
-                            Level.SEVERE, null, ex);
+                } catch (InterruptedException e) {
+                    System.out.println("Error: " + e);
                 }
 
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(UNOGameController.class.getName()).log(Level.SEVERE,
-                                                                    null, ex);
+            //TODO
         }
 
         theModel.setIsComputerTurn(false);

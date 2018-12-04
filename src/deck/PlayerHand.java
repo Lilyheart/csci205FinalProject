@@ -105,6 +105,13 @@ public class PlayerHand extends BUnoDeck {
         return isComputerPlayer;
     }
 
+    /**
+     * Returns the level of intelligence of the AI
+     *
+     * @author Lily Romano
+     *
+     * @return the level of intelligence of the AI
+     */
     public AIintelligenceLevel getAIintelligence() {
         return AIintelligence;
     }
@@ -113,6 +120,7 @@ public class PlayerHand extends BUnoDeck {
      * Returns a well formatted string representing the deck.
      *
      * @author jameskelly
+     * @author Lily Romano
      *
      * @return a well formatted string representing the deck.
      */
