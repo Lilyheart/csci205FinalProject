@@ -15,7 +15,7 @@
  */
 package unogame.helpers;
 
-import unogame.AIHelper;
+import deck.AIintelligenceLevel;
 import deck.PlayerHand;
 import deck.card.Card;
 import deck.card.CardColor;
@@ -25,6 +25,7 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import unogame.AIHelper;
 import unogame.NoValidCardException;
 import unogame.PlayCommand;
 
@@ -41,7 +42,7 @@ public class AIHelperTest {
 
     @Before
     public void setUp() {
-        testHandDeck = new PlayerHand(true);
+        testHandDeck = new PlayerHand(true, AIintelligenceLevel.BRILLIANT);
 
         //Add known set of cards
         //Hand does not have a Grey or number card greater than 3
@@ -68,8 +69,7 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.BLUE, CardType.FOUR);
         int expResult = 0;
 
-        int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
-                                            discardCard);
+        int result = AIHelper.findValidCard(testHandDeck, discardCard);
         assertEquals(expResult, result);
     }
 
@@ -85,8 +85,8 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.GRAY, CardType.ONE);
         int expResult = 0;
 
-        int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
-                                            discardCard);
+        int result = AIHelper.findValidCard(testHandDeck, discardCard
+        );
         assertEquals(expResult, result);
     }
 
@@ -101,8 +101,7 @@ public class AIHelperTest {
 
         //test if error is thrown when adding an employee that already exists
         try {
-            int result = AIHelper.findValidCard(testHandDeck.getCopyOfHand(),
-                                                discardCard);
+            int result = AIHelper.findValidCard(testHandDeck, discardCard);
             fail("addEmployee() doesn't error when adding an employee that already exists");
         } catch (NoValidCardException expected) {
         }
@@ -144,7 +143,7 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.GRAY, CardType.FOUR);
 
         PlayCommand result = AIHelper.determinePlayCommand(
-                testHandDeck.getCopyOfHand(), discardCard);
+                testHandDeck, discardCard);
 
         assertEquals(PlayCommand.NOPLAYABLECARD, result);
     }
@@ -159,7 +158,8 @@ public class AIHelperTest {
         Card discardCard = new Card(CardColor.GRAY, CardType.ONE);
 
         PlayCommand result = AIHelper.determinePlayCommand(
-                testHandDeck.getCopyOfHand(), discardCard);
+                testHandDeck, discardCard
+        );
 
         assertEquals(PlayCommand.PLAYABLECARD, result);
     }

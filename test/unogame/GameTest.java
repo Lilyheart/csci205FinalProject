@@ -83,6 +83,9 @@ public class GameTest {
         System.out.println("getPlayersHandCopy");
 
         unoGame.makePlayer(true);
+        unoGame.startRound();
+
+        System.out.println(unoGame);
 
         assertEquals(PlayerHand.NEWHANDCARDNUM,
                      unoGame.getPlayersHandCopy(1).size());
@@ -96,6 +99,8 @@ public class GameTest {
         System.out.println("drawCard");
 
         unoGame.makePlayer(true);
+        unoGame.startRound();
+
         unoGame.drawCard(1);
 
         assertEquals(PlayerHand.NEWHANDCARDNUM + 1,
@@ -109,9 +114,6 @@ public class GameTest {
     @Test
     public void testShuffleDiscardToDrawDeck() throws Exception {
         System.out.println("shuffleDiscardToDrawDeck");
-
-        //confirm discard starts with zero cards
-        assertEquals(0, unoGame.theDiscardDeck.getDeckSize());
 
         //start game
         unoGame.makePlayer(true);

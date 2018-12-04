@@ -15,6 +15,7 @@
  */
 package unogame;
 
+import deck.AIintelligenceLevel;
 import deck.DiscardDeck;
 import deck.DrawDeck;
 import deck.PlayerHand;
@@ -201,6 +202,31 @@ public class Game {
         }
 
         PlayerHand newPlayer = new PlayerHand(isComputerPlayer);
+
+        players.add(newPlayer);
+    }
+
+    /**
+     * Makes a new computer player
+     *
+     * @author Lily Romano
+     *
+     * @param isComputerPlayer true of the player is a computer player,
+     * otherwise false
+     * @param intelligenceLevel the {@code AIintelligenceLevel} of the computer
+     * player
+     * @throws unogame.GameNotStartedException
+     */
+    public void makeComputerPlayer(Boolean isComputerPlayer,
+                                   AIintelligenceLevel intelligenceLevel) throws GameNotStartedException {
+        if (isGameStarted) {
+            String player = isComputerPlayer ? "computer" : "human";
+            throw new GameNotStartedException(
+                    "Attempting to create a " + player + " player after the game has started");
+        }
+
+        PlayerHand newPlayer = new PlayerHand(isComputerPlayer,
+                                              intelligenceLevel);
 
         players.add(newPlayer);
     }
