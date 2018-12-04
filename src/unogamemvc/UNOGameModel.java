@@ -19,6 +19,7 @@ import deck.PlayerHand;
 import unogame.Game;
 import unogame.GameNotStartedException;
 import unogame.GameStartedException;
+import unogame.NoValidCardException;
 import unogame.RoundOverException;
 
 /**
@@ -29,77 +30,89 @@ import unogame.RoundOverException;
 public class UNOGameModel {
 
     /**
+     * The game object which runs the game
+     */
+    private Game unoGame;
+
+    /**
      * Total number of computer players
      */
     private final int NUM_OF_COMPUTER_PLAYERS = 3;
 
     /**
-     * The Player idNum for the human player
+     * The Player idNum for the main player to be drawn at the bottom of the
+     * play board.
      */
-    private final int HUMAN_PLAYER = 1;
+    private final int MAIN_PLAYER_ID = 1;
 
-    private Game unoGame;
-
-    private InvalidPlayPopup invalidPlayPopup;
-    private GameOverPopup gameOverPopup;
-    private RoundOverPopup roundOverPopup;
-
+    /**
+     * Stores if it's a computer player's turn. Used by the controller to
+     * restrict what can be clicked.
+     */
     private boolean isComputerTurn;
 
     /**
      * An explicit constructor for the UNO Main GUI Model
      */
     public UNOGameModel() {
-        //TODO [!Finalize]
         boolean isDEBUG = true;
         unoGame = new Game(isDEBUG);
         makeNewDefaultGame();
         unoGame.startGame();
-        //TODO [GUI] get starting player
         isComputerTurn = false;
-        this.invalidPlayPopup = new InvalidPlayPopup();
-        this.gameOverPopup = new GameOverPopup();
-        this.roundOverPopup = new RoundOverPopup(unoGame);
-
     }
 
+    /**
+     * Returns if it's the computer's turn.
+     *
+     * @return true if it's the computer's turn, otherwise false
+     */
     public boolean isIsComputerTurn() {
         return isComputerTurn;
     }
 
+    /**
+     * Sets if it's the computer's turn.
+     *
+     * @param isComputerTurn true if it's the computer's turn, otherwise false
+     */
     public void setIsComputerTurn(boolean isComputerTurn) {
         this.isComputerTurn = isComputerTurn;
     }
 
-    public int getNUM_OF_COMPUTER_PLAYERS() {
-        return NUM_OF_COMPUTER_PLAYERS;
-    }
-
+    /**
+     * Returns a reference to the game object.
+     *
+     * @return a reference to the game object.
+     */
     public Game getUnoGame() {
         return unoGame;
     }
 
-    public int getHUMAN_PLAYER() {
-        return HUMAN_PLAYER;
-    }
-
-    public InvalidPlayPopup getInvalidPlayPopup() {
-        return invalidPlayPopup;
+    /**
+     * Returns the player ID of the active player
+     *
+     * @return
+     */
+    public int getMAIN_PLAYER_ID() {
+        return MAIN_PLAYER_ID;
     }
 
     /**
-     * Creates a new default game
+     * Creates a new default game with one human player and three computer
+     * players
      */
     private void makeNewDefaultGame() {
         try {
             //create player
             unoGame.makePlayer(PlayerHand.HUMAN);
+
             //create computer players
             for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
                 unoGame.makePlayer(PlayerHand.COMPUTER);
             }
+
         } catch (GameStartedException ex) {
-            //TODO Except
             //Unable to play game if unable to add players - should never be hit
             System.out.println("Error: " + ex);
             System.exit(-1);
@@ -110,33 +123,47 @@ public class UNOGameModel {
      * Takes a card from the draw deck and adds it to the players hand.
      */
     public void tryToDrawCardAction() {
-        //TODO [Basic Game]
-        boolean isDrawSuccessful = false;
-        //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
-        while (!isDrawSuccessful) {
-            unoGame.drawCard(HUMAN_PLAYER);
-            isDrawSuccessful = true;
+
+        try {
+            unoGame.drawCard(MAIN_PLAYER_ID);
+        } catch (NoValidCardException ex) {
+            MessagePopup.display("No cards remaining!",
+                                 "No cards left to draw from! \n\nRound is over");
         }
     }
 
+    /**
+     * Attempt to play a card. Displays a message if it's not legal. If it's
+     * legal, the card is play and turn moves to the next player.
+     *
+     * @param playCardIndex
+     * @return true if the play was legal, otherwise false.
+     */
     public boolean tryToPlayCardAction(int playCardIndex) {
-        if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
-                HUMAN_PLAYER).get(playCardIndex))) {
-            invalidPlayPopup.display();
+        if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(MAIN_PLAYER_ID).get(
+                playCardIndex))) {
+            MessagePopup.display("Invalid Card!",
+                                 "Play by the rules! \n\nEnter a valid card or click on the deck to draw.");
             return false;
         }
         else {
-            unoGame.playCard(HUMAN_PLAYER, playCardIndex);
+            unoGame.playCard(MAIN_PLAYER_ID, playCardIndex);
             return true;
 
         }
     }
 
+    /**
+     * Checks to see if it's the end of a round. If it is, it processes the end
+     * of round tasks
+     *
+     * @throws RoundOverException
+     */
     public void checkAndRunEndOfTurn() throws RoundOverException {
-        //TODO [???] s/b in Game
-        //TODO HANDLE
+        //NOTE should be moved into Game.java and handled seperatly.
         int winningPlayerID = 0;
         boolean isEndOfGame = false;
+
         //Loop through all players
         for (int i = 1; i <= unoGame.getNumComputerPlayers() + unoGame.getNumHumanPlayers(); i++) {
             if (unoGame.getPlayersHandCopy(i).size() == 0) {
@@ -144,22 +171,27 @@ public class UNOGameModel {
             }
         }
 
+        //If there is a winner
         if (winningPlayerID > 0) {
-            //If any player's hand size is zero
+            //score it
             isEndOfGame = unoGame.updateScorePanel(winningPlayerID - 1);
+            //check to see if it's the end of game.
             if (isEndOfGame) {
-                //If score > 500, end game
-                gameOverPopup.display();
+                GameOverPopup.display();
             }
+            //otherwise process the end of the round
             else {
-                roundOverPopup.display();
+                MessagePopup.display("Round is over!", "Round over!");
                 try {
                     unoGame.startRound();
                 } catch (GameNotStartedException ex) {
+                    //Should never be hit
                     System.out.println("Error: " + ex);
                     System.exit(-1);
                 }
             }
+
+            //Throw exception to be caught by controller.  Neccessary to pass between threads.
             throw new RoundOverException(
                     "The round is over and the player" + winningPlayerID + "has won.");
         }

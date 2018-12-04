@@ -45,8 +45,6 @@ public class UNOGameController implements EventHandler<Event> {
      */
     private final UNOGameView theView;
 
-    private int cardGUIIndex;
-
     /**
      * An explicit constructor for the UNO game controller.
      *
@@ -79,11 +77,12 @@ public class UNOGameController implements EventHandler<Event> {
     public void handle(Event event) {
         EventType eType = event.getEventType();
 
-        //TODO [Final Project] Remove as esc should not close program during normal operation
         if (eType == KeyEvent.KEY_PRESSED) {
-            KeyEvent target = (KeyEvent) event;
-            if (target.getCode() == KeyCode.ESCAPE) {
-                Platform.exit();
+            if (theModel.getUnoGame().isPrintDEBUG()) {
+                KeyEvent target = (KeyEvent) event;
+                if (target.getCode() == KeyCode.ESCAPE) {
+                    Platform.exit();
+                }
             }
 
         }
@@ -116,18 +115,18 @@ public class UNOGameController implements EventHandler<Event> {
                         startComputerTask();
                     }
                 } catch (RoundOverException ex) {
-                    theView.redrawPanes();
+                    theView.drawPanes();
                 }
             }
 
         }
 
-//        }
     }
 
+    /**
+     * Updates the discard deck
+     */
     private void updateDiscardDeck() {
-        //TODO doesn't this just draw on top of?
-        //TODO should be in view?
         theView.getDiscardDeckPane().getChildren().add(
                 CardFrontView.createCardFrontView(
                         theModel.getUnoGame().getDiscardCardCard()));
@@ -145,6 +144,11 @@ public class UNOGameController implements EventHandler<Event> {
         });
     }
 
+    /**
+     * Starts thread to run the opponents turn
+     *
+     * @author James Kelly
+     */
     public void startComputerTask() {
         // Create a Runnable
         Runnable task = new Runnable() {
@@ -161,6 +165,11 @@ public class UNOGameController implements EventHandler<Event> {
         backgroundThread.start();
     }
 
+    /**
+     * Runs the opponents turn
+     *
+     * @author James Kelly
+     */
     public void runOpponentsTurnsTask() {
         theModel.setIsComputerTurn(true);
 
@@ -185,46 +194,36 @@ public class UNOGameController implements EventHandler<Event> {
 
                 AIHelper.computerTurn(theModel.getUnoGame(), i);
 
-                //TODO redraw stuffs
-                //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
-                //TODO [GUI] Redraw the computer's hand
-                //TODO [GUI] Deal with BUno
                 try {
                     // Update the card on the JavaFx Application Thread
                     Platform.runLater((new Runnable() {
                         @Override
                         public void run() {
                             updateDiscardDeck();
-                            theView.createOpponentsPane();
+                            theView.drawOpponentsPane();
                         }
                     }));
                     Thread.sleep(1000);
 
-                    //TODO TODO TODO
+                    // Update the card on the JavaFx Application Thread
                     Platform.runLater((new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 theModel.checkAndRunEndOfTurn();
                             } catch (RoundOverException ex) {
-                                theView.redrawPanes();
+                                theView.drawPanes();
                             }
                         }
                     }));
                     Thread.sleep(1000);
-                    //Sleep the computer for 2 seconds
-//                        try {
-//                            TimeUnit.SECONDS.sleep(2);
-//                        } catch (InterruptedException ex) {
-//                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
-//                        }
                 } catch (InterruptedException ex) {
                     System.out.println("Error: " + ex);
                 }
 
             }
         } catch (InterruptedException ex) {
-            //TODO
+            //If sleep doesn't happen, game can continue to progress, it's purely for effect
         }
 
         theModel.setIsComputerTurn(false);
@@ -242,8 +241,6 @@ public class UNOGameController implements EventHandler<Event> {
                 public void handle(MouseEvent event) {
 
                     if (!theModel.isIsComputerTurn()) {
-                        //TODO [GUI] ?? Move this to method in Model?
-
                         //draw the card into the play
                         theModel.tryToDrawCardAction(); // pops card from the deck
 

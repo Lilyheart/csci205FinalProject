@@ -161,7 +161,7 @@ public class GameTest {
         Card discardCard = unoGame.theDiscardDeck.peekTopCard();
 
         if (discardCard.getColor() == CardColor.SPECIAL) {
-            //TODO [Not Basic Game] Expand this test
+            //TODO [!Special Cards] Expand this test
         }
 
         CardColor matchColor = discardCard.getColor();
@@ -185,7 +185,7 @@ public class GameTest {
         Card discardCard = unoGame.theDiscardDeck.peekTopCard();
 
         if (discardCard.getColor() == CardColor.SPECIAL) {
-            //TODO [Not Basic Game] Expand this test
+            //TODO [!Special Cards] Expand this test
         }
 
         CardColor unmatchColor = (discardCard.getColor() == CardColor.BLUE) ? CardColor.GRAY : CardColor.BLUE;
@@ -209,7 +209,7 @@ public class GameTest {
         Card discardCard = unoGame.theDiscardDeck.peekTopCard();
 
         if (discardCard.getColor() == CardColor.SPECIAL) {
-            //TODO [Not Basic Game] Expand this test
+            //TODO [!Special Cards] Expand this test
         }
 
         CardColor matchColor = discardCard.getColor();
@@ -233,7 +233,7 @@ public class GameTest {
         Card discardCard = unoGame.theDiscardDeck.peekTopCard();
 
         if (discardCard.getColor() == CardColor.SPECIAL) {
-            //TODO [Not Basic Game] Expand this test
+            //TODO [!Special Cards] Expand this test
         }
 
         CardColor unmatchColor = (discardCard.getColor() == CardColor.BLUE) ? CardColor.GRAY : CardColor.BLUE;

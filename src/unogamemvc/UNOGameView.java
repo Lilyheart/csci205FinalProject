@@ -42,14 +42,14 @@ import unogamemvc.cardcreator.CardFrontView;
 public class UNOGameView {
 
     /**
-     * The root node of the view which is a BorderPane
-     */
-    private final BorderPane root;
-
-    /**
      * The model for the UNO game
      */
     private final UNOGameModel theModel;
+
+    /**
+     * The root node of the view which is a BorderPane
+     */
+    private final BorderPane root;
 
     /**
      * The JavaFX object which represents the players hand.
@@ -60,11 +60,6 @@ public class UNOGameView {
      * The Grid on which the Player's cards are displayed.
      */
     private StackPane cardsInPlayersHandPane;
-
-    /**
-     * The Grid which hold the two decks.
-     */
-    private GridPane drawAndDiscardDecksPane;
 
     /**
      * The deck to draw from.
@@ -87,44 +82,9 @@ public class UNOGameView {
     private StackPane opponentStack;
 
     /**
-     * Container for opponents and decks
-     */
-    private VBox opponentsAndDeckVBox;
-
-    /**
-     * Container that holds the button
-     */
-    private VBox rightPanel;
-
-    /**
      * Container that holds the button
      */
     private VBox leftPanel;
-
-    /**
-     * The button to press when a user wants to shout UNO!
-     */
-    private Button UNOButton;
-
-    /**
-     * Menu bar that displays options to click
-     */
-    private MenuBar menuBar;
-
-    /**
-     * Menu option that displays UNO rules
-     */
-    private Menu getHelp;
-
-    /**
-     * Menu option that shows choice to exit the game
-     */
-    private Menu exit;
-
-    /**
-     * Menu Item that exits the game
-     */
-    private MenuItem exit2;
 
     /**
      * An explicit constructor for the UNO game view
@@ -133,32 +93,29 @@ public class UNOGameView {
      * @author James Kelly
      *
      * @param theModel The model for the UNO game
-     * @throws deck.EmptyDeckException
      */
     public UNOGameView(UNOGameModel theModel) {
-        //TODO [Exception Handling]
         this.theModel = theModel;
         setDiscardDeckPane();
 
         root = new BorderPane();
         root.setId("rootNode");
 
-        createPlayersHandHBox();
+        drawPlayersHandHBox();
 
         drawPlayerHandPane();
 
         playersHandHBox.getChildren().add(cardsInPlayersHandPane);
 
-        createOpponentsAndDeckVBox();
+        VBox opponentsAndDeckVBox = createOpponentsAndDeckVBox();
 
         opponentsPane = new GridPane();
 
-        createOpponentsPane();
+        drawOpponentsPane();
 
-        createDrawAndDiscardDecksGridPane();
+        GridPane drawAndDiscardDecksPane = createDrawAndDiscardDecksGridPane();
 
         //create a card to represent the draw deck
-        //TODO [Card Display] Draw deck should show top card of draw pile.
         drawDeckPane = CardBackView.createCardBackView();
 
         //create a card to represent the discard deck
@@ -170,17 +127,17 @@ public class UNOGameView {
         opponentsAndDeckVBox.getChildren().add(drawAndDiscardDecksPane);
         opponentsAndDeckVBox.setAlignment(Pos.CENTER);
 
-        createRightPanel();
-        createUNOButton();
+        VBox rightPanel = createRightPanel();
+        //TODO [!BUno]
+//        Button btnUNOButton = createUNOButton();
 
-        rightPanel.getChildren().add(UNOButton);
-
-        menuBar = new MenuBar();
-        getHelp = new Menu("Help");
-        exit = new Menu("Exit");
-        exit2 = new MenuItem("Goodbye!");
+//        rightPanel.getChildren().add(btnUNOButton);
+        MenuBar menuBar = new MenuBar();
+        Menu getHelp = new Menu("Help");
+        Menu exit = new Menu("Exit");
+        MenuItem exit2 = new MenuItem("Goodbye!");
         exit2.setOnAction(e -> Platform.exit());
-        exit.getItems().add(this.exit2);
+        exit.getItems().add(exit2);
 
         menuBar.getMenus().addAll(getHelp, exit);
 
@@ -193,7 +150,26 @@ public class UNOGameView {
 
     }
 
-    public void updateScoreboard() {
+    protected BorderPane getRootNode() {
+        return root;
+    }
+
+    protected StackPane getCardsInPlayersHandPane() {
+        return cardsInPlayersHandPane;
+    }
+
+    protected StackPane getDrawDeckPane() {
+        return drawDeckPane;
+    }
+
+    protected StackPane getDiscardDeckPane() {
+        return discardDeckPane;
+    }
+
+    /**
+     * Updates the scoreboard pane
+     */
+    private void updateScoreboard() {
         leftPanel = new VBox();
         leftPanel.setPadding(new Insets(10, 10, 10, 10));
         leftPanel.setSpacing(20);
@@ -214,58 +190,14 @@ public class UNOGameView {
         root.setLeft(leftPanel);
     }
 
-    public BorderPane getRootNode() {
-        return root;
-    }
-
-    public StackPane getCardsInPlayersHandPane() {
-        return cardsInPlayersHandPane;
-    }
-
-    public GridPane getDrawAndDiscardDecksPane() {
-        return drawAndDiscardDecksPane;
-    }
-
-    public StackPane getDrawDeckPane() {
-        return drawDeckPane;
-    }
-
-    public StackPane getOpponentStack() {
-        return opponentStack;
-    }
-
-    public StackPane getDiscardDeckPane() {
-        return discardDeckPane;
-    }
-
-    public GridPane getOpponentsPane() {
-        return opponentsPane;
-    }
-
     /**
      * Sets the discard deck card as the last card from the draw deck
      *
-     * @throws EmptyDeckException
      * @author James Kelly
      */
-    public void setDiscardDeckPane() {
+    private void setDiscardDeckPane() {
         this.discardDeckPane = CardFrontView.createCardFrontView(
                 theModel.getUnoGame().getDiscardCardCard());
-    }
-
-    /**
-     * Creates a GUI object of the next card to add to add to the GirdPane
-     *
-     * @return
-     * @throws EmptyDeckException
-     * @author James Kelly
-     */
-    public StackPane createNextFaceUpCard() {
-        //TODO [Card Display] Get cards from hand instead
-        //test to see if correct cards come out
-        StackPane faceUpCard = CardFrontView.createCardFrontView(
-                theModel.getUnoGame().getDiscardCardCard()); //TODO Right?
-        return faceUpCard;
     }
 
     /**
@@ -275,43 +207,32 @@ public class UNOGameView {
      */
     protected void drawPlayerHandPane() {
         CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
-                theModel.getHUMAN_PLAYER());
+                theModel.getMAIN_PLAYER_ID());
+
         cardsInPlayersHandPane.getChildren().clear();
         int nextCol = 0;
-        int secondRow = 0;
         int j = 1;
         for (Card card : playersHand) {
             StackPane faceUpCard = CardFrontView.createCardFrontView(
                     card);
+
             faceUpCard.setId(String.valueOf(nextCol));
             faceUpCard.setTranslateX(30 * j);
-            /*
-            if (nextCol >= 9) {//Make final global
-                cardsInPlayersHandPane.add(faceUpCard, secondRow, 1);
-                secondRow++;
-            }
-            else {
-                cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
-                nextCol++;
 
-            }*/
-            //cardsInPlayersHandPane.add(faceUpCard, nextCol, 0);
-
-            //cardsInPlayersHandPane.setHgap(1);
             cardsInPlayersHandPane.getChildren().add(faceUpCard);
             nextCol++;
             j++;
-
         }
     }
 
     /**
      * Creates and adds the opponents facedown cards to the GUI
      *
-     * @param numCards
      * @author James Kelly
+     *
+     * @param numCards the number of cards to draw in the other player's hand
      */
-    protected void drawComputerHandPane(int numCards) {
+    private void drawOpponentHandPane(int numCards) {
         opponentStack = new StackPane();
 
         StackPane bottomCard = CardBackView.createCardBackView();
@@ -326,58 +247,63 @@ public class UNOGameView {
 
     }
 
-    protected StackPane createComputerPlayerStackPane(int numCards) {
-        StackPane thePane = new StackPane();
-        StackPane bottomCard = CardBackView.createCardBackView();
-        thePane.getChildren().add(bottomCard);
+    /**
+     * Updates the discardDeckPane
+     *
+     * @author James Kelly
+     */
+    private void updateDiscardDeck() {
+        discardDeckPane.getChildren().clear();
 
-        for (int j = 1; j < numCards; j++) {
-            StackPane nextCard = CardBackView.createCardBackView();
-            nextCard.setTranslateX(5 * j);
-            thePane.getChildren().add(nextCard);
-        }
-
-        return thePane;
-
+        discardDeckPane.getChildren().add(
+                CardFrontView.createCardFrontView(
+                        theModel.getUnoGame().getDiscardCardCard()));
     }
 
     /**
      * Creates the UNO button
      *
      * @author James Kelly
+     *
+     * @return the UNO Button
      */
-    private void createUNOButton() {
-        UNOButton = new Button();
-        UNOButton.setText("BUno!");
-        UNOButton.setPrefWidth(100);
+    private Button createUNOButton() {
+        Button btnUNOButton = new Button();
+
+        btnUNOButton.setText("BUno!");
+        btnUNOButton.setPrefWidth(100);
+
+        return btnUNOButton;
     }
 
     /**
      * Creates the container on the right side of the border pane
      *
      * @author James Kelly
+     *
+     * @return the rightPanel VBox
      */
-    private void createRightPanel() {
-        //create the right box that hold the button
-        rightPanel = new VBox();
+    private VBox createRightPanel() {
+        VBox rightPanel = new VBox();
+
         rightPanel.setPadding(new Insets(10, 50, 10, 10));
         rightPanel.setAlignment(Pos.BOTTOM_RIGHT);
         rightPanel.setSpacing(50);
+
+        return rightPanel;
     }
 
     /**
-     * Creates the GridPane that hold the opponents hands
+     * Creates and updates the GridPane that hold the opponents hands
      *
      * @author James Kelly
      */
-    protected void createOpponentsPane() {
-        //create the model of opponentsPane
+    protected void drawOpponentsPane() {
         opponentsPane.getChildren().clear();
 
         for (int i = 0; i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
-            drawComputerHandPane(
+            drawOpponentHandPane(
                     theModel.getUnoGame().getPlayersHandCopy(i + 2).size());
-            /* TODO [Card Display] The hands stack in a weird way*/
             opponentsPane.setHgap(100);
             opponentsPane.setVgap(20);
             opponentsPane.setPadding(new Insets(20, 0, 0, 0));
@@ -390,26 +316,29 @@ public class UNOGameView {
      * Creates the container that holds the opponents hands and decks
      *
      * @author James Kelly
+     *
+     * @return the opponentsAndDeckVBox VBox
      */
-    private void createOpponentsAndDeckVBox() {
-        opponentsAndDeckVBox = new VBox();
+    private VBox createOpponentsAndDeckVBox() {
+        VBox opponentsAndDeckVBox = new VBox();
+
         opponentsAndDeckVBox.setSpacing(100);
         opponentsAndDeckVBox.setPadding(new Insets(10, 10, 10, 10));
+
+        return opponentsAndDeckVBox;
     }
 
     /**
-     * Creates the container that hold the Players hand
+     * Creates and updates the containers that hold the Players hand
      *
      * @author James Kelly
      */
-    private void createPlayersHandHBox() {
+    private void drawPlayersHandHBox() {
         playersHandHBox = new HBox();
         playersHandHBox.setSpacing(100);
         playersHandHBox.setPadding(new Insets(10, 10, 10, 10));
 
         cardsInPlayersHandPane = new StackPane();
-        //cardsInPlayersHandPane.setHgap(20);
-        //cardsInPlayersHandPane.setVgap(20);
         cardsInPlayersHandPane.setPadding(new Insets(40));
     }
 
@@ -417,17 +346,28 @@ public class UNOGameView {
      * Creates the grid that holds the discard and draw decks
      *
      * @author James Kelly
+     *
+     * @return the drawAndDiscardDecksPane GridPane
      */
-    private void createDrawAndDiscardDecksGridPane() {
-        drawAndDiscardDecksPane = new GridPane();
+    private GridPane createDrawAndDiscardDecksGridPane() {
+        GridPane drawAndDiscardDecksPane = new GridPane();
+
         drawAndDiscardDecksPane.setHgap(20);
         drawAndDiscardDecksPane.setVgap(20);
         drawAndDiscardDecksPane.setPadding(new Insets(40));
+
+        return drawAndDiscardDecksPane;
     }
 
-    public void redrawPanes() {
+    /**
+     * Draws the panes that change
+     *
+     * @author James Kelly
+     */
+    protected void drawPanes() {
         drawPlayerHandPane();
-        createOpponentsPane();
+        drawOpponentsPane();
+        updateDiscardDeck();
         updateScoreboard();
     }
 

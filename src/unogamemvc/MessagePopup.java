@@ -8,14 +8,13 @@
 *
 * Project: csci205FinalProject
 * Package: unogamemvc
-* File: InvalidPlayPopup
+* File: MessagePopup
 * Description:
 *
 * ****************************************
  */
 package unogamemvc;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,24 +24,25 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * The pop-up that displays when the game is over.
+ * The pop-up that displays when the play is invalid
  *
  * @author James Kelly
  */
-public final class GameOverPopup {
+public final class MessagePopup {
 
     /**
-     * Creates and Displays the pop-up.
+     * Creates and displays the pop-up.
+     *
+     * @param title The title of the message pop-up
+     * @param message The message in the body of the pop-up
      */
-    public static void display() {
-
+    public static void display(String title, String message) {
         VBox root = new VBox();
         Scene primaryScene = new Scene(root, 350, 200);
         root.setPadding(new Insets(20, 20, 20, 20));
 
         //creating borderpane root
-        Label label = new Label(
-                "Game Over!");
+        Label label = new Label(message);
         label.setStyle("-fx-font: 24 arial;");
         label.setAlignment(Pos.CENTER);
         label.setPadding(new Insets(0, 0, 20, 0));
@@ -52,14 +52,15 @@ public final class GameOverPopup {
 
         root.getChildren().addAll(label, exit);
         root.setAlignment(Pos.CENTER);
+
         Stage popUpWindow = new Stage();
 
-        popUpWindow.setTitle("Game Over!");
+        popUpWindow.setTitle(title);
         popUpWindow.setWidth(700);
         popUpWindow.setScene(primaryScene);
         popUpWindow.show();
 
-        exit.setOnAction(e -> Platform.exit());
+        exit.setOnAction(e -> popUpWindow.close());
     }
 
 }

@@ -38,7 +38,7 @@ public class PlayerHand extends BUnoDeck {
     /**
      * The number of cards in a new hand
      */
-    public final static int NEWHANDCARDNUM = 2;
+    public final static int NEWHANDCARDNUM = 7;
 
     /**
      * A more readable variable to signify if human player

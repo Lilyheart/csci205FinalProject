@@ -162,12 +162,17 @@ public final class AIHelper {
         PlayCommand playcommand = determinePlayCommand(hand, discardCard);
 
         switch (playcommand) {
-            case NOPLAYABLECARD:
-                unoGame.drawCard(playerIndex);
-                break;
+            case NOPLAYABLECARD: {
+                try {
+                    unoGame.drawCard(playerIndex);
+                } catch (NoValidCardException ex) {
+                    System.out.println("Error: " + ex);
+                    System.exit(-1);
+                }
+            }
+            break;
 
             case PLAYABLECARD:
-                //TODO [!Finalize] Does this mirror a player method?
                 boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
 
                 if (isbuno) {

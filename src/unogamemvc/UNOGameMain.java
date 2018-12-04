@@ -42,18 +42,14 @@ public class UNOGameMain extends Application {
      */
     private UNOGameController theControl;
 
-    private static Scene scene;
-
     /**
      * The primary method that is called by the JavaFX application to initialize
      * the GUI
      *
      * @author Lily Romano
-     * @throws Exception
      */
     @Override
-    public void init() throws Exception {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
+    public void init() {
         this.theModel = new UNOGameModel();
         this.theView = new UNOGameView(theModel);
 
@@ -72,7 +68,7 @@ public class UNOGameMain extends Application {
     public void start(Stage primaryStage) {
         this.theControl = new UNOGameController(theModel, theView);
 
-        scene = new Scene(this.theView.getRootNode());
+        Scene scene = new Scene(this.theView.getRootNode());
         scene.getStylesheets().add(
                 getClass().getResource("resource/stylesheet.css").toExternalForm());
 
@@ -81,7 +77,6 @@ public class UNOGameMain extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-
     }
 
     /**
@@ -91,10 +86,6 @@ public class UNOGameMain extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public static Scene getScene() {
-        return scene;
     }
 
 }

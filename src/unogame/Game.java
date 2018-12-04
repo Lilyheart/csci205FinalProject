@@ -347,8 +347,17 @@ public class Game {
      *
      * @param playerID the player ID [Starting from 1]
      */
-    public void drawCard(int playerID) {
+    public void drawCard(int playerID) throws NoValidCardException {
+        int totalCardsNotInPlay = theDrawDeck.getDeckSize() + theDiscardDeck.getDeckSize();
         int playerIndex = playerID - 1;
+
+        boolean isDrawSuccessful = false;
+        if (theDrawDeck.getDeckSize() == 0) {
+            shuffleDiscardToDrawDeck();
+        }
+        else if (totalCardsNotInPlay < 1) {
+            throw new NoValidCardException("No cards remaining");
+        }
 
         players.get(playerIndex).addCard(theDrawDeck.popTopCard());
 
@@ -364,9 +373,15 @@ public class Game {
      *
      * @author Lily Romano
      */
-    public void shuffleDiscardToDrawDeck() {
-        theDrawDeck.addCards(theDiscardDeck.removeAllCards());
-        theDiscardDeck.addCard(theDrawDeck.popTopCard());
+    public void shuffleDiscardToDrawDeck() throws NoValidCardException {
+        int totalCardsNotInPlay = theDrawDeck.getDeckSize() + theDiscardDeck.getDeckSize();
+        if (totalCardsNotInPlay > 0) {
+            theDrawDeck.addCards(theDiscardDeck.removeAllCards());
+            theDiscardDeck.addCard(theDrawDeck.popTopCard());
+        }
+        else {
+            throw new NoValidCardException("No cards remaining");
+        }
     }
 
     /**
