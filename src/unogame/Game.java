@@ -327,7 +327,6 @@ public class Game {
      * @param cardIndex the index of the card to play
      */
     public void playCard(int playerID, int cardIndex) {
-        //TODO [Basic Game] Add Rules
         int playerIndex = playerID - 1;
 
         if (printDEBUG) {

@@ -15,6 +15,7 @@
  */
 package unogame;
 
+import deck.AIintelligenceLevel;
 import deck.PlayerHand;
 import deck.card.Card;
 import deck.card.CardColor;
@@ -241,5 +242,63 @@ public class GameTest {
         //Test matches color only
         Card testCard = new Card(unmatchColor, unmatchType);
         assertEquals(false, unoGame.isLegalPlay(testCard));
+    }
+
+    /**
+     * Test of findValidCard method, of class AIHelper.
+     */
+    @Test
+    public void makePlayerException() {
+        System.out.println("makePlayerException");
+
+        unoGame.startGame();
+
+        //test if error is thrown when it should be
+        try {
+            unoGame.makePlayer(true);
+            fail("makePlayer() doesn't error when making player after game started");
+        } catch (GameStartedException expected) {
+        }
+    }
+
+    /**
+     * Test of findValidCard method, of class AIHelper.
+     */
+    @Test
+    public void makeComputerPlayerException() {
+        System.out.println("makePlayerException");
+
+        unoGame.startGame();
+
+        //test if error is thrown when it should be
+        try {
+            unoGame.makeComputerPlayer(true, AIintelligenceLevel.SMART);
+            fail("makeComputerPlayer() doesn't error when making player after game started");
+        } catch (GameStartedException expected) {
+        }
+    }
+
+    /**
+     * Test of findValidCard method, of class AIHelper.
+     */
+    @Test
+    public void startRoundException() {
+        System.out.println("makePlayerException");
+
+        //test if error is thrown when it should be
+        try {
+            unoGame.startRound();
+            fail("startRound() doesn't error when running before game is started");
+        } catch (GameNotStartedException expected) {
+        }
+
+        unoGame.startGame();
+
+        //test if error isn't thrown when it shouldn't be
+        try {
+            unoGame.startRound();
+        } catch (GameNotStartedException expected) {
+            fail("startRound() error after game started");
+        }
     }
 }

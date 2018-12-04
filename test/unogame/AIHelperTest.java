@@ -33,13 +33,16 @@ import org.junit.Test;
 public class AIHelperTest {
 
     PlayerHand testHandDeck;
+    static final AIintelligenceLevel AI_LEVEL = AIintelligenceLevel.SMART;
+    static final double EPSILON = 0.01;
+    int totalRuns = 100000;
 
     public AIHelperTest() {
     }
 
     @Before
     public void setUp() {
-        testHandDeck = new PlayerHand(true, AIintelligenceLevel.BRILLIANT);
+        testHandDeck = new PlayerHand(true, AI_LEVEL);
 
         //Add known set of cards
         //Hand does not have a Grey or number card greater than 3
@@ -91,7 +94,7 @@ public class AIHelperTest {
      * Test of findValidCard method, of class AIHelper.
      */
     @Test
-    public void testGetValidCardNoMatch() {
+    public void testGetValidCardNoMatchException() {
         System.out.println("testGetValidCardNoMatch");
 
         Card discardCard = new Card(CardColor.GRAY, CardType.FOUR);
@@ -112,7 +115,6 @@ public class AIHelperTest {
     public void testIsTimeForBunoFalse() {
         System.out.println("testIsTimeForBunoFalse");
 
-        //TODO [Unit Test] Loop 100(?) times and check that result is within range
         assertEquals(false, AIHelper.checkIsTimeForBuno(testHandDeck));
     }
 
@@ -126,8 +128,16 @@ public class AIHelperTest {
         //drop a card
         testHandDeck.popTopCard();
 
-        //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(true, AIHelper.checkIsTimeForBuno(testHandDeck));
+        double result = 0;
+        for (int i = 0; i < totalRuns; i++) {
+            if (AIHelper.checkIsTimeForBuno(testHandDeck)) {
+                result++;
+            }
+        }
+
+        result /= totalRuns;
+
+        assertEquals(AI_LEVEL.getBunoCatchPercent(), result, EPSILON);
     }
 
     /**
@@ -168,7 +178,6 @@ public class AIHelperTest {
     public void testIsTimeToBunoActivePlayerFalse() {
         System.out.println("testIsTimeToBunoActivePlayerFalse");
 
-        //TODO [Unit Test] Loop 100(?) times and check that result is within range
         assertEquals(false, AIHelper.checkIsTimeToBunoActivePlayer(testHandDeck));
     }
 
@@ -183,7 +192,15 @@ public class AIHelperTest {
         testHandDeck.popTopCard();
         testHandDeck.popTopCard();
 
-        //TODO [Unit Test] Loop 100(?) times and check that result is within range
-        assertEquals(true, AIHelper.checkIsTimeToBunoActivePlayer(testHandDeck));
+        double result = 0;
+        for (int i = 0; i < totalRuns; i++) {
+            if (AIHelper.checkIsTimeToBunoActivePlayer(testHandDeck)) {
+                result++;
+            }
+        }
+
+        result /= totalRuns;
+
+        assertEquals(AI_LEVEL.getBunoCatchPercent(), result, EPSILON);
     }
 }
