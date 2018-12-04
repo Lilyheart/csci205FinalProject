@@ -60,6 +60,9 @@ public class Game {
      */
     private boolean isBUnoLastTurnPlayed;
 
+    /**
+     * Determines if debug is printed to the console
+     */
     private boolean printDEBUG;
 
     /**
@@ -76,6 +79,7 @@ public class Game {
      * An explicit constructor for a new game.
      *
      * @author Lily Romano
+     * @param printDEBUG true if debugging comments should print to the console
      */
     public Game(boolean printDEBUG) {
         players = new LinkedList<>();
@@ -151,42 +155,65 @@ public class Game {
      * @param playerID The playerID of the player's hand to return.
      * @return a copy of the player's hand.
      */
-    public PlayerHand getPlayersCopy(int playerID) {
+    protected PlayerHand getPlayerCopy(int playerID) {
         int playerIndex = playerID - 1;
         return players.get(playerIndex);
     }
 
-    public DrawDeck getTheDrawDeck() {
-        return theDrawDeck;
+    /**
+     * Updates the scores on the {@code ScorePanel}
+     *
+     * @author aw029
+     *
+     * @param winnerPlayerIndex
+     * @return true of the game is over, false otherwise
+     */
+    public boolean updateScorePanel(int winnerPlayerIndex) {
+        return scorePanel.updateScores(winnerPlayerIndex);
     }
 
-    public DiscardDeck getTheDiscardDeck() {
-        return theDiscardDeck;
+    /**
+     * Gets the score of a player
+     *
+     * @author aw029
+     *
+     * @param playerIndex
+     * @return
+     */
+    public int getScore(int playerIndex) {
+        return scorePanel.getScore(playerIndex);
     }
 
-    public ScorePanel getScorePanel() {
-        return scorePanel;
-    }
-
-    public LinkedList<PlayerHand> getPlayers() {
-        return players;
-    }
-
-    public Boolean getAndClearIsBUnoLastTurnPlayed() {
-        Boolean originalValue = isBUnoLastTurnPlayed;
-        isBUnoLastTurnPlayed = false;
-
-        return originalValue;
-    }
-
-    public void setIsBUnoLastTurnPlayed(Boolean isBUnoLastTurnPlayed) {
-        this.isBUnoLastTurnPlayed = isBUnoLastTurnPlayed;
-    }
-
+// TODO [!BUno]
+//    public Boolean getAndClearIsBUnoLastTurnPlayed() {
+//        Boolean originalValue = isBUnoLastTurnPlayed;
+//        isBUnoLastTurnPlayed = false;
+//
+//        return originalValue;
+//    }
+//
+//    public void setIsBUnoLastTurnPlayed(Boolean isBUnoLastTurnPlayed) {
+//        this.isBUnoLastTurnPlayed = isBUnoLastTurnPlayed;
+//    }
+//
+    /**
+     * Returns the {@code Card} on the discard pile
+     *
+     * @author Lily Romano
+     *
+     * @return the {@code Card} on the discard pile
+     */
     public Card getDiscardCardCard() {
         return theDiscardDeck.peekBottomCard();
     }
 
+    /**
+     * Return printDEBUG status
+     *
+     * @author Lily Romano
+     *
+     * @return true if debug messages should be printed, otherwise false.
+     */
     public boolean isPrintDEBUG() {
         return printDEBUG;
     }
@@ -254,6 +281,7 @@ public class Game {
      * cards
      *
      * @author Lily Romano
+     * @author James Kelly
      */
     public void startRound() {
         //create draw decks
@@ -314,9 +342,9 @@ public class Game {
         players.get(playerIndex).addCard(theDrawDeck.popTopCard());
 
         if (printDEBUG) {
-            System.out.printf(
-                    "= Draw Card on playerIndex %d: %-15s\n", playerIndex,
-                    getPlayersCopy(playerID).peekBottomCard());
+            System.out.printf("= Draw Card on playerIndex %d: %-15s\n",
+                              playerIndex,
+                              getPlayerCopy(playerID).peekBottomCard());
         }
     }
 
@@ -352,11 +380,18 @@ public class Game {
         return isLegal;
     }
 
+    /**
+     * Returns a well formatted string representing the state of the game.
+     *
+     * @author Lily Romano
+     *
+     * @return a well formatted string representing the state of the game.
+     */
     @Override
     public String toString() {
         String result;
 
-        result = "GAME STATUS: " + "isGameStarted=" + isGameStarted + ", isBUnoLastTurnPlayed=" + isBUnoLastTurnPlayed + "\n";
+        result = "GAME STATUS: " + "isGameStarted=" + isGameStarted + ", isBUnoLastTurnPlayed=" + isBUnoLastTurnPlayed + ", Discard=" + getDiscardCardCard() + "\n";
         for (PlayerHand player : players) {
             result += " - " + player.toString() + "\n";
         }

@@ -156,8 +156,8 @@ public final class AIHelper {
      * ArrayList in the {@code unoGame}
      */
     public static void computerTurn(Game unoGame, int playerIndex) {
-        PlayerHand hand = unoGame.getPlayersCopy(playerIndex);
-        Card discardCard = unoGame.getTheDiscardDeck().peekBottomCard();
+        PlayerHand hand = unoGame.getPlayerCopy(playerIndex);
+        Card discardCard = unoGame.getDiscardCardCard();
 
         PlayCommand playcommand = determinePlayCommand(hand, discardCard);
 
@@ -171,7 +171,8 @@ public final class AIHelper {
                 boolean isbuno = AIHelper.checkIsTimeForBuno(hand);
 
                 if (isbuno) {
-                    unoGame.setIsBUnoLastTurnPlayed(true);
+                    //TODO [!BUno]
+//                    unoGame.setIsBUnoLastTurnPlayed(true);
                 }
 
                 int cardToPlay;

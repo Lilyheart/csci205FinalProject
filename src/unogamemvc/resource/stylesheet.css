@@ -52,3 +52,15 @@
     -fx-effect: dropshadow(gaussian, #222, 10, 0, 4, 4);
     -fx-padding: 45 -10 0 -10;
 }
+
+.scorePanelName {
+    -fx-font-family: "Spicy Rice";
+    -fx-font-size: 30;
+    -fx-underline: true;
+
+}
+
+.scorePanelScore {
+    -fx-font-family: "Spicy Rice";
+    -fx-font-size: 26;
+}

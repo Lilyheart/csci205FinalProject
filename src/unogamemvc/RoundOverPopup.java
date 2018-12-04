@@ -27,7 +27,7 @@ import unogame.Game;
 
 /**
  *
- * @author jameskelly
+ * @author James Kelly
  */
 public class RoundOverPopup {
 

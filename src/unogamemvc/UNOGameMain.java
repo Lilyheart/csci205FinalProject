@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 /**
  * GUI of the java playing screen.
  *
- * @author jameskelly
+ * @author James Kelly
  * @author Lily Romano
  */
 public class UNOGameMain extends Application {
@@ -63,7 +63,7 @@ public class UNOGameMain extends Application {
      * The primary method that is called by the JavaFX application to set up the
      * initial stage
      *
-     * @author jameskelly
+     * @author James Kelly
      * @author Lily Romano
      *
      * @param primaryStage The initial stage

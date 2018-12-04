@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author jameskelly
+ * @author James Kelly
  */
 public class GameOverPopup {
 

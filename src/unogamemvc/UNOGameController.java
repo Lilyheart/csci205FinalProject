@@ -130,7 +130,7 @@ public class UNOGameController implements EventHandler<Event> {
         //TODO should be in view?
         theView.getDiscardDeckPane().getChildren().add(
                 CardFrontView.createCardFrontView(
-                        theModel.getUnoGame().getTheDiscardDeck().peekBottomCard()));
+                        theModel.getUnoGame().getDiscardCardCard()));
     }
 
     /**

@@ -16,7 +16,6 @@
 package unogamemvc;
 
 import deck.PlayerHand;
-import deck.card.Card;
 import unogame.Game;
 import unogame.GameNotStartedException;
 import unogame.RoundOverException;
@@ -107,30 +106,6 @@ public class UNOGameModel {
     }
 
     /**
-     * Pops the top card from the draw deck so we can add it to hand.
-     *
-     * @return
-     */
-    Card popNextDrawCard() {
-        return unoGame.getTheDrawDeck().popTopCard();
-    }
-
-    /**
-     * Peeks the next card, useful for testing.
-     *
-     * @return
-     */
-    Card peekNextDrawCard() {
-        return unoGame.getTheDrawDeck().peekTopCard();
-
-    }
-
-    Card peekDiscardPileNextCard() {
-        return unoGame.getTheDiscardDeck().peekBottomCard();
-
-    }
-
-    /**
      * Takes a card from the draw deck and adds it to the players hand.
      */
     public void tryToDrawCardAction() {
@@ -163,15 +138,14 @@ public class UNOGameModel {
         boolean isEndOfGame = false;
         //Loop through all players
         for (int i = 1; i <= unoGame.getNumComputerPlayers() + unoGame.getNumHumanPlayers(); i++) {
-            if (unoGame.getPlayersCopy(i).getDeckSize() == 0) {
+            if (unoGame.getPlayersHandCopy(i).size() == 0) {
                 winningPlayerID = i;
             }
         }
 
         if (winningPlayerID > 0) {
             //If any player's hand size is zero
-            isEndOfGame = unoGame.getScorePanel().updateScores(
-                    winningPlayerID - 1);
+            isEndOfGame = unoGame.updateScorePanel(winningPlayerID - 1);
             if (isEndOfGame) {
                 //If score > 500, end game
                 gameOverPopup.display();
