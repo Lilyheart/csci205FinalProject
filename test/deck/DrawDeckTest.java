@@ -37,9 +37,9 @@ public class DrawDeckTest {
      * The default string a deck of 102 cards should display
      */
     //TODO [Basic Game] Switch Active string test
-//    String defaultDeckString = "Draw Deck: [Card{color=BLUE, type=ZERO}, Card{color=BLUE, type=ONE}, Card{color=BLUE, type=ONE}, Card{color=BLUE, type=TWO}, Card{color=BLUE, type=TWO}, Card{color=BLUE, type=THREE}, Card{color=BLUE, type=THREE}, Card{color=BLUE, type=FOUR}, Card{color=BLUE, type=FOUR}, Card{color=BLUE, type=FIVE}, Card{color=BLUE, type=FIVE}, Card{color=BLUE, type=SIX}, Card{color=BLUE, type=SIX}, Card{color=BLUE, type=SEVEN}, Card{color=BLUE, type=SEVEN}, Card{color=BLUE, type=EIGHT}, Card{color=BLUE, type=EIGHT}, Card{color=BLUE, type=NINE}, Card{color=BLUE, type=NINE}, Card{color=BLUE, type=DRAW2}, Card{color=BLUE, type=DRAW2}, Card{color=BLUE, type=REVERSE}, Card{color=BLUE, type=REVERSE}, Card{color=BLUE, type=SKIP}, Card{color=BLUE, type=SKIP}, Card{color=ORANGE, type=ZERO}, Card{color=ORANGE, type=ONE}, Card{color=ORANGE, type=ONE}, Card{color=ORANGE, type=TWO}, Card{color=ORANGE, type=TWO}, Card{color=ORANGE, type=THREE}, Card{color=ORANGE, type=THREE}, Card{color=ORANGE, type=FOUR}, Card{color=ORANGE, type=FOUR}, Card{color=ORANGE, type=FIVE}, Card{color=ORANGE, type=FIVE}, Card{color=ORANGE, type=SIX}, Card{color=ORANGE, type=SIX}, Card{color=ORANGE, type=SEVEN}, Card{color=ORANGE, type=SEVEN}, Card{color=ORANGE, type=EIGHT}, Card{color=ORANGE, type=EIGHT}, Card{color=ORANGE, type=NINE}, Card{color=ORANGE, type=NINE}, Card{color=ORANGE, type=DRAW2}, Card{color=ORANGE, type=DRAW2}, Card{color=ORANGE, type=REVERSE}, Card{color=ORANGE, type=REVERSE}, Card{color=ORANGE, type=SKIP}, Card{color=ORANGE, type=SKIP}, Card{color=YELLOW, type=ZERO}, Card{color=YELLOW, type=ONE}, Card{color=YELLOW, type=ONE}, Card{color=YELLOW, type=TWO}, Card{color=YELLOW, type=TWO}, Card{color=YELLOW, type=THREE}, Card{color=YELLOW, type=THREE}, Card{color=YELLOW, type=FOUR}, Card{color=YELLOW, type=FOUR}, Card{color=YELLOW, type=FIVE}, Card{color=YELLOW, type=FIVE}, Card{color=YELLOW, type=SIX}, Card{color=YELLOW, type=SIX}, Card{color=YELLOW, type=SEVEN}, Card{color=YELLOW, type=SEVEN}, Card{color=YELLOW, type=EIGHT}, Card{color=YELLOW, type=EIGHT}, Card{color=YELLOW, type=NINE}, Card{color=YELLOW, type=NINE}, Card{color=YELLOW, type=DRAW2}, Card{color=YELLOW, type=DRAW2}, Card{color=YELLOW, type=REVERSE}, Card{color=YELLOW, type=REVERSE}, Card{color=YELLOW, type=SKIP}, Card{color=YELLOW, type=SKIP}, Card{color=GRAY, type=ZERO}, Card{color=GRAY, type=ONE}, Card{color=GRAY, type=ONE}, Card{color=GRAY, type=TWO}, Card{color=GRAY, type=TWO}, Card{color=GRAY, type=THREE}, Card{color=GRAY, type=THREE}, Card{color=GRAY, type=FOUR}, Card{color=GRAY, type=FOUR}, Card{color=GRAY, type=FIVE}, Card{color=GRAY, type=FIVE}, Card{color=GRAY, type=SIX}, Card{color=GRAY, type=SIX}, Card{color=GRAY, type=SEVEN}, Card{color=GRAY, type=SEVEN}, Card{color=GRAY, type=EIGHT}, Card{color=GRAY, type=EIGHT}, Card{color=GRAY, type=NINE}, Card{color=GRAY, type=NINE}, Card{color=GRAY, type=DRAW2}, Card{color=GRAY, type=DRAW2}, Card{color=GRAY, type=REVERSE}, Card{color=GRAY, type=REVERSE}, Card{color=GRAY, type=SKIP}, Card{color=GRAY, type=SKIP}, Card{color=SPECIAL, type=WILD}, Card{color=SPECIAL, type=WILD}, Card{color=SPECIAL, type=WILD}, Card{color=SPECIAL, type=WILD}, Card{color=SPECIAL, type=WILDDRAW4}, Card{color=SPECIAL, type=WILDDRAW4}, Card{color=SPECIAL, type=WILDDRAW4}, Card{color=SPECIAL, type=WILDDRAW4}]";
-    String defaultDeckString = "Draw Deck: [Card{color=BLUE, type=ZERO}, Card{color=BLUE, type=ONE}, Card{color=BLUE, type=ONE}, Card{color=BLUE, type=TWO}, Card{color=BLUE, type=TWO}, Card{color=BLUE, type=THREE}, Card{color=BLUE, type=THREE}, Card{color=BLUE, type=FOUR}, Card{color=BLUE, type=FOUR}, Card{color=BLUE, type=FIVE}, Card{color=BLUE, type=FIVE}, Card{color=BLUE, type=SIX}, Card{color=BLUE, type=SIX}, Card{color=BLUE, type=SEVEN}, Card{color=BLUE, type=SEVEN}, Card{color=BLUE, type=EIGHT}, Card{color=BLUE, type=EIGHT}, Card{color=BLUE, type=NINE}, Card{color=BLUE, type=NINE}, Card{color=ORANGE, type=ZERO}, Card{color=ORANGE, type=ONE}, Card{color=ORANGE, type=ONE}, Card{color=ORANGE, type=TWO}, Card{color=ORANGE, type=TWO}, Card{color=ORANGE, type=THREE}, Card{color=ORANGE, type=THREE}, Card{color=ORANGE, type=FOUR}, Card{color=ORANGE, type=FOUR}, Card{color=ORANGE, type=FIVE}, Card{color=ORANGE, type=FIVE}, Card{color=ORANGE, type=SIX}, Card{color=ORANGE, type=SIX}, Card{color=ORANGE, type=SEVEN}, Card{color=ORANGE, type=SEVEN}, Card{color=ORANGE, type=EIGHT}, Card{color=ORANGE, type=EIGHT}, Card{color=ORANGE, type=NINE}, Card{color=ORANGE, type=NINE}, Card{color=YELLOW, type=ZERO}, Card{color=YELLOW, type=ONE}, Card{color=YELLOW, type=ONE}, Card{color=YELLOW, type=TWO}, Card{color=YELLOW, type=TWO}, Card{color=YELLOW, type=THREE}, Card{color=YELLOW, type=THREE}, Card{color=YELLOW, type=FOUR}, Card{color=YELLOW, type=FOUR}, Card{color=YELLOW, type=FIVE}, Card{color=YELLOW, type=FIVE}, Card{color=YELLOW, type=SIX}, Card{color=YELLOW, type=SIX}, Card{color=YELLOW, type=SEVEN}, Card{color=YELLOW, type=SEVEN}, Card{color=YELLOW, type=EIGHT}, Card{color=YELLOW, type=EIGHT}, Card{color=YELLOW, type=NINE}, Card{color=YELLOW, type=NINE}, Card{color=GRAY, type=ZERO}, Card{color=GRAY, type=ONE}, Card{color=GRAY, type=ONE}, Card{color=GRAY, type=TWO}, Card{color=GRAY, type=TWO}, Card{color=GRAY, type=THREE}, Card{color=GRAY, type=THREE}, Card{color=GRAY, type=FOUR}, Card{color=GRAY, type=FOUR}, Card{color=GRAY, type=FIVE}, Card{color=GRAY, type=FIVE}, Card{color=GRAY, type=SIX}, Card{color=GRAY, type=SIX}, Card{color=GRAY, type=SEVEN}, Card{color=GRAY, type=SEVEN}, Card{color=GRAY, type=EIGHT}, Card{color=GRAY, type=EIGHT}, Card{color=GRAY, type=NINE}, Card{color=GRAY, type=NINE}]";
-    String unshuffledTopCard = "Card{color=BLUE, type=ZERO}";
+//    String defaultDeckString = "Draw Deck: [Blue Zero, Blue One, Blue One, Blue Two, Blue Two, Blue Three, Blue Three, Blue Four, Blue Four, Blue Five, Blue Five, Blue Six, Blue Six, Blue Seven, Blue Seven, Blue Eight, Blue Eight, Blue Nine, Blue Nine, Blue Draw2, Blue Draw2, Blue Reverse, Blue Reverse, Blue Skip, Blue Skip, Orange Zero, Orange One, Orange One, Orange Two, Orange Two, Orange Three, Orange Three, Orange Four, Orange Four, Orange Five, Orange Five, Orange Six, Orange Six, Orange Seven, Orange Seven, Orange Eight, Orange Eight, Orange Nine, Orange Nine, Orange Draw2, Orange Draw2, Orange Reverse, Orange Reverse, Orange Skip, Orange Skip, Yellow Zero, Yellow One, Yellow One, Yellow Two, Yellow Two, Yellow Three, Yellow Three, Yellow Four, Yellow Four, Yellow Five, Yellow Five, Yellow Six, Yellow Six, Yellow Seven, Yellow Seven, Yellow Eight, Yellow Eight, Yellow Nine, Yellow Nine, Yellow Draw2, Yellow Draw2, Yellow Reverse, Yellow Reverse, Yellow Skip, Yellow Skip, Gray Zero, Gray One, Gray One, Gray Two, Gray Two, Gray Three, Gray Three, Gray Four, Gray Four, Gray Five, Gray Five, Gray Six, Gray Six, Gray Seven, Gray Seven, Gray Eight, Gray Eight, Gray Nine, Gray Nine, Gray Draw2, Gray Draw2, Gray Reverse, Gray Reverse, Gray Skip, Gray Skip, Special Wild, Special Wild, Special Wild, Special Wild, Special Wilddraw4, Special Wilddraw4, Special Wilddraw4, Special Wilddraw4]";
+    String defaultDeckString = "Draw Deck: [Blue Zero, Blue One, Blue One, Blue Two, Blue Two, Blue Three, Blue Three, Blue Four, Blue Four, Blue Five, Blue Five, Blue Six, Blue Six, Blue Seven, Blue Seven, Blue Eight, Blue Eight, Blue Nine, Blue Nine, Orange Zero, Orange One, Orange One, Orange Two, Orange Two, Orange Three, Orange Three, Orange Four, Orange Four, Orange Five, Orange Five, Orange Six, Orange Six, Orange Seven, Orange Seven, Orange Eight, Orange Eight, Orange Nine, Orange Nine, Yellow Zero, Yellow One, Yellow One, Yellow Two, Yellow Two, Yellow Three, Yellow Three, Yellow Four, Yellow Four, Yellow Five, Yellow Five, Yellow Six, Yellow Six, Yellow Seven, Yellow Seven, Yellow Eight, Yellow Eight, Yellow Nine, Yellow Nine, Gray Zero, Gray One, Gray One, Gray Two, Gray Two, Gray Three, Gray Three, Gray Four, Gray Four, Gray Five, Gray Five, Gray Six, Gray Six, Gray Seven, Gray Seven, Gray Eight, Gray Eight, Gray Nine, Gray Nine]";
+    String unshuffledTopCard = "Blue Zero";
 
     /**
      * Creates a new deck before every individual test
@@ -80,7 +80,7 @@ public class DrawDeckTest {
      * Test top card is popped correctly
      */
     @Test
-    public void testTopCare() {
+    public void testTopCard() {
         assertEquals(unshuffledTopCard, testDeck.popTopCard().toString());
     }
 
@@ -97,6 +97,7 @@ public class DrawDeckTest {
           otherwise asserting false after shuffle would pass
           even if shuffle was not working*/
         String newDeckString = testDeck.toString();
+        System.out.println(newDeckString);
         assertEquals(defaultDeckString, newDeckString);
 
         //Shuffle and assert
@@ -123,28 +124,6 @@ public class DrawDeckTest {
         assertFalse(firstCard.equals(secondCard));
     }
 
-//    /**
-//     * Test that EmptyDeckException is thrown correctly on empty deck and test
-//     * removeAllCards() method.
-//     */
-//    @Test
-//    public void testRemoveNextCardEmptyDeckException() {
-//        System.out.println("testRemoveNextCardEmptyDeckException");
-//
-//        //Remove all cards in deck, fail if exception while deck still has cards
-//        testDeck.removeAllCards();
-//
-//        //Confirm deck is empty
-//        assertEquals(0, testDeck.getDeckSize());
-//
-//        //Attempt to remove card from empty deck
-//        try {
-//            testDeck.popTopCard();
-//            fail("EmptyDeckException should have been throw for removeNextCard().  Should not have thrown exception");
-//        } catch (EmptyDeckException e) {
-//            assertEquals("class deck.DrawDeck is empty", e.getMessage());
-//        }
-//    }
     /**
      * Test of addCard method and the peekTopCard method, of class DrawDeck.
      *
