@@ -24,13 +24,6 @@ package unogame;
 public class GameStartedException extends Exception {
 
     /**
-     * Creates a new instance of <code>GameStartedException</code> without
-     * detail message.
-     */
-    public GameStartedException() {
-    }
-
-    /**
      * Constructs an instance of <code>GameStartedException</code> with the
      * specified detail message.
      *

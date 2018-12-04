@@ -16,22 +16,14 @@
 package unogame;
 
 /**
- * Thrown when a command is issued that is only acceptable when a game has
- * started yet the game hadn't actually been started yet.
+ * Thrown when the round is over
  *
  * @author Lily Romano
  */
 public class RoundOverException extends Exception {
 
     /**
-     * Creates a new instance of <code>GameStartedException</code> without
-     * detail message.
-     */
-    public RoundOverException() {
-    }
-
-    /**
-     * Constructs an instance of <code>GameStartedException</code> with the
+     * Constructs an instance of <code>RoundOverException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.

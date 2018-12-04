@@ -82,7 +82,7 @@ public final class AIHelper {
             return maxID;
         }
         else {
-            throw new NoValidCardException();
+            throw new NoValidCardException("No card found for player");
         }
     }
 
@@ -184,6 +184,7 @@ public final class AIHelper {
                     /*case PLAYABLECARD is only possible when a valid card is
                      * locatable, exception cannot be thrown and if it is,
                      * there an unrecoverable error */
+                    System.out.println("Error: " + ex);
                     System.exit(-1);
                 }
 

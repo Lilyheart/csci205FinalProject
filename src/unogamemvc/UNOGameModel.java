@@ -18,6 +18,7 @@ package unogamemvc;
 import deck.PlayerHand;
 import unogame.Game;
 import unogame.GameNotStartedException;
+import unogame.GameStartedException;
 import unogame.RoundOverException;
 
 /**
@@ -97,7 +98,7 @@ public class UNOGameModel {
             for (int i = 0; i < NUM_OF_COMPUTER_PLAYERS; i++) {
                 unoGame.makePlayer(PlayerHand.COMPUTER);
             }
-        } catch (GameNotStartedException ex) {
+        } catch (GameStartedException ex) {
             //TODO Except
             //Unable to play game if unable to add players - should never be hit
             System.out.println("Error: " + ex);
@@ -152,9 +153,15 @@ public class UNOGameModel {
             }
             else {
                 roundOverPopup.display();
-                unoGame.startRound();
+                try {
+                    unoGame.startRound();
+                } catch (GameNotStartedException ex) {
+                    System.out.println("Error: " + ex);
+                    System.exit(-1);
+                }
             }
-            throw new RoundOverException();
+            throw new RoundOverException(
+                    "The round is over and the player" + winningPlayerID + "has won.");
         }
     }
 }

@@ -79,6 +79,7 @@ public class Game {
      * An explicit constructor for a new game.
      *
      * @author Lily Romano
+     *
      * @param printDEBUG true if debugging comments should print to the console
      */
     public Game(boolean printDEBUG) {
@@ -225,12 +226,12 @@ public class Game {
      *
      * @param isComputerPlayer true of the player is a computer player,
      * otherwise false
-     * @throws unogame.GameNotStartedException
+     * @throws unogame.GameStartedException
      */
-    public void makePlayer(Boolean isComputerPlayer) throws GameNotStartedException {
+    public void makePlayer(Boolean isComputerPlayer) throws GameStartedException {
         if (isGameStarted) {
             String player = isComputerPlayer ? "computer" : "human";
-            throw new GameNotStartedException(
+            throw new GameStartedException(
                     "Attempting to create a " + player + " player after the game has started");
         }
 
@@ -248,13 +249,13 @@ public class Game {
      * otherwise false
      * @param intelligenceLevel the {@code AIintelligenceLevel} of the computer
      * player
-     * @throws unogame.GameNotStartedException
+     * @throws unogame.GameStartedException
      */
     public void makeComputerPlayer(Boolean isComputerPlayer,
-                                   AIintelligenceLevel intelligenceLevel) throws GameNotStartedException {
+                                   AIintelligenceLevel intelligenceLevel) throws GameStartedException {
         if (isGameStarted) {
             String player = isComputerPlayer ? "computer" : "human";
-            throw new GameNotStartedException(
+            throw new GameStartedException(
                     "Attempting to create a " + player + " player after the game has started");
         }
 
@@ -273,7 +274,13 @@ public class Game {
     public void startGame() {
         isGameStarted = true;
         scorePanel = new ScorePanel(players);
-        startRound();
+        try {
+            startRound();
+        } catch (GameNotStartedException ex) {
+            //isGameStarted variable is set above, this exception wil never happen here.
+            System.out.println("Error: " + ex);
+            System.exit(-1);
+        }
     }
 
     /**
@@ -282,8 +289,13 @@ public class Game {
      *
      * @author Lily Romano
      * @author James Kelly
+     * @throws unogame.GameNotStartedException
      */
-    public void startRound() {
+    public void startRound() throws GameNotStartedException {
+        if (!isGameStarted) {
+            throw new GameNotStartedException(
+                    "Attempting to start a round before the game has started");
+        }
         //create draw decks
         theDrawDeck = new DrawDeck();
         theDiscardDeck = new DiscardDeck();

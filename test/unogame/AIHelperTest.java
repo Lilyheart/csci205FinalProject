@@ -13,7 +13,7 @@
 *
 * ****************************************
  */
-package unogame.helpers;
+package unogame;
 
 import deck.AIintelligenceLevel;
 import deck.PlayerHand;
@@ -25,9 +25,6 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import unogame.AIHelper;
-import unogame.NoValidCardException;
-import unogame.PlayCommand;
 
 /**
  *

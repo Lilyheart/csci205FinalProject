@@ -23,13 +23,6 @@ package unogame;
 public class NoValidCardException extends Exception {
 
     /**
-     * Creates a new instance of <code>NoValidCard</code> without detail
-     * message.
-     */
-    public NoValidCardException() {
-    }
-
-    /**
      * Constructs an instance of <code>NoValidCard</code> with the specified
      * detail message.
      *

@@ -26,11 +26,12 @@ import org.junit.Test;
 
 /**
  *
- * @author lilyheart
+ * @author Lily Romano
  */
 public class GameTest {
 
     private Game unoGame;
+    private final static int SINGLEPLAYERINDEX = 1;
 
     public GameTest() {
     }
@@ -83,12 +84,12 @@ public class GameTest {
         System.out.println("getPlayersHandCopy");
 
         unoGame.makePlayer(true);
-        unoGame.startRound();
+        unoGame.startGame();
 
         System.out.println(unoGame);
 
         assertEquals(PlayerHand.NEWHANDCARDNUM,
-                     unoGame.getPlayersHandCopy(1).size());
+                     unoGame.getPlayersHandCopy(SINGLEPLAYERINDEX).size());
     }
 
     /**
@@ -99,12 +100,12 @@ public class GameTest {
         System.out.println("drawCard");
 
         unoGame.makePlayer(true);
-        unoGame.startRound();
+        unoGame.startGame();
 
-        unoGame.drawCard(1);
+        unoGame.drawCard(SINGLEPLAYERINDEX);
 
         assertEquals(PlayerHand.NEWHANDCARDNUM + 1,
-                     unoGame.getPlayersHandCopy(1).size());
+                     unoGame.getPlayersHandCopy(SINGLEPLAYERINDEX).size());
     }
 
     /**
@@ -124,20 +125,18 @@ public class GameTest {
         assertEquals(1, unoGame.theDiscardDeck.getDeckSize());
 
         //discard a card
-        unoGame.playCard(1, 0);
+        unoGame.playCard(SINGLEPLAYERINDEX, 0);
         drawDeckSize++;
 
         //confirm card left player's hand
         assertEquals(PlayerHand.NEWHANDCARDNUM - 1,
-                     unoGame.getPlayersHandCopy(1).size());
+                     unoGame.getPlayersHandCopy(SINGLEPLAYERINDEX).size());
 
         //discard more cards
-        unoGame.playCard(1, 0);
-        drawDeckSize++;
-        unoGame.playCard(1, 0);
-        drawDeckSize++;
-        unoGame.playCard(1, 0);
-        drawDeckSize++;
+        while (unoGame.getPlayersHandCopy(SINGLEPLAYERINDEX).size() > 1) {
+            unoGame.playCard(SINGLEPLAYERINDEX, 0);
+            drawDeckSize++;
+        }
 
         //shuffle discard into draw
         unoGame.shuffleDiscardToDrawDeck();

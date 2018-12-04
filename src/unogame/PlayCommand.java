@@ -24,20 +24,11 @@ public enum PlayCommand {
     //TODO [!Finalize] What enums are used?
 
     /**
-     * enum when player wants to call BUNO
-     */
-    BUNO,
-    /**
      * enum when player wants to draw
      */
     NOPLAYABLECARD,
     /**
      * enum when player wants to play a card
      */
-    PLAYABLECARD,
-    /**
-     * enum when still no valid card to play after the draw or the user chooses
-     * to skip a playable card
-     */
-    PASS;
+    PLAYABLECARD;
 }
