@@ -66,7 +66,6 @@ public class Game {
      * @author Lily Romano
      */
     public Game() {
-        //Instantiate variables
         players = new LinkedList<>();
         isGameStarted = false;
     }
@@ -144,45 +143,31 @@ public class Game {
         return players.get(playerIndex);
     }
 
+    public DrawDeck getTheDrawDeck() {
+        return theDrawDeck;
+    }
+
+    public DiscardDeck getTheDiscardDeck() {
+        return theDiscardDeck;
+    }
+
+    public ScorePanel getScorePanel() {
+        return scorePanel;
+    }
+
+    public LinkedList<PlayerHand> getPlayers() {
+        return players;
+    }
+
+    public Boolean getAndClearIsBUnoLastTurnPlayed() {
+        Boolean originalValue = isBUnoLastTurnPlayed;
+        isBUnoLastTurnPlayed = false;
+
+        return originalValue;
+    }
+
     public void setIsBUnoLastTurnPlayed(Boolean isBUnoLastTurnPlayed) {
         this.isBUnoLastTurnPlayed = isBUnoLastTurnPlayed;
-    }
-
-    /**
-     * Starts a new game by popping the top card of the draw deck onto the
-     * discard deck
-     *
-     * @author Lily Romano
-     */
-    public void startGame() {
-        isGameStarted = true;
-        scorePanel = new ScorePanel(players);
-        startRound();
-    }
-
-    /**
-     * Starts a new round by recreating all the decks, shuffling and dealing
-     * cards
-     *
-     * @author Lily Romano
-     */
-    public void startRound() {
-        //create draw decks
-        theDrawDeck = new DrawDeck();
-        theDiscardDeck = new DiscardDeck();
-        //shuffle draw deck
-        theDrawDeck.shuffle();
-
-        //set hands
-        for (PlayerHand hand : players) {
-            hand.removeAllCards();
-            for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
-                hand.addCard(theDrawDeck.popTopCard());
-            }
-        }
-
-        //set up discard pile
-        theDiscardDeck.addCard(theDrawDeck.popTopCard());
     }
 
     /**
@@ -229,6 +214,43 @@ public class Game {
                                               intelligenceLevel);
 
         players.add(newPlayer);
+    }
+
+    /**
+     * Starts a new game by popping the top card of the draw deck onto the
+     * discard deck
+     *
+     * @author Lily Romano
+     */
+    public void startGame() {
+        isGameStarted = true;
+        scorePanel = new ScorePanel(players);
+        startRound();
+    }
+
+    /**
+     * Starts a new round by recreating all the decks, shuffling and dealing
+     * cards
+     *
+     * @author Lily Romano
+     */
+    public void startRound() {
+        //create draw decks
+        theDrawDeck = new DrawDeck();
+        theDiscardDeck = new DiscardDeck();
+        //shuffle draw deck
+        theDrawDeck.shuffle();
+
+        //set hands
+        for (PlayerHand hand : players) {
+            hand.removeAllCards();
+            for (int i = 0; i < PlayerHand.NEWHANDCARDNUM; i++) {
+                hand.addCard(theDrawDeck.popTopCard());
+            }
+        }
+
+        //set up discard pile
+        theDiscardDeck.addCard(theDrawDeck.popTopCard());
     }
 
     /**
@@ -289,29 +311,6 @@ public class Game {
         }
 
         return isLegal;
-    }
-
-    public DrawDeck getTheDrawDeck() {
-        return theDrawDeck;
-    }
-
-    public DiscardDeck getTheDiscardDeck() {
-        return theDiscardDeck;
-    }
-
-    public ScorePanel getScorePanel() {
-        return scorePanel;
-    }
-
-    public LinkedList<PlayerHand> getPlayers() {
-        return players;
-    }
-
-    public Boolean getAndClearIsBUnoLastTurnPlayed() {
-        Boolean originalValue = isBUnoLastTurnPlayed;
-        isBUnoLastTurnPlayed = false;
-
-        return originalValue;
     }
 
     @Override
