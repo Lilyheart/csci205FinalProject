@@ -50,12 +50,13 @@ public class UNOGameModel {
      * An explicit constructor for the UNO Main GUI Model
      */
     public UNOGameModel() {
-        unoGame = new Game();
+        //TODO [!Finalize]
+        boolean isDEBUG = true;
+        unoGame = new Game(isDEBUG);
         makeNewDefaultGame();
         unoGame.startGame();
         //TODO [GUI] get starting player
         isComputerTurn = false;
-        System.out.println("New Game Deck: " + unoGame.getTheDrawDeck());
         this.invalidPlayPopup = new InvalidPlayPopup();
         this.gameOverPopup = new GameOverPopup();
         this.roundOverPopup = new RoundOverPopup(unoGame);
@@ -88,8 +89,6 @@ public class UNOGameModel {
 
     /**
      * Creates a new default game
-     *
-     * @throws EmptyDeckException
      */
     private void makeNewDefaultGame() {
         try {
@@ -100,8 +99,9 @@ public class UNOGameModel {
                 unoGame.makePlayer(PlayerHand.COMPUTER);
             }
         } catch (GameNotStartedException ex) {
+            //TODO Except
             //Unable to play game if unable to add players - should never be hit
-            System.out.println(ex);
+            System.out.println("Error: " + ex);
             System.exit(-1);
         }
     }
@@ -110,7 +110,6 @@ public class UNOGameModel {
      * Pops the top card from the draw deck so we can add it to hand.
      *
      * @return
-     * @throws EmptyDeckException
      */
     Card popNextDrawCard() {
         return unoGame.getTheDrawDeck().popTopCard();
@@ -120,7 +119,6 @@ public class UNOGameModel {
      * Peeks the next card, useful for testing.
      *
      * @return
-     * @throws EmptyDeckException
      */
     Card peekNextDrawCard() {
         return unoGame.getTheDrawDeck().peekTopCard();
@@ -141,26 +139,18 @@ public class UNOGameModel {
         //TODO [Basic Game] If there are no cards in the discard or draw piles this loop will be infinite
         while (!isDrawSuccessful) {
             unoGame.drawCard(HUMAN_PLAYER);
-            System.out.println("JUST DREW A CARD!!");
             isDrawSuccessful = true;
         }
     }
 
     public boolean tryToPlayCardAction(int playCardIndex) {
-        System.out.println("Playing card: " + unoGame.getPlayersHandCopy(
-                HUMAN_PLAYER).get(playCardIndex));
-        System.out.println("New Full Hand: " + unoGame.getPlayersHandCopy(
-                HUMAN_PLAYER));
-
         if (!unoGame.isLegalPlay(unoGame.getPlayersHandCopy(
                 HUMAN_PLAYER).get(playCardIndex))) {
-            System.out.println("Invalid play\n");
             invalidPlayPopup.display();
             return false;
         }
         else {
             unoGame.playCard(HUMAN_PLAYER, playCardIndex);
-            System.out.println("Valid Play\n");
             return true;
 
         }
@@ -173,13 +163,10 @@ public class UNOGameModel {
         boolean isEndOfGame = false;
         //Loop through all players
         for (int i = 1; i <= unoGame.getNumComputerPlayers() + unoGame.getNumHumanPlayers(); i++) {
-            System.out.print("Player " + i);
             if (unoGame.getPlayersCopy(i).getDeckSize() == 0) {
-                System.out.print(" won!");
                 winningPlayerID = i;
             }
         }
-        System.out.println();
 
         if (winningPlayerID > 0) {
             //If any player's hand size is zero
@@ -190,7 +177,6 @@ public class UNOGameModel {
                 gameOverPopup.display();
             }
             else {
-                System.out.println("XX" + isEndOfGame);
                 roundOverPopup.display();
                 unoGame.startRound();
             }

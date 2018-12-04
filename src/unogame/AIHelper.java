@@ -156,17 +156,10 @@ public final class AIHelper {
      * ArrayList in the {@code unoGame}
      */
     public static void computerTurn(Game unoGame, int playerIndex) {
-        //DEBUG output
-        System.out.printf(">>User %d playing: ", (playerIndex + 1));
-        System.out.print("\n\tBefore Hand: " + unoGame.getPlayersHandCopy(
-                playerIndex) + "\n\t");
-
         PlayerHand hand = unoGame.getPlayersCopy(playerIndex);
         Card discardCard = unoGame.getTheDiscardDeck().peekBottomCard();
 
         PlayCommand playcommand = determinePlayCommand(hand, discardCard);
-
-        System.out.print(playcommand + " ");
 
         switch (playcommand) {
             case NOPLAYABLECARD:
@@ -179,7 +172,6 @@ public final class AIHelper {
 
                 if (isbuno) {
                     unoGame.setIsBUnoLastTurnPlayed(true);
-                    System.out.print("BUNO! ");
                 }
 
                 int cardToPlay;
@@ -187,7 +179,6 @@ public final class AIHelper {
                     cardToPlay = AIHelper.findValidCard(
                             hand, discardCard);
                     unoGame.playCard(playerIndex, cardToPlay);
-                    System.out.print("Playing Card " + cardToPlay);
                 } catch (NoValidCardException ex) {
                     /*case PLAYABLECARD is only possible when a valid card is
                      * locatable, exception cannot be thrown and if it is,
@@ -197,8 +188,5 @@ public final class AIHelper {
 
                 break;
         }
-        System.out.println("\n\tAfter Hand: " + unoGame.getPlayersHandCopy(
-                playerIndex));
-
     }
 }

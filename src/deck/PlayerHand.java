@@ -126,8 +126,13 @@ public class PlayerHand extends BUnoDeck {
      */
     @Override
     public String toString() {
-        String player = isComputerPlayer ? "computer" : "human";
-        return "Player " + "[" + player + "] {" + AIintelligence + "} Player's " + super.toString();
+        if (isComputerPlayer) {
+            return "Player " + "[computer] {" + AIintelligence + "} Player's " + super.toString();
+        }
+        else {
+
+            return "Player " + "[human] Player's " + super.toString();
+        }
     }
 
 }

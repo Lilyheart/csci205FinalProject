@@ -58,7 +58,9 @@ public class Game {
     /**
      * Maintains if BUno was called on the last turn played
      */
-    private Boolean isBUnoLastTurnPlayed;
+    private boolean isBUnoLastTurnPlayed;
+
+    private boolean printDEBUG;
 
     /**
      * An explicit constructor for a new game.
@@ -66,8 +68,19 @@ public class Game {
      * @author Lily Romano
      */
     public Game() {
+        //create game without debugging
+        this(false);
+    }
+
+    /**
+     * An explicit constructor for a new game.
+     *
+     * @author Lily Romano
+     */
+    public Game(boolean printDEBUG) {
         players = new LinkedList<>();
         isGameStarted = false;
+        this.printDEBUG = printDEBUG;
     }
 
     /**
@@ -170,6 +183,14 @@ public class Game {
         this.isBUnoLastTurnPlayed = isBUnoLastTurnPlayed;
     }
 
+    public Card getDiscardCardCard() {
+        return theDiscardDeck.peekBottomCard();
+    }
+
+    public boolean isPrintDEBUG() {
+        return printDEBUG;
+    }
+
     /**
      * Makes a new player
      *
@@ -251,6 +272,10 @@ public class Game {
 
         //set up discard pile
         theDiscardDeck.addCard(theDrawDeck.popTopCard());
+
+        if (printDEBUG) {
+            System.out.println("New Round: \n" + this);
+        }
     }
 
     /**
@@ -264,6 +289,14 @@ public class Game {
     public void playCard(int playerID, int cardIndex) {
         //TODO [Basic Game] Add Rules
         int playerIndex = playerID - 1;
+
+        if (printDEBUG) {
+            System.out.printf(
+                    "= Play Card on playerIndex %d: Discard card was %-15s == Playing card %-15s\n",
+                    playerIndex, getDiscardCardCard(),
+                    getPlayersHandCopy(playerID).get(cardIndex));
+        }
+
         theDiscardDeck.addCard(
                 players.get(playerIndex).popCardAtIndex(cardIndex));
     }
@@ -277,7 +310,14 @@ public class Game {
      */
     public void drawCard(int playerID) {
         int playerIndex = playerID - 1;
+
         players.get(playerIndex).addCard(theDrawDeck.popTopCard());
+
+        if (printDEBUG) {
+            System.out.printf(
+                    "= Draw Card on playerIndex %d: %-15s\n", playerIndex,
+                    getPlayersCopy(playerID).peekBottomCard());
+        }
     }
 
     /**
@@ -299,7 +339,6 @@ public class Game {
     public boolean isLegalPlay(Card playerCard) {
         boolean isLegal = false;
         Card discardCard = theDiscardDeck.peekBottomCard();
-        System.out.println(playerCard.getColor() + " " + playerCard.getType());
 
         //test color
         if (playerCard.getColor() == discardCard.getColor()) {

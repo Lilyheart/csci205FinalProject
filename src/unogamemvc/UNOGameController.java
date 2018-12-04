@@ -92,11 +92,11 @@ public class UNOGameController implements EventHandler<Event> {
             if (source instanceof StackPane && !theModel.isIsComputerTurn()) { //Any card clicked
                 boolean isLegalPlay = false;
 
-                System.out.println(
-                        "StackPaneID Clicked: " + ((StackPane) source).getId());
+                if (theModel.getUnoGame().isPrintDEBUG()) {
+                    System.out.println(
+                            "StackPaneID Clicked: " + ((StackPane) source).getId());
+                }
 
-                System.out.println(
-                        "Discard is: " + theModel.getUnoGame().getTheDiscardDeck().peekBottomCard());
                 //Plays the card via unogame.Game
                 isLegalPlay = theModel.tryToPlayCardAction(
                         Integer.parseInt(((StackPane) source).getId()));
@@ -107,10 +107,6 @@ public class UNOGameController implements EventHandler<Event> {
                 //Clears the players and and redraws
                 theView.getCardsInPlayersHandPane().getChildren().clear();
                 theView.drawPlayerHandPane();
-
-                System.out.println(
-                        "Player's Hand After Play" + theModel.getUnoGame().getPlayersHandCopy(
-                                theModel.getHUMAN_PLAYER()));
 
                 this.activateCardsInPlayersHand();
 
@@ -193,13 +189,6 @@ public class UNOGameController implements EventHandler<Event> {
                 //TODO [GUI] Redraws the discard deck - TODO [Refactor] Could be own method?
                 //TODO [GUI] Redraw the computer's hand
                 //TODO [GUI] Deal with BUno
-                System.out.println("Played " + i
-                                   + theModel.getUnoGame().getPlayersHandCopy(
-                                i));
-                System.out.println(
-                        "Size of hand" + theModel.getUnoGame().getPlayersHandCopy(
-                                i).size());
-
                 try {
                     // Update the card on the JavaFx Application Thread
                     Platform.runLater((new Runnable() {
@@ -229,8 +218,8 @@ public class UNOGameController implements EventHandler<Event> {
 //                        } catch (InterruptedException ex) {
 //                            //If sleep doesn't happen, game can continue to progress, it's purely for effect
 //                        }
-                } catch (InterruptedException e) {
-                    System.out.println("Error: " + e);
+                } catch (InterruptedException ex) {
+                    System.out.println("Error: " + ex);
                 }
 
             }
@@ -254,8 +243,6 @@ public class UNOGameController implements EventHandler<Event> {
 
                     if (!theModel.isIsComputerTurn()) {
                         //TODO [GUI] ?? Move this to method in Model?
-                        System.out.println(
-                                "***\nClicked on draw deck...next added to hand***");
 
                         //draw the card into the play
                         theModel.tryToDrawCardAction(); // pops card from the deck

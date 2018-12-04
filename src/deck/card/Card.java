@@ -87,7 +87,15 @@ public class Card {
      */
     @Override
     public String toString() {
-        return "Card{" + "color=" + color + ", type=" + type + '}';
+        String cardInfo = color + " " + type;
+
+        String[] words = cardInfo.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            String s = words[i];
+            words[i] = s.toUpperCase().charAt(0) + s.substring(1, s.length()).toLowerCase();
+        }
+
+        return String.join(" ", words);
     }
 
 }

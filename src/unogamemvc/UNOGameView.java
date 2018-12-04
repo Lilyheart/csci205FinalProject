@@ -283,7 +283,6 @@ public class UNOGameView {
      */
     public StackPane createNextFaceUpCard() {
         //TODO [Card Display] Get cards from hand instead
-        System.out.println(theModel.peekNextDrawCard()); //test to see if correct cards come out
         //test to see if correct cards come out
         StackPane faceUpCard = CardFrontView.createCardFrontView(
                 theModel.peekNextDrawCard());
@@ -299,7 +298,6 @@ public class UNOGameView {
         CopyOnWriteArrayList<Card> playersHand = theModel.getUnoGame().getPlayersHandCopy(
                 theModel.getHUMAN_PLAYER());
         cardsInPlayersHandPane.getChildren().clear();
-        System.out.println("Drawing Player hand: " + playersHand);
         int nextCol = 0;
         int secondRow = 0;
         int j = 1;
@@ -398,9 +396,6 @@ public class UNOGameView {
         opponentsPane.getChildren().clear();
 
         for (int i = 0; i < theModel.getUnoGame().getNumComputerPlayers(); i++) {
-            System.out.println(
-                    "Drawing computer hand " + (i + 2) + ": " + theModel.getUnoGame().getPlayersHandCopy(
-                            i + 2).size());
             drawComputerHandPane(
                     theModel.getUnoGame().getPlayersHandCopy(i + 2).size());
             /* TODO [Card Display] The hands stack in a weird way*/
@@ -410,7 +405,6 @@ public class UNOGameView {
             opponentsPane.setAlignment(Pos.TOP_CENTER);
             opponentsPane.add(opponentStack, i, 0);
         }
-        System.out.println(theModel.getUnoGame());
     }
 
     /**

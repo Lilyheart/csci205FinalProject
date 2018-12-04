@@ -60,11 +60,11 @@ public enum CardColor {
     }
 
     /**
-     * Returns the {@code Color} of the card.
+     * Returns the hex code {@code Color} of the card.
      *
      * @author Lily Romano
      *
-     * @return the {@code Color} of the card
+     * @return the hex code {@code Color} of the card
      */
     public String getColor() {
         return color;
