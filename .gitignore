@@ -1,8 +1,8 @@
 #
 # .gitignore file
 #
-# This file is set to ignore standard configuration files, backup files, 
-# build files, and other local, OS-specific files that do not belong in a 
+# This file is set to ignore standard configuration files, backup files,
+# build files, and other local, OS-specific files that do not belong in a
 # shared repository
 #
 # Last updated:
@@ -25,13 +25,15 @@
 nbproject/private
 build/
 nbbuild/
-dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
 
+!dist/*jar
+dist/README.TXT
+
 # Eclipse configuration files
-# NOTE: If you want to use the Git plugin for Eclipse, then 
+# NOTE: If you want to use the Git plugin for Eclipse, then
 # do NOT exclude .classpath and .project!
 .settings/
 .metadata
